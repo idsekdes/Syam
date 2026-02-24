@@ -1,56 +1,94 @@
-<!-- SECTION POTENSI & UMKM -->
-<section id="potensi" class="py-20 bg-slate-50">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-        <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Potensi & Produk Lokal</h2>
-        <p class="text-slate-600 mb-12 max-w-2xl mx-auto">Mendukung ekonomi warga melalui promosi produk unggulan dari Dusun Petigo, Lumbum, dan Kavatua.</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <!-- Produk 1: Contoh Olahan Laut/Kelapa -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                <div class="relative h-64">
-                    <img src="https://images.unsplash.com" alt="Produk UMKM" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tersedia</span>
-                </div>
-                <div class="p-6 text-left">
-                    <h3 class="text-xl font-bold mb-2">Kerajinan Khas Wani</h3>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Produk anyaman dan kerajinan tangan dari bahan alam lokal yang dikelola oleh kelompok Ibu PKK.</p>
-                    <a href="https://wa.me" class="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700">
-                        <i class="fab fa-whatsapp"></i> Hubungi Penjual
-                    </a>
-                </div>
-            </div>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potensi & UMKM | Desa Wani Lumbumpetigo</title>
+    <!-- WAJIB: Panggil Tailwind CSS di sini -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Panggil Font Awesome untuk Icon -->
+    <link href="https://cdnjs.cloudflare.com" rel="stylesheet">
+</head>
+<body class="bg-slate-50 font-sans text-slate-800">
 
-            <!-- Produk 2: Wisata Alam/Sawah -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition group border-2 border-blue-100">
-                <div class="relative h-64">
-                    <img src="https://images.unsplash.com" alt="Wisata" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Wisata</span>
+    <!-- NAVIGATION (Sama dengan Index) -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg">
+                    <i class="fas fa-arrow-left"></i>
                 </div>
-                <div class="p-6 text-left">
-                    <h3 class="text-xl font-bold mb-2">Agrowisata Lumbumpetigo</h3>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Keindahan hamparan sawah dan perbukitan yang asri, sangat cocok untuk wisata keluarga di akhir pekan.</p>
-                    <a href="#" class="inline-flex items-center gap-2 text-green-600 font-bold">
-                        <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
-                    </a>
-                </div>
-            </div>
+                <span class="font-bold text-xl tracking-tight">Kembali ke <span class="text-blue-600">Beranda</span></span>
+            </a>
+        </div>
+    </nav>
 
-            <!-- Produk 3: Kuliner -->
-            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition group">
-                <div class="relative h-64">
-                    <img src="https://images.unsplash.com" alt="Kuliner" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    <span class="absolute top-4 left-4 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Kuliner</span>
+    <!-- SECTION POTENSI & UMKM -->
+    <section id="potensi" class="py-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Potensi & Produk Lokal</h2>
+            <p class="text-slate-600 mb-12 max-w-2xl mx-auto">Mendukung ekonomi warga melalui promosi produk unggulan dari Dusun Petigo, Lumbum, dan Kavatua.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card Produk 1 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 group border border-slate-100">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com" alt="Produk UMKM" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tersedia</span>
+                    </div>
+                    <div class="p-8 text-left">
+                        <h3 class="text-xl font-bold mb-3 text-slate-900">Kerajinan Khas Wani</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed text-justify">Produk anyaman dan kerajinan tangan dari bahan alam lokal yang dikelola oleh kelompok Ibu PKK Desa Wani Lumbumpetigo.</p>
+                        <a href="https://wa.me" class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-lg font-bold hover:bg-blue-600 hover:text-white transition w-full justify-center">
+                            <i class="fab fa-whatsapp text-lg"></i> Hubungi Penjual
+                        </a>
+                    </div>
                 </div>
-                <div class="p-6 text-left">
-                    <h3 class="text-xl font-bold mb-2">Olahan Ikan Segar</h3>
-                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Hasil laut segar dari teluk Donggala yang diolah secara higienis menjadi produk siap saji.</p>
-                    <a href="https://wa.me" class="inline-flex items-center gap-2 text-orange-600 font-bold">
-                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
-                    </a>
+
+                <!-- Card Produk 2 (Highlight) -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border-2 border-blue-500/20">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com" alt="Wisata" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">Wisata Utama</span>
+                    </div>
+                    <div class="p-8 text-left">
+                        <h3 class="text-xl font-bold mb-3 text-slate-900">Agrowisata Lumbumpetigo</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed text-justify">Keindahan hamparan sawah dan perbukitan yang asri di Dusun Kavatua, sangat cocok untuk wisata keluarga di akhir pekan.</p>
+                        <a href="#" class="inline-flex items-center gap-2 bg-green-50 text-green-600 px-4 py-2 rounded-lg font-bold hover:bg-green-600 hover:text-white transition w-full justify-center">
+                            <i class="fas fa-map-marked-alt text-lg"></i> Lihat Rute Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Produk 3 -->
+                <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 group border border-slate-100">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com" alt="Kuliner" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Kuliner</span>
+                    </div>
+                    <div class="p-8 text-left">
+                        <h3 class="text-xl font-bold mb-3 text-slate-900">Olahan Ikan Segar</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed text-justify">Hasil laut segar dari teluk Donggala yang diolah secara higienis menjadi abon atau kerupuk ikan siap saji berkualitas tinggi.</p>
+                        <a href="https://wa.me" class="inline-flex items-center gap-2 bg-orange-50 text-orange-600 px-4 py-2 rounded-lg font-bold hover:bg-orange-600 hover:text-white transition w-full justify-center">
+                            <i class="fab fa-whatsapp text-lg"></i> Pesan Sekarang
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="font-bold text-white mb-2 uppercase tracking-widest text-sm">Pemerintah Desa Wani Lumbumpetigo</p>
+            <p class="text-xs">Dikelola secara mandiri oleh Tim IT Desa - Donggala, Sulawesi Tengah</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+
 </section>
 <!-- SECTION FORMULIR UMKM -->
 <section id="daftar-umkm" class="py-20 bg-white">
