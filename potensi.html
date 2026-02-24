@@ -1,0 +1,109 @@
+<!-- SECTION POTENSI & UMKM -->
+<section id="potensi" class="py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Potensi & Produk Lokal</h2>
+        <p class="text-slate-600 mb-12 max-w-2xl mx-auto">Mendukung ekonomi warga melalui promosi produk unggulan dari Dusun Petigo, Lumbum, dan Kavatua.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Produk 1: Contoh Olahan Laut/Kelapa -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                <div class="relative h-64">
+                    <img src="https://images.unsplash.com" alt="Produk UMKM" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Tersedia</span>
+                </div>
+                <div class="p-6 text-left">
+                    <h3 class="text-xl font-bold mb-2">Kerajinan Khas Wani</h3>
+                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Produk anyaman dan kerajinan tangan dari bahan alam lokal yang dikelola oleh kelompok Ibu PKK.</p>
+                    <a href="https://wa.me" class="inline-flex items-center gap-2 text-blue-600 font-bold hover:text-blue-700">
+                        <i class="fab fa-whatsapp"></i> Hubungi Penjual
+                    </a>
+                </div>
+            </div>
+
+            <!-- Produk 2: Wisata Alam/Sawah -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition group border-2 border-blue-100">
+                <div class="relative h-64">
+                    <img src="https://images.unsplash.com" alt="Wisata" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Wisata</span>
+                </div>
+                <div class="p-6 text-left">
+                    <h3 class="text-xl font-bold mb-2">Agrowisata Lumbumpetigo</h3>
+                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Keindahan hamparan sawah dan perbukitan yang asri, sangat cocok untuk wisata keluarga di akhir pekan.</p>
+                    <a href="#" class="inline-flex items-center gap-2 text-green-600 font-bold">
+                        <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+                    </a>
+                </div>
+            </div>
+
+            <!-- Produk 3: Kuliner -->
+            <div class="bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition group">
+                <div class="relative h-64">
+                    <img src="https://images.unsplash.com" alt="Kuliner" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <span class="absolute top-4 left-4 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Kuliner</span>
+                </div>
+                <div class="p-6 text-left">
+                    <h3 class="text-xl font-bold mb-2">Olahan Ikan Segar</h3>
+                    <p class="text-slate-500 text-sm mb-4 leading-relaxed">Hasil laut segar dari teluk Donggala yang diolah secara higienis menjadi produk siap saji.</p>
+                    <a href="https://wa.me" class="inline-flex items-center gap-2 text-orange-600 font-bold">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- SECTION FORMULIR UMKM -->
+<section id="daftar-umkm" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="bg-blue-600 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <!-- Dekorasi Latar Belakang -->
+            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-blue-500 rounded-full opacity-50"></div>
+            
+            <div class="relative z-10 text-white mb-10 text-center">
+                <h2 class="text-3xl font-bold mb-4">Daftarkan Produk UMKM Anda</h2>
+                <p class="text-blue-100 italic">Bantu kami mendata dan mempromosikan produk lokal Desa Wani Lumbumpetigo agar dikenal lebih luas.</p>
+            </div>
+
+            <!-- FORMULIR -->
+            <form action="https://formspree.io" method="POST" class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-white">Nama Lengkap Pemilik</label>
+                    <input type="text" name="nama" placeholder="Contoh: Bpk. Ahmad" required 
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-white">Nama Usaha/Produk</label>
+                    <input type="text" name="produk" placeholder="Contoh: Keripik Kelapa Petigo" required 
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-white">Nomor WhatsApp (Aktif)</label>
+                    <input type="tel" name="whatsapp" placeholder="Contoh: 081234567890" required 
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-white">Dusun Asal</label>
+                    <select name="dusun" required 
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-white appearance-none">
+                        <option value="" class="text-slate-800">Pilih Dusun...</option>
+                        <option value="Petigo" class="text-slate-800">Dusun I Petigo</option>
+                        <option value="Lumbum" class="text-slate-800">Dusun II Lumbum</option>
+                        <option value="Kavatua" class="text-slate-800">Dusun III Kavatua</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold mb-2 text-white">Deskripsi Singkat Produk</label>
+                    <textarea name="deskripsi" rows="3" placeholder="Ceritakan keunggulan produk Anda..." required 
+                        class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white"></textarea>
+                </div>
+                <div class="md:col-span-2 mt-4 text-center">
+                    <button type="submit" 
+                        class="bg-white text-blue-600 font-bold px-10 py-4 rounded-xl hover:bg-blue-50 transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-paper-plane mr-2"></i> Kirim Pendaftaran
+                    </button>
+                    <p class="text-xs text-blue-200 mt-4 italic">*Data akan dikirimkan langsung ke tim admin desa.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
