@@ -9,12 +9,25 @@ st.set_page_config(page_title="SID Digital", layout="wide", page_icon="🏘️")
 # CSS SAKTI: Memperbaiki warna teks metrik & ukuran font
 st.markdown("""
     <style>
-    [data-testid="stMetricValue"] { color: #1e293b !important; font-weight: bold; }
-    [data-testid="stMetricLabel"] { color: #475569 !important; }
-    .big-font { font-size: 110% !important; color: #1e293b; }
-    code { font-size: 105% !important; background-color: #f1f5f9 !important; }
-    .stTabs [data-baseweb="tab"] { color: #1e293b; font-weight: bold; }
-    [data-testid="stSidebar"] { background-color: #1e293b; }
+    /* Paksa teks metrik dan label menjadi Hitam Pekat */
+    [data-testid="stMetricValue"] { color: #000000 !important; font-weight: 800 !important; font-size: 1.8rem !important; }
+    [data-testid="stMetricLabel"] { color: #1e293b !important; font-weight: bold !important; font-size: 1rem !important; }
+    
+    /* Berikan background putih pada area informasi agar kontras di Dark Mode */
+    [data-testid="column"] { 
+        background-color: #ffffff; 
+        padding: 15px; 
+        border-radius: 10px; 
+        border: 1px solid #e2e8f0;
+        margin-bottom: 10px;
+    }
+    
+    /* Tulisan Alamat dan Judul */
+    .big-font { font-size: 115% !important; color: #000000 !important; font-weight: bold; }
+    .stMarkdown p { color: #000000 !important; }
+    
+    /* Box NIK & KK agar lebih Gelap teksnya */
+    code { font-size: 110% !important; color: #ffffff !important; background-color: #1e293b !important; padding: 10px !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -25,9 +38,10 @@ conn = st.connection("postgresql", type="sql")
 def clean_col(name):
     return " ".join(str(name).upper().split()).strip()
 
+# --- 2. PERBAIKAN FUNGSI MODAL (Ganti Baris 26-68) ---
 @st.dialog("📄 PROFIL DIGITAL PENDUDUK", width="large")
 def rincian_penduduk(data):
-    col_foto, col_utama = st.columns([1, 2]) # Foto 1 bagian, Info 2 bagian
+    col_foto, col_utama = st.columns([1, 2]) # Perbandingan lebar 1:2
     
     with col_foto:
         url_foto = data.get('FOTO')
@@ -37,19 +51,19 @@ def rincian_penduduk(data):
             st.image("https://cdn-icons-png.flaticon.com", use_container_width=True)
 
     with col_utama:
-        st.title(f"👤 {data.get('NAMA', 'TANPA NAMA')}")
-        st.info(f"📋 **STATUS:** {data.get('SHDK', 'ANGGOTA KELUARGA')}")
+        st.markdown(f"<h1 style='color:black; margin-bottom:0;'>👤 {data.get('NAMA', 'TANPA NAMA')}</h1>", unsafe_allow_html=True)
+        st.success(f"📋 **STATUS:** {data.get('SHDK', 'ANGGOTA KELUARGA')}")
         
-        # Kartu Metrik (Warna Teks Hitam Pekat)
+        # Kartu Metrik dengan Background Putih (Sudah diatur di CSS atas)
         m1, m2, m3 = st.columns(3)
         m1.metric("Umur", f"{data.get('UMUR', '-')} Thn")
         m2.metric("Status", f"{data.get('STATUS', 'Hidup')}")
         m3.metric("Dusun", f"{data.get('DUSUN', '-')}")
         
-        # Alamat +10% Font
+        # Teks Alamat Hitam Tebal
         st.markdown(f'<p class="big-font">📍 <b>Alamat:</b> {data.get("ALAMAT", "-")}</p>', unsafe_allow_html=True)
         
-        # NIK & KK GABUNG + TOMBOL SALIN
+        # NIK & KK GABUNG (Background Gelap, Teks Putih Terang agar Jelas)
         st.write("💳 **Identitas (Klik ikon kanan untuk salin):**")
         identitas = f"NIK: {data.get('NIK', '-')} | No. KK: {data.get('NO_KK', '-')}"
         st.code(identitas, language="text")
