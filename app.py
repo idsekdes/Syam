@@ -103,4 +103,39 @@ if not filtered_df.empty:
     )
 else:
     st.warning("Tidak ada data untuk didownload.")
+# Tambahkan link penduduk di bagian atas
+URL_PENDUDUK = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRd3_sz649R1j66EVGQIzrBZa-fQJTR0IvBXiFXlI7nlFmQgbG__qVa9EUM5JUkalFQUXaT3oPLlv2Y/pub?gid=0&single=true&output=csv"
+
+if st.button("👥 Sinkronkan Data Penduduk"):
+    df_penduduk = pd.read_csv(URL_PENDUDUK)
+    # Bersihkan nama kolom agar standar SQL
+    df_penduduk.columns = [str(c).strip().upper().replace(' ', '_') for c in df_penduduk.columns]
+    
+    # Simpan ke tabel berbeda di Neon
+    df_penduduk.to_sql('data_penduduk', conn.engine, if_exists='replace', index=False)
+    st.success("Data Penduduk berhasil masuk ke Neon!")
+
+# Buat Menu di Samping
+menu = st.sidebar.selectbox("Pilih Menu", ["💰 Anggaran Desa", "👨‍👩‍👧‍👦 Data Penduduk"])
+
+if menu == "💰 Anggaran Desa":
+    st.header("Monitoring Anggaran Desa")
+    # ... (Masukkan kode pencarian anggaran yang sudah jadi tadi disini) ...
+    df_neon = conn.query("SELECT * FROM data_desa;")
+    st.dataframe(df_neon)
+
+elif menu == "👨‍👩‍👧‍👦 Data Penduduk":
+    st.header("Database Penduduk Desa")
+    # Ambil data dari tabel penduduk
+    try:
+        df_orang = conn.query("SELECT * FROM data_penduduk;")
+        # Tambahkan fitur pencarian penduduk (misal berdasarkan NIK atau Nama)
+        cari_nama = st.text_input("Cari Nama Penduduk")
+        if cari_nama:
+            df_orang = df_orang[df_orang['NAMA'].str.contains(cari_nama, case=False, na=False)]
+        
+        st.dataframe(df_orang, use_container_width=True)
+    except:
+        st.warning("Data penduduk belum disinkronkan ke database.")
+
 
