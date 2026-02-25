@@ -230,3 +230,58 @@ if not filtered_orang.empty:
 
 else:
     st.info("Ketik nama untuk mencari...")
+import streamlit as st
+import pandas as pd
+
+# 1. FUNGSI MODAL DENGAN FOTO
+@st.dialog("📄 Profil Lengkap Penduduk")
+def rincian_penduduk(data):
+    # Tentukan nama kolom foto sesuai di Google Sheets Anda
+    # Misal nama kolomnya: 'LINK FOTO'
+    kolom_foto = 'LINK FOTO' 
+
+    # Layout Modal: Kiri untuk Foto, Kanan untuk Informasi Utama
+    col_foto, col_info = st.columns([1, 2]) 
+
+    with col_foto:
+        if kolom_foto in data and pd.notna(data[kolom_foto]):
+            # Menampilkan foto dari link URL
+            st.image(data[kolom_foto], use_container_width=True)
+        else:
+            # Foto default jika link kosong/error
+            st.image("https://cdn-icons-png.flaticon.com", 
+                     caption="Foto tidak tersedia", use_container_width=True)
+
+    with col_info:
+        st.subheader(data.get('NAMA', 'Tanpa Nama'))
+        st.write(f"🆔 **NIK:** {data.get('NIK', '-')}")
+        st.write(f"🏠 **Alamat:** {data.get('ALAMAT', '-')}")
+        st.write(f"🎂 **Tgl Lahir:** {data.get('TANGGAL LAHIR', '-')}")
+
+    st.divider()
+    
+    # Menampilkan sisa data lainnya secara otomatis (dinamis)
+    st.write("🔍 **Data Detail Lainnya:**")
+    c1, c2 = st.columns(2)
+    # Filter kolom agar link foto tidak muncul lagi sebagai teks di bawah
+    kolom_lain = [k for k in data.index if k not in [kolom_foto, 'NAMA']]
+    
+    for i, col in enumerate(kolom_lain):
+        if i % 2 == 0:
+            c1.markdown(f"**{col}:** {data[col]}")
+        else:
+            c2.markdown(f"**{col}:** {data[col]}")
+    
+    if st.button("Tutup"):
+        st.rerun()
+
+# 2. TAMPILAN DI MENU PENDUDUK
+# (Gunakan ini setelah proses filter nama Syamsuddin berhasil)
+if not filtered_orang.empty:
+    for index, row in filtered_orang.iterrows():
+        with st.container(border=True):
+            c_nama, c_btn = st.columns([3, 1])
+            c_nama.write(f"**{row['NAMA']}**")
+            # Tombol untuk memicu Modal
+            if c_btn.button("👁️ Lihat Detail", key=f"det_{index}"):
+                rincian_penduduk(row)
