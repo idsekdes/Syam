@@ -2,36 +2,53 @@ import streamlit as st
 import pandas as pd
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="SYAM DIGITAL - SID", layout="wide")
+st.set_page_config(page_title="SYAM DIGITAL - DARK MODE", layout="wide")
 
-# --- 2. CSS PROFESIONAL (PUTIH BERSIH & KONTRAS TAJAM) ---
+# --- 2. CSS CUSTOM (Halaman Utama GELAP, Teks PUTIH) ---
 st.markdown("""
     <style>
-    div[role="dialog"] { background-color: #ffffff !important; }
-    .stApp { background-color: #f8fafc; }
-    .photo-box {
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 10px;
-        background-color: #ffffff;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    /* Paksa Halaman Utama jadi GELAP */
+    .stApp {
+        background-color: #0f172a !important;
     }
+
+    /* Paksa Semua Teks di Halaman Utama jadi PUTIH BERSIH */
+    .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp label, .stApp div {
+        color: #ffffff !important;
+    }
+
+    /* Kotak Input (Pencarian) agar tetap terbaca */
+    .stTextInput input {
+        background-color: #1e293b !important;
+        color: #ffffff !important;
+        border: 1px solid #3b82f6 !important;
+    }
+
+    /* Container Nama Penduduk (Card) */
+    [data-testid="stVerticalBlock"] > div > div[data-testid="stVerticalBlock"] {
+        background-color: #1e293b !important;
+        border: 1px solid #334155 !important;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    /* MODAL TETAP PUTIH BERSIH (Agar Identitas Jelas) */
+    div[role="dialog"] {
+        background-color: #ffffff !important;
+    }
+    div[role="dialog"] h1, div[role="dialog"] h2, div[role="dialog"] h3, 
+    div[role="dialog"] p, div[role="dialog"] span, div[role="dialog"] td {
+        color: #1a202c !important; /* Teks Hitam di dalam Modal */
+    }
+
+    /* Tabel Identitas di dalam Modal */
     .info-row { border-bottom: 1px solid #edf2f7; margin-bottom: 2px; background-color: #ffffff; }
     .label-cell { color: #4a5568 !important; font-size: 0.85rem; padding: 8px; width: 45%; font-weight: 500; }
     .value-cell { color: #1a202c !important; font-size: 0.95rem; padding: 8px; font-weight: 700; }
-    .admin-header {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #1a202c !important;
-        margin-bottom: 15px;
-        border-bottom: 3px solid #1a202c;
-        padding-bottom: 5px;
-    }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 3. FUNGSI RENDER BARIS TABEL ---
+# --- 3. FUNGSI RENDER BARIS TABEL (Untuk Modal) ---
 def render_row(label, value):
     val = str(value).strip() if value and str(value).lower() != 'nan' else "-"
     return f"""
@@ -51,20 +68,19 @@ def rincian_penduduk(data):
     col_left, col_right = st.columns([1, 2.5], gap="large")
     
     with col_left:
-        st.markdown('<div class="photo-box">', unsafe_allow_html=True)
+        st.markdown('<div style="border:2px solid #e2e8f0; border-radius:12px; padding:10px; background:white; text-align:center;">', unsafe_allow_html=True)
         foto_url = data.get('FOTO')
         if pd.notna(foto_url) and str(foto_url).startswith('http'):
             st.image(foto_url, use_container_width=True)
         else:
             st.image("https://cdn-icons-png.flaticon.com", use_container_width=True)
         
-        st.markdown(f"<h3 style='color:#1a202c !important;'>{data.get('NAMA', '-')}</h3>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:#4a5568 !important; margin-bottom:0;'>Nama: {data.get('NAMA', '-')}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:#4a5568 !important;'>NIK: {data.get('NIK', '-')}</p>", unsafe_allow_html=True)
+        st.markdown(f"<h3>{data.get('NAMA', '-')}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p>NIK: {data.get('NIK', '-')}</p>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_right:
-        st.markdown('<div class="admin-header">Identitas 📄</div>', unsafe_allow_html=True)
+        st.markdown('<h2 style="border-bottom:3px solid #1a202c; padding-bottom:5px;">Identitas 📄</h2>', unsafe_allow_html=True)
         sub_col1, sub_col2 = st.columns(2)
         
         with sub_col1:
@@ -95,28 +111,19 @@ try:
     if menu == "Data Penduduk":
         st.title("📂 Database Kependudukan")
         
-        # FITUR PENCARIAN
-        cari_nama = st.text_input("🔍 Cari Nama Warga (Contoh: SYAMSUDDIN)")
+        cari_nama = st.text_input("🔍 Cari Nama Warga")
         
         df_p = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
         df_p.columns = [str(c).upper().strip() for c in df_p.columns]
 
-        if cari_nama:
-            # Filter berdasarkan input nama
-            df_res = df_p[df_p['NAMA'].str.contains(cari_nama, case=False, na=False)]
-        else:
-            # Tampilkan 5 data pertama jika belum cari
-            df_res = df_p.head(5)
-
-        st.write(f"Menampilkan **{len(df_res)}** data")
+        df_res = df_p[df_p['NAMA'].str.contains(cari_nama, case=False, na=False)] if cari_nama else df_p.head(10)
 
         for i, row in df_res.iterrows():
-            with st.container(border=True):
-                # PERBAIKAN: Menambahkan angka '2' di dalam columns
-                c1, c2 = st.columns(2)
-                c1.write(f"**{row.get('NAMA', 'TANPA NAMA')}**")
+            with st.container():
+                c1, c2 = st.columns([3, 1])
+                c1.write(f"### {row.get('NAMA', 'TANPA NAMA')}")
                 if c2.button("👁️ Rincian", key=f"det_{i}"):
                     rincian_penduduk(row)
 
 except Exception as e:
-    st.error(f"Terjadi Kesalahan: {e}")
+    st.error(f"Kesalahan: {e}")
