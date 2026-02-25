@@ -4,25 +4,57 @@ import re
 import io
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="SYAM DIGITAL - SID", layout="wide", page_icon="🏘️")
+st.set_page_config(page_title="SYAM DIGITAL - ULTRA DARK", layout="wide", page_icon="🏘️")
 
-# --- 2. CSS CUSTOM (PREMIUM DESIGN) ---
+# --- 2. CSS CUSTOM (BLACK & BLUE THEME) ---
 st.markdown("""
     <style>
-    /* Global Styles */
-    .main { background-color: #f1f5f9; }
-    [data-testid="stSidebar"] { background-color: #0f172a; color: white; }
+    /* Global Styles - Paksa Background Hitam */
+    .stApp { background-color: #000000 !important; color: #3b82f6 !important; }
+    [data-testid="stHeader"] { background-color: #000000 !important; }
+    [data-testid="stSidebar"] { background-color: #0f172a; border-right: 1px solid #1e3a8a; }
     
-    /* Header Admin Style */
-    .admin-card { background: white; padding: 15px; border-radius: 12px; border-left: 5px solid #3b82f6; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-    .status-online { color: #10b981; font-weight: bold; font-size: 0.8rem; }
-    .badge-verify { background-color: #3b82f6; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; }
+    /* Modal / Dialog Box */
+    div[role="dialog"] { background-color: #000000 !important; border: 2px solid #1e40af !important; }
+
+    /* Card Box - Background Hitam, Border Biru */
+    .info-box { 
+        background-color: #0a0a0a; 
+        border: 1px solid #1e40af; 
+        padding: 15px; 
+        border-radius: 10px; 
+        margin-bottom: 12px; 
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+    }
     
-    /* Modal Detail Style */
-    .info-box { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 8px; margin-bottom: 10px; }
-    .label-txt { color: #64748b; font-size: 0.8rem; margin-bottom: 0px; font-weight: 500; }
-    .value-txt { color: #1e293b; font-size: 1rem; font-weight: 700; margin-top: -5px; }
-    .section-header { color: #1e3a8a; font-weight: 800; font-size: 1.1rem; border-bottom: 2px solid #e2e8f0; margin-bottom: 10px; padding-bottom: 5px; }
+    /* Teks Label & Value - Warna Biru Elektrik */
+    .label-txt { color: #60a5fa !important; font-size: 0.85rem; margin-bottom: 2px; font-weight: bold; text-transform: uppercase; }
+    .value-txt { color: #3b82f6 !important; font-size: 1.1rem; font-weight: 800; border-bottom: 1px solid #1e3a8a; padding-bottom: 5px; }
+    
+    /* Section Header */
+    .section-header { 
+        color: #60a5fa; 
+        font-weight: 800; 
+        font-size: 1.2rem; 
+        margin-top: 15px;
+        margin-bottom: 15px;
+        text-shadow: 0 0 5px #1e40af;
+    }
+
+    /* Admin Card Header */
+    .admin-card { 
+        background: #0f172a; 
+        padding: 20px; 
+        border-radius: 15px; 
+        border: 1px solid #3b82f6; 
+        margin-bottom: 25px; 
+        text-align: center;
+    }
+
+    /* Override Streamlit UI Colors */
+    h1, h2, h3, p, span, div { color: #3b82f6 !important; }
+    .stButton>button { background-color: #1e40af !important; color: white !important; border-radius: 8px; border: none; }
+    .stTextInput>div>div>input { background-color: #0f172a !important; color: #3b82f6 !important; border: 1px solid #1e40af !important; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -33,14 +65,17 @@ conn = st.connection("postgresql", type="sql")
 def clean_col(name):
     return " ".join(str(name).upper().split()).strip()
 
-@st.dialog("👁️ Detail Lengkap Data Penduduk", width="large")
+@st.dialog("👁️ DETAIL DATA PENDUDUK - SYAM DIGITAL", width="large")
 def rincian_penduduk(data):
-    # HEADER MODAL: SYAM DIGITAL ADMIN
+    # HEADER ADMIN
     st.markdown(f"""
         <div class="admin-card">
-            <h3 style='margin:0; color:#1e293b;'>SYAM DIGITAL</h3>
-            <p style='margin:0; color:#64748b;'>👑 <b>ADMIN</b> | Administrator Sistem Data Penduduk</p>
-            <span class="status-online">● Online</span> <span class="badge-verify">✓ Terverifikasi</span>
+            <h1 style='margin:0; color:#3b82f6 !important; font-size:2rem;'>SYAM DIGITAL</h1>
+            <p style='margin:5px; color:#60a5fa !important;'>👑 <b>ADMINISTRATOR SISTEM</b></p>
+            <div style='display:flex; justify-content:center; gap:10px; margin-top:10px;'>
+                <span style='color:#10b981 !important; font-weight:bold;'>● ONLINE</span>
+                <span style='color:#3b82f6 !important; font-weight:bold;'>✓ TERVERIFIKASI</span>
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -53,100 +88,101 @@ def rincian_penduduk(data):
             st.image("https://cdn-icons-png.flaticon.com", use_container_width=True)
     
     with c_intro:
-        st.write("Mode Tampilan: **Detail Lengkap**")
-        st.title(data.get('NAMA', 'TANPA NAMA'))
-        st.info("💡 Informasi lengkap dan terverifikasi data penduduk")
-
-    st.divider()
+        st.markdown(f"<p class='label-txt'>Mode Tampilan</p><p class='value-text' style='font-size:1.5rem; font-weight:bold;'>DETAIL LENGKAP DATA PENDUDUK</p>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='color:#3b82f6 !important; text-transform:uppercase;'>{data.get('NAMA', 'TANPA NAMA')}</h1>", unsafe_allow_html=True)
+        st.write("---")
 
     col_l, col_r = st.columns(2)
 
     with col_l:
-        st.markdown("<div class='section-header'>👤 Informasi Personal</div>", unsafe_allow_html=True)
-        with st.container():
-            st.markdown(f"<div class='info-box'><p class='label-txt'>NIK:</p><p class='value-txt'>{data.get('NIK','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Nama Lengkap:</p><p class='value-txt'>{data.get('NAMA','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>No. KK:</p><p class='value-txt'>{data.get('NO_KK','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Jenis Kelamin:</p><p class='value-txt'>{data.get('JENIS_KELAMIN','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Tempat, Tanggal Lahir:</p><p class='value-txt'>{data.get('TEMPATLAHIR','-')}, {data.get('TANGGALLAHIR','-')}</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>👤 INFORMASI PERSONAL</div>", unsafe_allow_html=True)
+        items_p = [
+            ("NIK", data.get('NIK','-')),
+            ("NAMA LENGKAP", data.get('NAMA','-')),
+            ("NO. KK", data.get('NO_KK','-')),
+            ("JENIS KELAMIN", data.get('JENIS_KELAMIN','-')),
+            ("TEMPAT, TGL LAHIR", f"{data.get('TEMPATLAHIR','-')}, {data.get('TANGGALLAHIR','-')}")
+        ]
+        for label, val in items_p:
+            st.markdown(f"<div class='info-box'><p class='label-txt'>{label}</p><p class='value-txt'>{val}</p></div>", unsafe_allow_html=True)
 
-        st.markdown("<div class='section-header'>🎓 Pendidikan & Agama</div>", unsafe_allow_html=True)
-        with st.container():
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Agama:</p><p class='value-txt'>{data.get('AGAMA','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Pendidikan:</p><p class='value-txt'>{data.get('PENDIDIKAN_KK_ID','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Status Perkawinan:</p><p class='value-txt'>{data.get('STATUS_KAWIN','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Pekerjaan:</p><p class='value-txt'>{data.get('PEKERJAAN_ID','-')}</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>🎓 PENDIDIKAN & AGAMA</div>", unsafe_allow_html=True)
+        items_edu = [
+            ("AGAMA", data.get('AGAMA','-')),
+            ("PENDIDIKAN", data.get('PENDIDIKAN_KK_ID','-')),
+            ("STATUS PERKAWINAN", data.get('STATUS_KAWIN','-')),
+            ("PEKERJAAN", data.get('PEKERJAAN_ID','-'))
+        ]
+        for label, val in items_edu:
+            st.markdown(f"<div class='info-box'><p class='label-txt'>{label}</p><p class='value-txt'>{val}</p></div>", unsafe_allow_html=True)
 
     with col_r:
-        st.markdown("<div class='section-header'>👨‍👩‍👧‍👦 Informasi Keluarga</div>", unsafe_allow_html=True)
-        with st.container():
-            st.markdown(f"<div class='info-box'><p class='label-txt'>SHDK:</p><p class='value-txt'>{data.get('SHDK','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>WNI:</p><p class='value-txt'>{data.get('WARGANEGARA_ID','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Nama Ayah:</p><p class='value-txt'>{data.get('NAMA_AYAH','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Nama Ibu:</p><p class='value-txt'>{data.get('NAMA_IBU','-')}</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>👨‍👩‍👧‍👦 INFORMASI KELUARGA</div>", unsafe_allow_html=True)
+        items_fam = [
+            ("SHDK", data.get('SHDK','-')),
+            ("KEWARGANEGARAAN", data.get('WARGANEGARA_ID','-')),
+            ("NAMA AYAH", data.get('NAMA_AYAH','-')),
+            ("NAMA IBU", data.get('NAMA_IBU','-'))
+        ]
+        for label, val in items_fam:
+            st.markdown(f"<div class='info-box'><p class='label-txt'>{label}</p><p class='value-txt'>{val}</p></div>", unsafe_allow_html=True)
 
-        st.markdown("<div class='section-header'>🏠 Alamat Lengkap</div>", unsafe_allow_html=True)
-        with st.container():
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Alamat:</p><p class='value-txt'>{data.get('ALAMAT','-')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Desa:</p><p class='value-txt'>{data.get('DESA','Wani Lumbumpetigo')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Kecamatan:</p><p class='value-txt'>{data.get('KECAMATAN','Tanantovea')}</p></div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='info-box'><p class='label-txt'>Kabupaten:</p><p class='value-txt'>Donggala</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='section-header'>🏠 ALAMAT LENGKAP</div>", unsafe_allow_html=True)
+        items_loc = [
+            ("ALAMAT", data.get('ALAMAT','-')),
+            ("DESA", data.get('DESA','WANI LUMBUMPETIGO')),
+            ("KECAMATAN", data.get('KECAMATAN','TANANTOVEA')),
+            ("KABUPATEN", "DONGGALA"),
+            ("PROVINSI", "SULAWESI TENGAH")
+        ]
+        for label, val in items_loc:
+            st.markdown(f"<div class='info-box'><p class='label-txt'>{label}</p><p class='value-txt'>{val}</p></div>", unsafe_allow_html=True)
 
-    if st.button("❌ Tutup", use_container_width=True):
+    if st.button("🚪 TUTUP DETAIL", use_container_width=True):
         st.rerun()
 
-# --- 5. SIDEBAR NAVIGATION ---
-st.sidebar.markdown("<h1 style='color:white;'>SYAM DIGITAL</h1>", unsafe_allow_html=True)
-menu = st.sidebar.radio("PILIH MENU", ["💰 Anggaran Desa", "👨‍👩‍👧‍👦 Data Penduduk", "⚙️ Sinkronisasi"])
+# --- 5. SIDEBAR ---
+st.sidebar.markdown("<h1 style='text-align:center;'>SYAM DIGITAL</h1>", unsafe_allow_html=True)
+menu = st.sidebar.radio("NAVIGASI", ["💰 ANGGARAN DESA", "👨‍👩‍👧‍👦 DATA PENDUDUK", "⚙️ SINKRONISASI"])
 
-# --- 6. HALAMAN: ANGGARAN DESA ---
-if menu == "💰 Anggaran Desa":
-    st.title("📊 Monitoring Anggaran Desa")
-    df_ang = conn.query("SELECT * FROM data_desa;", ttl="1m")
-    df_ang.columns = [clean_col(c) for c in df_ang.columns]
+# --- 6. HALAMAN ANGGARAN ---
+if menu == "💰 ANGGARAN DESA":
+    st.title("📊 MONITORING ANGGARAN")
+    df = conn.query("SELECT * FROM data_desa;", ttl="1m")
+    df.columns = [clean_col(c) for c in df.columns]
     
-    c1, c2 = st.columns(2)
-    with c1: kec = st.selectbox("Kecamatan", ["Semua"] + sorted(df_ang['NAMA KEC'].unique().tolist()))
-    with c2: desa = st.text_input("Cari Nama Desa")
+    filt_kec = st.selectbox("KECAMATAN", ["SEMUA"] + sorted(df['NAMA KEC'].unique().tolist()))
+    filt_desa = st.text_input("CARI DESA")
     
-    filt = df_ang.copy()
-    if kec != "Semua": filt = filt[filt['NAMA KEC'] == kec]
-    if desa: filt = filt[filt['NAMA DESA'].str.contains(desa, case=False)]
+    res = df.copy()
+    if filt_kec != "SEMUA": res = res[res['NAMA KEC'] == filt_kec]
+    if filt_desa: res = res[res['NAMA DESA'].str.contains(filt_desa, case=False)]
     
-    st.dataframe(filt, use_container_width=True, hide_index=True)
-    if not filt.empty:
-        total = pd.to_numeric(filt['PAGU'], errors='coerce').sum()
-        st.metric("Total Pagu Terfilter", f"Rp {total:,.0f}")
+    st.dataframe(res, use_container_width=True)
 
-# --- 7. HALAMAN: DATA PENDUDUK ---
-elif menu == "👨‍👩‍👧‍👦 Data Penduduk":
-    st.title("📂 Database Kependudukan")
-    df_pen = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
-    df_pen.columns = [clean_col(c) for c in df_pen.columns]
+# --- 7. HALAMAN PENDUDUK ---
+elif menu == "👨‍👩‍👧‍👦 DATA PENDUDUK":
+    st.title("📂 DATABASE KEPENDUDUKAN")
+    df_p = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
+    df_p.columns = [clean_col(c) for c in df_p.columns]
     
-    cari = st.text_input("🔍 Cari Nama Penduduk (Contoh: FITRIA)")
+    nama_input = st.text_input("🔍 CARI NAMA PENDUDUK (HURUF BESAR)")
     
-    if cari:
-        res = df_pen[df_pen['NAMA'].str.contains(cari, case=False, na=False)]
-        st.write(f"Menampilkan **{len(res)}** hasil")
-        for idx, row in res.iterrows():
+    if nama_input:
+        match = df_p[df_p['NAMA'].str.contains(nama_input, case=False, na=False)]
+        for i, r in match.iterrows():
             with st.container(border=True):
-                ca, cb = st.columns([3, 1])
-                ca.write(f"### {row['NAMA']}\nNIK: `{row['NIK']}` | SHDK: {row.get('SHDK','-')}")
-                if cb.button("👁️ Detail", key=f"det_{idx}"):
-                    rincian_penduduk(row)
-    else:
-        st.info("Masukkan nama penduduk untuk melihat detail.")
+                c1, c2 = st.columns([3, 1])
+                c1.write(f"### {r['NAMA']}")
+                c1.write(f"NIK: {r['NIK']}")
+                if c2.button("👁️ DETAIL", key=f"d_{i}"):
+                    rincian_penduduk(r)
 
-# --- 8. HALAMAN: SINKRONISASI ---
-elif menu == "⚙️ Sinkronisasi":
-    st.title("⚙️ Pengaturan Database")
-    u_ang = st.text_input("Link CSV Anggaran", "https://docs.google.com")
-    u_pen = st.text_input("Link CSV Penduduk", "PASTE_LINK_CSV_PENDUDUK_BARU_ANDA")
-    
-    if st.button("🔄 Jalankan Sinkronisasi"):
-        with st.spinner("Mengupdate data..."):
-            pd.read_csv(u_ang).to_sql('data_desa', conn.engine, if_exists='replace', index=False)
-            pd.read_csv(u_pen).to_sql('data_penduduk', conn.engine, if_exists='replace', index=False)
-            st.success("Sinkronisasi Berhasil!")
-            st.rerun()
+# --- 8. HALAMAN SINKRON ---
+elif menu == "⚙️ SINKRONISASI":
+    st.title("⚙️ PENGATURAN DATABASE")
+    link_p = st.text_input("LINK CSV PENDUDUK")
+    if st.button("🔄 UPDATE DATABASE"):
+        with st.spinner("Memproses..."):
+            pd.read_csv(link_p).to_sql('data_penduduk', conn.engine, if_exists='replace', index=False)
+            st.success("DATABASE UPDATED!")
