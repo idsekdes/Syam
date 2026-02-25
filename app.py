@@ -4,13 +4,11 @@ import pandas as pd
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="SYAM DIGITAL - SID", layout="wide")
 
-# --- 2. CSS PROFESIONAL (PUTIH BERSIH & KONTRAST TAJAM) ---
+# --- 2. CSS PROFESIONAL (PUTIH BERSIH & KONTRAS TAJAM) ---
 st.markdown("""
     <style>
-    /* Paksa Background Modal jadi Putih Bersih */
     div[role="dialog"] { background-color: #ffffff !important; }
-    
-    /* Box Foto Profile */
+    .stApp { background-color: #f8fafc; }
     .photo-box {
         border: 2px solid #e2e8f0;
         border-radius: 12px;
@@ -19,26 +17,9 @@ st.markdown("""
         text-align: center;
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
-
-    /* Tabel Identitas: Teks Hitam Pekat agar Tidak Buram */
-    .info-row { 
-        border-bottom: 1px solid #edf2f7; 
-        margin-bottom: 2px;
-        background-color: #ffffff; 
-    }
-    .label-cell { 
-        color: #4a5568 !important; 
-        font-size: 0.85rem; 
-        padding: 8px; 
-        width: 45%;
-        font-weight: 500;
-    }
-    .value-cell { 
-        color: #1a202c !important; 
-        font-size: 0.95rem; 
-        padding: 8px; 
-        font-weight: 700;
-    }
+    .info-row { border-bottom: 1px solid #edf2f7; margin-bottom: 2px; background-color: #ffffff; }
+    .label-cell { color: #4a5568 !important; font-size: 0.85rem; padding: 8px; width: 45%; font-weight: 500; }
+    .value-cell { color: #1a202c !important; font-size: 0.95rem; padding: 8px; font-weight: 700; }
     .admin-header {
         font-size: 1.5rem;
         font-weight: 800;
@@ -113,14 +94,29 @@ try:
 
     if menu == "Data Penduduk":
         st.title("📂 Database Kependudukan")
-        df_p = conn.query("SELECT * FROM data_penduduk LIMIT 20;", ttl="1m")
+        
+        # FITUR PENCARIAN
+        cari_nama = st.text_input("🔍 Cari Nama Warga (Contoh: SYAMSUDDIN)")
+        
+        df_p = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
         df_p.columns = [str(c).upper().strip() for c in df_p.columns]
 
-        for i, row in df_p.iterrows():
+        if cari_nama:
+            # Filter berdasarkan input nama
+            df_res = df_p[df_p['NAMA'].str.contains(cari_nama, case=False, na=False)]
+        else:
+            # Tampilkan 5 data pertama jika belum cari
+            df_res = df_p.head(5)
+
+        st.write(f"Menampilkan **{len(df_res)}** data")
+
+        for i, row in df_res.iterrows():
             with st.container(border=True):
-                c1, c2 = st.columns()
+                # PERBAIKAN: Menambahkan angka '2' di dalam columns
+                c1, c2 = st.columns(2)
                 c1.write(f"**{row.get('NAMA', 'TANPA NAMA')}**")
                 if c2.button("👁️ Rincian", key=f"det_{i}"):
                     rincian_penduduk(row)
+
 except Exception as e:
-    st.error(f"Koneksi Database Gagal: {e}")
+    st.error(f"Terjadi Kesalahan: {e}")
