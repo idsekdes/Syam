@@ -103,7 +103,7 @@ def rincian_penduduk(data):
                 st.markdown(render_row("Tanggal Lahir", data.get("TANGGALLAHIR", "-")), unsafe_allow_html=True)
                 st.markdown(render_row("Pendidikan", data.get("PENDIDIKAN_KK_ID", "-")), unsafe_allow_html=True)
                 st.markdown(render_row("SHDK", data.get("SHDK", "-")), unsafe_allow_html=True)
-                 st.markdown(render_row("Usia", f"{data.get('UMUR', '-')} TAHUN"), unsafe_allow_html=True)
+                st.markdown(render_row("Usia", f"{data.get('UMUR', '-')} TAHUN"), unsafe_allow_html=True)
 
 
             with sub_col2:
