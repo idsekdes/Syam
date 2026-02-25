@@ -1,46 +1,60 @@
-import streamlit as st
-import pandas as pd
-
-# --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="SYAM DIGITAL - Minimalis", layout="wide")
-
-# --- 2. CSS FIX (Memaksa Teks Terlihat Tajam) ---
+# --- CSS FIX: KONTRAS TINGGI & PROFESIONAL ---
 st.markdown("""
     <style>
-    /* Paksa Background Utama Putih Bersih */
-    .stApp { background-color: #ffffff !important; }
+    /* Paksa Latar Belakang Modal jadi Putih Bersih */
+    div[role="dialog"] { background-color: #ffffff !important; }
     
-    /* Paksa SEMUA teks di area utama menjadi Hitam Pekat */
-    .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp div {
-        color: #1e293b !important;
+    /* Box Foto */
+    .photo-box {
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 5px;
+        background-color: #ffffff;
     }
 
-    /* Khusus untuk teks Nama di daftar (sebelum klik rincian) */
-    .stMarkdown p {
-        color: #1e293b !important;
-        font-weight: 600 !important;
-        font-size: 1.1rem !important;
+    /* Tabel Identitas: Baris Putih, Teks Hitam Tajam */
+    .info-row { 
+        border-bottom: 1px solid #edf2f7; 
+        margin-bottom: 2px;
+        background-color: #ffffff; 
+    }
+    
+    /* Label (Titik Bulat & Nama Kolom) - Abu-abu Tua */
+    .label-cell { 
+        color: #4a5568 !important; 
+        font-size: 0.85rem; 
+        padding: 8px; 
+        width: 40%;
+        font-weight: 500;
+    }
+    
+    /* Isi Data - Hitam Pekat */
+    .value-cell { 
+        color: #1a202c !important; 
+        font-size: 0.95rem; 
+        padding: 8px; 
+        font-weight: 700;
     }
 
-    /* Sidebar tetap biarkan gelap agar kontras */
-    [data-testid="stSidebar"] p, [data-testid="stSidebar"] span {
-        color: #ffffff !important;
+    /* Judul Identitas */
+    .admin-header {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #2d3748 !important;
+        margin-bottom: 15px;
+        border-bottom: 3px solid #2d3748;
+        padding-bottom: 5px;
     }
-
-    /* Card Identitas Minimalis (Latar Putih, Border Abu-abu) */
-    .info-row { border-bottom: 1px solid #e2e8f0; margin-bottom: 2px; }
-    .label-cell { color: #64748b !important; font-size: 0.85rem; padding: 5px; width: 45%; }
-    .value-cell { color: #0f172a !important; font-size: 0.9rem; padding: 5px; font-weight: 700; }
     </style>
 """, unsafe_allow_html=True)
 
-
-# --- 3. FUNGSI RENDER BARIS TABEL ---
+# --- FUNGSI RENDER BARIS (Pastikan Teks String) ---
 def render_row(label, value):
-    val = str(value) if pd.notna(value) else "-"
+    # Memastikan data bukan None agar tidak error
+    val = str(value) if value and str(value) != 'nan' else "-"
     return f"""
     <div class="info-row">
-        <table style="width:100%; border-spacing:0;">
+        <table style="width:100%; border-spacing:0; background-color:white;">
             <tr>
                 <td class="label-cell">● {label}</td>
                 <td class="value-cell">{val}</td>
@@ -48,6 +62,7 @@ def render_row(label, value):
         </table>
     </div>
     """
+
 
 # --- 4. FUNGSI DIALOG (MODAL) MINIMALIS ---
 @st.dialog("Identitas", width="large")
