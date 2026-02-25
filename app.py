@@ -4,40 +4,30 @@ import re
 import io
 
 # --- 1. KONFIGURASI HALAMAN ---
-st.set_page_config(page_title="Sistem Informasi Desa Digital", layout="wide", page_icon="🏘️")
+st.set_page_config(page_title="SID Digital", layout="wide", page_icon="🏘️")
 
-# Custom CSS untuk tampilan lebih modern
+# CSS SAKTI: Memperbaiki warna teks metrik & ukuran font
 st.markdown("""
     <style>
-    .main { background-color: #f8f9fa; }
-    .stMetric { background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    [data-testid="stSidebar"] { background-color: #1e293b; color: white; }
+    [data-testid="stMetricValue"] { color: #1e293b !important; font-weight: bold; }
+    [data-testid="stMetricLabel"] { color: #475569 !important; }
+    .big-font { font-size: 110% !important; color: #1e293b; }
+    code { font-size: 105% !important; background-color: #f1f5f9 !important; }
+    .stTabs [data-baseweb="tab"] { color: #1e293b; font-weight: bold; }
+    [data-testid="stSidebar"] { background-color: #1e293b; }
     </style>
 """, unsafe_allow_html=True)
 
 # --- 2. KONEKSI DATABASE ---
-try:
-    conn = st.connection("postgresql", type="sql")
-except Exception as e:
-    st.error("Gagal koneksi ke database. Cek secrets.toml.")
-    st.stop()
+conn = st.connection("postgresql", type="sql")
 
-# --- 3. FUNGSI PEMBERSIH & HELPER ---
+# --- 3. FUNGSI HELPER ---
 def clean_col(name):
     return " ".join(str(name).upper().split()).strip()
 
 @st.dialog("📄 PROFIL DIGITAL PENDUDUK", width="large")
 def rincian_penduduk(data):
-    # --- CSS FIX: Memastikan teks metrik berwarna gelap dan kontras ---
-    st.markdown("""
-        <style>
-        [data-testid="stMetricValue"] { color: #1e293b !important; font-weight: bold; }
-        [data-testid="stMetricLabel"] { color: #475569 !important; }
-        .stTabs [data-baseweb="tab"] { color: #1e293b; }
-        </style>
-    """, unsafe_allow_html=True)
-
-    col_foto, col_utama = st.columns([1, 2]) # Foto lebih kecil, Info lebih lebar
+    col_foto, col_utama = st.columns([1, 2]) # Foto 1 bagian, Info 2 bagian
     
     with col_foto:
         url_foto = data.get('FOTO')
@@ -48,121 +38,93 @@ def rincian_penduduk(data):
 
     with col_utama:
         st.title(f"👤 {data.get('NAMA', 'TANPA NAMA')}")
-        st.info(f"📋 **STATUS DALAM KELUARGA:** {data.get('SHDK', 'ANGGOTA KELUARGA')}")
+        st.info(f"📋 **STATUS:** {data.get('SHDK', 'ANGGOTA KELUARGA')}")
         
-        # Area Metrik dengan warna yang sudah diperbaiki via CSS di atas
+        # Kartu Metrik (Warna Teks Hitam Pekat)
         m1, m2, m3 = st.columns(3)
         m1.metric("Umur", f"{data.get('UMUR', '-')} Thn")
         m2.metric("Status", f"{data.get('STATUS', 'Hidup')}")
         m3.metric("Dusun", f"{data.get('DUSUN', '-')}")
         
-        st.markdown(f"📍 **Alamat:** {data.get('ALAMAT', '-')}")
-        st.markdown(f"💳 **NIK:** `{data.get('NIK', '-')}`")
+        # Alamat +10% Font
+        st.markdown(f'<p class="big-font">📍 <b>Alamat:</b> {data.get("ALAMAT", "-")}</p>', unsafe_allow_html=True)
+        
+        # NIK & KK GABUNG + TOMBOL SALIN
+        st.write("💳 **Identitas (Klik ikon kanan untuk salin):**")
+        identitas = f"NIK: {data.get('NIK', '-')} | No. KK: {data.get('NO_KK', '-')}"
+        st.code(identitas, language="text")
 
     st.divider()
-    
-    # Bagian Tabs tetap menggunakan struktur yang rapi
-    t1, t2, t3 = st.tabs(["📋 Data Pribadi", "👪 Keluarga", "💼 Pekerjaan"])
+    t1, t2, t3 = st.tabs(["📋 Data Pribadi", "👪 Keluarga", "💼 Administrasi"])
     
     with t1:
         st.write("### Informasi Personal")
         ca, cb = st.columns(2)
-        with ca:
-            st.write(f"**Jenis Kelamin:** {data.get('JENIS_KELAMIN', '-')}")
-            st.write(f"**Agama:** {data.get('AGAMA', '-')}")
-            st.write(f"**Tempat Lahir:** {data.get('TEMPATLAHIR', '-')}")
-        with cb:
-            st.write(f"**Tanggal Lahir:** {data.get('TANGGALLAHIR', '-')}")
-            st.write(f"**Golongan Darah:** {data.get('GOLONGAN_DARAH', '-')}")
-            st.write(f"**Pendidikan:** {data.get('PENDIDIKAN_KK_ID', '-')}")
+        ca.markdown(f"**Jenis Kelamin:** {data.get('JENIS_KELAMIN', '-')}\n\n**Agama:** {data.get('AGAMA', '-')}\n\n**Tempat Lahir:** {data.get('TEMPATLAHIR', '-')}")
+        cb.markdown(f"**Tgl Lahir:** {data.get('TANGGALLAHIR', '-')}\n\n**Pendidikan:** {data.get('PENDIDIKAN_KK_ID', '-')}\n\n**Gol. Darah:** {data.get('GOLONGAN_DARAH', '-')}")
             
     with t2:
         st.write("### Hubungan Keluarga")
         cc, cd = st.columns(2)
-        with cc:
-            st.markdown(f"👨 **Ayah:** {data.get('NAMA_AYAH', '-')}")
-            st.markdown(f"🆔 **NIK Ayah:** {data.get('NIK_AYAH', '-')}")
-        with cd:
-            st.markdown(f"👩 **Ibu:** {data.get('NAMA_IBU', '-')}")
-            st.markdown(f"🆔 **NIK Ibu:** {data.get('NIK_IBU', '-')}")
+        cc.markdown(f"👨 **Ayah:** {data.get('NAMA_AYAH', '-')}\n\n🆔 **NIK Ayah:** {data.get('NIK_AYAH', '-')}")
+        cd.markdown(f"👩 **Ibu:** {data.get('NAMA_IBU', '-')}\n\n🆔 **NIK Ibu:** {data.get('NIK_IBU', '-')}")
         st.warning(f"💍 **Status Perkawinan:** {data.get('STATUS_KAWIN', '-')}")
             
     with t3:
-        st.write("### Detail Administrasi")
+        st.write("### Detail Pekerjaan")
         ce, cf = st.columns(2)
-        with ce:
-            st.markdown(f"💼 **Pekerjaan:** {data.get('PEKERJAAN_ID', '-')}")
-            st.markdown(f"🇮🇩 **Warganegara:** {data.get('WARGANEGARA_ID', '-')}")
-        with cf:
-            st.markdown(f"💳 **No. KK:** `{data.get('NO_KK', '-')}`")
+        ce.markdown(f"💼 **Pekerjaan:** {data.get('PEKERJAAN_ID', '-')}\n\n🇮🇩 **Warganegara:** {data.get('WARGANEGARA_ID', '-')}")
+        cf.markdown(f"🏘️ **Dusun:** {data.get('DUSUN', '-')}\n\n🏷️ **Status:** {data.get('STATUS', '-')}")
 
+# --- 4. NAVIGASI SIDEBAR ---
+menu = st.sidebar.radio("PILIH HALAMAN:", ["💰 Anggaran Desa", "👨‍👩‍👧‍👦 Data Penduduk", "⚙️ Sinkronisasi Data"])
 
-# --- 4. SIDEBAR NAVIGATION ---
-st.sidebar.title("📌 MENU DESA")
-menu = st.sidebar.radio("Pindah Halaman:", ["💰 Anggaran Desa", "👨‍👩‍👧‍👦 Data Penduduk", "⚙️ Pengaturan Data"])
-
-# --- 5. HALAMAN: ANGGARAN DESA ---
+# --- 5. HALAMAN ANGGARAN ---
 if menu == "💰 Anggaran Desa":
     st.header("📊 Monitoring Anggaran Desa")
-    df_anggaran = conn.query("SELECT * FROM data_desa;", ttl="1m")
-    df_anggaran.columns = [clean_col(c) for c in df_anggaran.columns]
-
-    col1, col2 = st.columns(2)
-    with col1:
-        pilih_kec = st.selectbox("Filter Kecamatan", ["Semua"] + sorted(df_anggaran['NAMA KEC'].unique().tolist()))
-    with col2:
-        cari_desa = st.text_input("Cari Nama Desa")
-
-    filtered = df_anggaran.copy()
-    if pilih_kec != "Semua": filtered = filtered[filtered['NAMA KEC'] == pilih_kec]
-    if cari_desa: filtered = filtered[filtered['NAMA DESA'].str.contains(cari_desa, case=False, na=False)]
-
-    st.dataframe(filtered, use_container_width=True, hide_index=True)
+    df_ang = conn.query("SELECT * FROM data_desa;", ttl="1m")
+    df_ang.columns = [clean_col(c) for c in df_ang.columns]
     
-    if not filtered.empty:
-        st.divider()
-        m1, m2, m3 = st.columns(3)
-        pagu = pd.to_numeric(filtered['PAGU'], errors='coerce').sum()
-        m1.metric("Total Pagu", f"Rp {pagu:,.0f}")
-        m2.metric("Total Tahap 1", f"Rp {pd.to_numeric(filtered['TAHAP 1'], errors='coerce').sum():,.0f}")
-        m3.metric("Total Tahap 2", f"Rp {pd.to_numeric(filtered['TAHAP 2'], errors='coerce').sum():,.0f}")
+    k1, k2 = st.columns(2)
+    pilih_kec = k1.selectbox("Kecamatan", ["Semua"] + sorted(df_ang['NAMA KEC'].unique().tolist()))
+    cari_desa = k2.text_input("Cari Desa")
+    
+    filt = df_ang.copy()
+    if pilih_kec != "Semua": filt = filt[filt['NAMA KEC'] == pilih_kec]
+    if cari_desa: filt = filt[filt['NAMA DESA'].str.contains(cari_desa, case=False, na=False)]
+    
+    st.dataframe(filt, use_container_width=True, hide_index=True)
+    if not filt.empty:
+        total = pd.to_numeric(filt['PAGU'], errors='coerce').sum()
+        st.success(f"💰 **Total Pagu Terfilter: Rp {total:,.0f}**")
 
-# --- 6. HALAMAN: DATA PENDUDUK ---
+# --- 6. HALAMAN PENDUDUK ---
 elif menu == "👨‍👩‍👧‍👦 Data Penduduk":
     st.header("📂 Database Kependudukan")
-    df_penduduk = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
-    df_penduduk.columns = [clean_col(c) for c in df_penduduk.columns]
-
-    cari_nama = st.text_input("🔍 Masukkan Nama Penduduk (Contoh: SYAMSUDDIN)")
+    df_pen = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
+    df_pen.columns = [clean_col(c) for c in df_pen.columns]
+    
+    cari_nama = st.text_input("🔍 Cari Nama Warga (Contoh: SYAMSUDDIN)")
     
     if cari_nama:
-        res = df_penduduk[df_penduduk['NAMA'].str.contains(cari_nama, case=False, na=False)]
+        res = df_pen[df_pen['NAMA'].str.contains(cari_nama, case=False, na=False)]
         st.write(f"Ditemukan **{len(res)}** Jiwa")
-        
         for idx, row in res.iterrows():
             with st.container(border=True):
-                c_nama, c_btn = st.columns([3, 1])
-                c_nama.write(f"### {row['NAMA']}\nNIK: `{row['NIK']}` | Dusun: {row.get('DUSUN','-')}")
-                if c_btn.button("👁️ Lihat Detail", key=f"p_{idx}"):
+                c_n, c_b = st.columns([3, 1])
+                c_n.write(f"### {row['NAMA']}\nNIK: `{row['NIK']}`")
+                if c_b.button("👁️ Rincian", key=f"p_{idx}"):
                     rincian_penduduk(row)
-    else:
-        st.info("Silakan ketik nama penduduk untuk menampilkan rincian.")
 
-# --- 7. HALAMAN: PENGATURAN ---
-elif menu == "⚙️ Pengaturan Data":
-    st.header("⚙️ Sinkronisasi Data")
-    st.warning("Gunakan tombol ini hanya jika ada perubahan di Google Sheets.")
+# --- 7. HALAMAN SINKRON ---
+elif menu == "⚙️ Sinkronisasi Data":
+    st.header("⚙️ Update Database dari Google Sheets")
+    u_ang = st.text_input("Link CSV Anggaran", "https://docs.google.com")
+    u_pen = st.text_input("Link CSV Penduduk", "PASTE_LINK_CSV_PENDUDUK_DI_SINI")
     
-    url_ang = st.text_input("Link CSV Anggaran", "https://docs.google.com")
-    url_pen = st.text_input("Link CSV Penduduk", "PASTE_LINK_CSV_PENDUDUK_ANDA")
-
-    if st.button("🔄 Perbarui Semua Data (Overide Neon)"):
-        with st.spinner("Sedang menyinkronkan..."):
-            # Update Anggaran
-            df1 = pd.read_csv(url_ang)
-            df1.to_sql('data_desa', conn.engine, if_exists='replace', index=False)
-            # Update Penduduk
-            df2 = pd.read_csv(url_pen)
-            df2.to_sql('data_penduduk', conn.engine, if_exists='replace', index=False)
-            st.success("Semua data berhasil diperbarui!")
+    if st.button("🔄 Jalankan Sinkronisasi"):
+        with st.spinner("Sedang memproses..."):
+            pd.read_csv(u_ang).to_sql('data_desa', conn.engine, if_exists='replace', index=False)
+            pd.read_csv(u_pen).to_sql('data_penduduk', conn.engine, if_exists='replace', index=False)
+            st.success("Berhasil! Database Neon telah diperbarui.")
             st.rerun()
