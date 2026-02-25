@@ -4,42 +4,36 @@ import pandas as pd
 # --- 1. KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="SYAM DIGITAL - Minimalis", layout="wide")
 
-# --- 2. CSS MINIMALIS (Latar Putih, Teks Kontras) ---
+# --- 2. CSS FIX (Memaksa Teks Terlihat Tajam) ---
 st.markdown("""
     <style>
-    .stApp { background-color: #ffffff; }
-    .photo-box {
-        border: 1px solid #e0e0e0;
-        padding: 10px;
-        border-radius: 5px;
-        text-align: center;
-        background-color: #fcfcfc;
-        margin-bottom: 20px;
+    /* Paksa Background Utama Putih Bersih */
+    .stApp { background-color: #ffffff !important; }
+    
+    /* Paksa SEMUA teks di area utama menjadi Hitam Pekat */
+    .stApp h1, .stApp h2, .stApp h3, .stApp p, .stApp span, .stApp div {
+        color: #1e293b !important;
     }
-    .info-row { border-bottom: 1px solid #f0f0f0; margin-bottom: 2px; }
-    .label-cell { 
-        color: #666666; 
-        font-size: 0.85rem; 
-        padding: 5px; 
-        width: 45%;
-        font-weight: 500;
+
+    /* Khusus untuk teks Nama di daftar (sebelum klik rincian) */
+    .stMarkdown p {
+        color: #1e293b !important;
+        font-weight: 600 !important;
+        font-size: 1.1rem !important;
     }
-    .value-cell { 
-        color: #222222; 
-        font-size: 0.9rem; 
-        padding: 5px; 
-        font-weight: 600;
+
+    /* Sidebar tetap biarkan gelap agar kontras */
+    [data-testid="stSidebar"] p, [data-testid="stSidebar"] span {
+        color: #ffffff !important;
     }
-    .admin-header {
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #333333;
-        margin-bottom: 15px;
-        border-bottom: 2px solid #333;
-        padding-bottom: 5px;
-    }
+
+    /* Card Identitas Minimalis (Latar Putih, Border Abu-abu) */
+    .info-row { border-bottom: 1px solid #e2e8f0; margin-bottom: 2px; }
+    .label-cell { color: #64748b !important; font-size: 0.85rem; padding: 5px; width: 45%; }
+    .value-cell { color: #0f172a !important; font-size: 0.9rem; padding: 5px; font-weight: 700; }
     </style>
 """, unsafe_allow_html=True)
+
 
 # --- 3. FUNGSI RENDER BARIS TABEL ---
 def render_row(label, value):
