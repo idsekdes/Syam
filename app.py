@@ -234,54 +234,84 @@ import streamlit as st
 import pandas as pd
 
 # 1. FUNGSI MODAL DENGAN FOTO
-@st.dialog("📄 Profil Lengkap Penduduk")
+@st.dialog("📄 PROFIL DIGITAL PENDUDUK", width="large")
 def rincian_penduduk(data):
-    # Tentukan nama kolom foto sesuai di Google Sheets Anda
-    # Misal nama kolomnya: 'LINK FOTO'
-    kolom_foto = 'LINK FOTO' 
+    # 1. CSS Custom untuk mempercantik tampilan (Optional)
+    st.markdown("""
+        <style>
+        [data-testid="stExpander"] { border: none; box-shadow: none; }
+        .main-profile { background-color: #f0f2f6; padding: 20px; border-radius: 15px; }
+        </style>
+    """, unsafe_allow_html=True)
 
-    # Layout Modal: Kiri untuk Foto, Kanan untuk Informasi Utama
-    col_foto, col_info = st.columns([1, 2]) 
+    # 2. Header Utama (Foto & Info Penting)
+    with st.container():
+        col_foto, col_utama = st.columns([1, 2])
+        
+        with col_foto:
+            # Menggunakan kolom 'FOTO' sesuai data Anda
+            url_foto = data.get('FOTO')
+            if pd.notna(url_foto) and str(url_foto).startswith('http'):
+                st.image(url_foto, use_container_width=True, caption=f"ID: {data.get('NIK')}")
+            else:
+                st.image("https://cdn-icons-png.flaticon.com", 
+                         use_container_width=True, caption="Foto Tidak Tersedia")
 
-    with col_foto:
-        if kolom_foto in data and pd.notna(data[kolom_foto]):
-            # Menampilkan foto dari link URL
-            st.image(data[kolom_foto], use_container_width=True)
-        else:
-            # Foto default jika link kosong/error
-            st.image("https://cdn-icons-png.flaticon.com", 
-                     caption="Foto tidak tersedia", use_container_width=True)
+        with col_utama:
+            st.title(f" {data.get('NAMA', 'TANPA NAMA')}")
+            st.subheader(f"🏷️ {data.get('SHDK', 'ANGGOTA KELUARGA')}")
+            
+            # Kartu Info Cepat
+            c1, c2 = st.columns(2)
+            c1.metric("Umur", f"{data.get('UMUR', '-')} Thn")
+            c2.metric("Status", f"{data.get('STATUS', 'Hidup')}")
+            
+            st.markdown(f"📍 **Alamat:** {data.get('ALAMAT', '-')}")
+            st.markdown(f"💳 **No. KK:** `{data.get('NO_KK', '-')}`")
 
-    with col_info:
-        st.subheader(data.get('NAMA', 'Tanpa Nama'))
-        st.write(f"🆔 **NIK:** {data.get('NIK', '-')}")
-        st.write(f"🏠 **Alamat:** {data.get('ALAMAT', '-')}")
-        st.write(f"🎂 **Tgl Lahir:** {data.get('TANGGAL LAHIR', '-')}")
+    st.divider()
+
+    # 3. Data Detail Terstruktur dalam Tabs
+    tab1, tab2, tab3 = st.tabs(["📋 Data Pribadi", "👪 Keluarga", "🏫 Lainnya"])
+
+    with tab1:
+        st.write("### Informasi Personal")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            st.markdown(f"**NIK:** `{data.get('NIK', '-')}`")
+            st.markdown(f"**Jenis Kelamin:** {data.get('JENIS_KELAMIN', '-')}")
+            st.markdown(f"**Tempat Lahir:** {data.get('TEMPATLAHIR', '-')}")
+        with col_b:
+            st.markdown(f"**Tanggal Lahir:** {data.get('TANGGALLAHIR', '-')}")
+            st.markdown(f"**Agama:** {data.get('AGAMA', '-')}")
+            st.markdown(f"**Pendidikan:** {data.get('PENDIDIKAN_KK_ID', '-')}")
+
+    with tab2:
+        st.write("### Hubungan Keluarga")
+        col_c, col_d = st.columns(2)
+        with col_c:
+            st.markdown(f"👨 **Nama Ayah:** {data.get('NAMA_AYAH', '-')}")
+            st.markdown(f"🆔 **NIK Ayah:** {data.get('NIK_AYAH', '-')}")
+        with col_d:
+            st.markdown(f"👩 **Nama Ibu:** {data.get('NAMA_IBU', '-')}")
+            st.markdown(f"🆔 **NIK Ibu:** {data.get('NIK_IBU', '-')}")
+        st.info(f"💍 **Status Perkawinan:** {data.get('STATUS_KAWIN', '-')}")
+
+    with tab3:
+        st.write("### Data Tambahan")
+        col_e, col_f = st.columns(2)
+        with col_e:
+            st.markdown(f"💼 **Pekerjaan:** {data.get('PEKERJAAN_ID', '-')}")
+            st.markdown(f"🏘️ **Dusun:** {data.get('DUSUN', '-')}")
+        with col_f:
+            st.markdown(f"🇮🇩 **Kewarganegaraan:** {data.get('WARGANEGARA_ID', '-')}")
 
     st.divider()
     
-    # Menampilkan sisa data lainnya secara otomatis (dinamis)
-    st.write("🔍 **Data Detail Lainnya:**")
-    c1, c2 = st.columns(2)
-    # Filter kolom agar link foto tidak muncul lagi sebagai teks di bawah
-    kolom_lain = [k for k in data.index if k not in [kolom_foto, 'NAMA']]
-    
-    for i, col in enumerate(kolom_lain):
-        if i % 2 == 0:
-            c1.markdown(f"**{col}:** {data[col]}")
-        else:
-            c2.markdown(f"**{col}:** {data[col]}")
-    
-    if st.button("Tutup"):
-        st.rerun()
-
-# 2. TAMPILAN DI MENU PENDUDUK
-# (Gunakan ini setelah proses filter nama Syamsuddin berhasil)
-if not filtered_orang.empty:
-    for index, row in filtered_orang.iterrows():
-        with st.container(border=True):
-            c_nama, c_btn = st.columns([3, 1])
-            c_nama.write(f"**{row['NAMA']}**")
-            # Tombol untuk memicu Modal
-            if c_btn.button("👁️ Lihat Detail", key=f"det_{index}"):
-                rincian_penduduk(row)
+    # Tombol Aksi
+    col_btn1, col_btn2 = st.columns([1, 4])
+    with col_btn1:
+        if st.button("❌ Tutup"):
+            st.rerun()
+    with col_btn2:
+        st.caption("Data ini bersumber dari Sistem Informasi Desa Digital.")
