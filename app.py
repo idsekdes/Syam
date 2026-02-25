@@ -28,40 +28,74 @@ def clean_col(name):
 
 @st.dialog("📄 PROFIL DIGITAL PENDUDUK", width="large")
 def rincian_penduduk(data):
-    col_foto, col_utama = st.columns([1, 2])
+    # --- CSS FIX: Memastikan teks metrik berwarna gelap dan kontras ---
+    st.markdown("""
+        <style>
+        [data-testid="stMetricValue"] { color: #1e293b !important; font-weight: bold; }
+        [data-testid="stMetricLabel"] { color: #475569 !important; }
+        .stTabs [data-baseweb="tab"] { color: #1e293b; }
+        </style>
+    """, unsafe_allow_html=True)
+
+    col_foto, col_utama = st.columns([1, 2]) # Foto lebih kecil, Info lebih lebar
+    
     with col_foto:
         url_foto = data.get('FOTO')
         if pd.notna(url_foto) and str(url_foto).startswith('http'):
-            st.image(url_foto, use_container_width=True, caption=f"NIK: {data.get('NIK')}")
+            st.image(url_foto, use_container_width=True)
         else:
             st.image("https://cdn-icons-png.flaticon.com", use_container_width=True)
 
     with col_utama:
-        st.title(data.get('NAMA', 'TANPA NAMA'))
-        st.subheader(f"🆔 {data.get('SHDK', 'ANGGOTA KELUARGA')}")
-        c1, c2 = st.columns(2)
-        c1.metric("Umur", f"{data.get('UMUR', '-')} Thn")
-        c2.metric("Status", f"{data.get('STATUS', 'Hidup')}")
+        st.title(f"👤 {data.get('NAMA', 'TANPA NAMA')}")
+        st.info(f"📋 **STATUS DALAM KELUARGA:** {data.get('SHDK', 'ANGGOTA KELUARGA')}")
+        
+        # Area Metrik dengan warna yang sudah diperbaiki via CSS di atas
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Umur", f"{data.get('UMUR', '-')} Thn")
+        m2.metric("Status", f"{data.get('STATUS', 'Hidup')}")
+        m3.metric("Dusun", f"{data.get('DUSUN', '-')}")
+        
         st.markdown(f"📍 **Alamat:** {data.get('ALAMAT', '-')}")
+        st.markdown(f"💳 **NIK:** `{data.get('NIK', '-')}`")
 
     st.divider()
-    t1, t2, t3 = st.tabs(["📋 Data Pribadi", "👪 Keluarga", "🏫 Pekerjaan & Lainnya"])
+    
+    # Bagian Tabs tetap menggunakan struktur yang rapi
+    t1, t2, t3 = st.tabs(["📋 Data Pribadi", "👪 Keluarga", "💼 Pekerjaan"])
+    
     with t1:
         st.write("### Informasi Personal")
         ca, cb = st.columns(2)
-        ca.markdown(f"**NIK:** `{data.get('NIK', '-')}`\n\n**Jenis Kelamin:** {data.get('JENIS_KELAMIN', '-')}\n\n**Agama:** {data.get('AGAMA', '-')}")
-        cb.markdown(f"**Tgl Lahir:** {data.get('TANGGALLAHIR', '-')}\n\n**Tempat Lahir:** {data.get('TEMPATLAHIR', '-')}\n\n**Pendidikan:** {data.get('PENDIDIKAN_KK_ID', '-')}")
+        with ca:
+            st.write(f"**Jenis Kelamin:** {data.get('JENIS_KELAMIN', '-')}")
+            st.write(f"**Agama:** {data.get('AGAMA', '-')}")
+            st.write(f"**Tempat Lahir:** {data.get('TEMPATLAHIR', '-')}")
+        with cb:
+            st.write(f"**Tanggal Lahir:** {data.get('TANGGALLAHIR', '-')}")
+            st.write(f"**Golongan Darah:** {data.get('GOLONGAN_DARAH', '-')}")
+            st.write(f"**Pendidikan:** {data.get('PENDIDIKAN_KK_ID', '-')}")
+            
     with t2:
         st.write("### Hubungan Keluarga")
         cc, cd = st.columns(2)
-        cc.markdown(f"👨 **Ayah:** {data.get('NAMA_AYAH', '-')}\n\n🆔 **NIK Ayah:** {data.get('NIK_AYAH', '-')}")
-        cd.markdown(f"👩 **Ibu:** {data.get('NAMA_IBU', '-')}\n\n🆔 **NIK Ibu:** {data.get('NIK_IBU', '-')}")
-        st.info(f"💍 **Status Perkawinan:** {data.get('STATUS_KAWIN', '-')}")
+        with cc:
+            st.markdown(f"👨 **Ayah:** {data.get('NAMA_AYAH', '-')}")
+            st.markdown(f"🆔 **NIK Ayah:** {data.get('NIK_AYAH', '-')}")
+        with cd:
+            st.markdown(f"👩 **Ibu:** {data.get('NAMA_IBU', '-')}")
+            st.markdown(f"🆔 **NIK Ibu:** {data.get('NIK_IBU', '-')}")
+        st.warning(f"💍 **Status Perkawinan:** {data.get('STATUS_KAWIN', '-')}")
+            
     with t3:
         st.write("### Detail Administrasi")
         ce, cf = st.columns(2)
-        ce.markdown(f"💼 **Pekerjaan:** {data.get('PEKERJAAN_ID', '-')}\n\n🏘️ **Dusun:** {data.get('DUSUN', '-')}")
-        cf.markdown(f"🇮🇩 **Warganegara:** {data.get('WARGANEGARA_ID', '-')}\n\n💳 **No. KK:** `{data.get('NO_KK', '-')}`")
+        with ce:
+            st.markdown(f"💼 **Pekerjaan:** {data.get('PEKERJAAN_ID', '-')}")
+            st.markdown(f"🇮🇩 **Warganegara:** {data.get('WARGANEGARA_ID', '-')}")
+        with cf:
+            st.markdown(f"💳 **No. KK:** `{data.get('NO_KK', '-')}`")
+
 
 # --- 4. SIDEBAR NAVIGATION ---
 st.sidebar.title("📌 MENU DESA")
