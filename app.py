@@ -101,6 +101,7 @@ if not filtered_df.empty:
         file_name=f"Laporan_Desa_{pilih_kec}_{cari_desa}.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
 else:
     st.warning("Tidak ada data untuk didownload.")
 # Tambahkan link penduduk di bagian atas
@@ -125,17 +126,47 @@ if menu == "💰 Anggaran Desa":
     st.dataframe(df_neon)
 
 elif menu == "👨‍👩‍👧‍👦 Data Penduduk":
-    st.header("Database Penduduk Desa")
-    # Ambil data dari tabel penduduk
+    st.header("📂 Database Penduduk Desa")
+    
+    # 1. Ambil data dari tabel penduduk di Neon
     try:
-        df_orang = conn.query("SELECT * FROM data_penduduk;")
-        # Tambahkan fitur pencarian penduduk (misal berdasarkan NIK atau Nama)
-        cari_nama = st.text_input("Cari Nama Penduduk")
-        if cari_nama:
-            df_orang = df_orang[df_orang['NAMA'].str.contains(cari_nama, case=False, na=False)]
+        df_orang = conn.query("SELECT * FROM data_penduduk;", ttl="1m")
         
-        st.dataframe(df_orang, use_container_width=True)
-    except:
-        st.warning("Data penduduk belum disinkronkan ke database.")
+        # --- PEMBERSIH KOLOM (Agar Pencarian Lancar) ---
+        df_orang.columns = [str(c).strip().upper() for c in df_orang.columns]
+        
+        # 2. Fitur Pencarian
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            cari_nama = st.text_input("🔍 Cari Nama Penduduk (Ketik Nama)")
+        with col2:
+            # Misal ada kolom JENIS KELAMIN atau DESA di data pendudukmu
+            if 'DESA' in df_orang.columns:
+                list_desa = sorted(df_orang['DESA'].unique())
+                pilih_desa = st.selectbox("Filter Desa", ["Semua"] + list_desa)
+            else:
+                pilih_desa = "Semua"
 
+        # 3. Logika Filter
+        filtered_orang = df_orang.copy()
+        
+        if cari_nama:
+            # Mencari nama yang mengandung kata kunci (tidak peka huruf besar/kecil)
+            filtered_orang = filtered_orang[filtered_orang['NAMA'].str.contains(cari_nama, case=False, na=False)]
+        
+        if pilih_desa != "Semua":
+            filtered_orang = filtered_orang[filtered_orang['DESA'] == pilih_desa]
 
+        # 4. Tampilkan Hasil
+        st.write(f"Ditemukan **{len(filtered_orang)}** jiwa.")
+        st.dataframe(filtered_orang, use_container_width=True, hide_index=True)
+        
+        # 5. Statistik Singkat (Contoh: Total Laki-laki / Perempuan)
+        if 'JENIS KELAMIN' in filtered_orang.columns:
+            st.divider()
+            st.subheader("📊 Statistik Penduduk")
+            st.bar_chart(filtered_orang['JENIS KELAMIN'].value_counts())
+
+    except Exception as e:
+        st.error(f"Gagal memuat data. Pastikan sudah klik 'Sinkronkan Data Penduduk'.")
+        st.info("Tips: Cek apakah tabel 'data_penduduk' sudah ada di SQL Editor Neon.")
