@@ -170,3 +170,63 @@ elif menu == "👨‍👩‍👧‍👦 Data Penduduk":
     except Exception as e:
         st.error(f"Gagal memuat data. Pastikan sudah klik 'Sinkronkan Data Penduduk'.")
         st.info("Tips: Cek apakah tabel 'data_penduduk' sudah ada di SQL Editor Neon.")
+# --- Tambahkan Statistik Penduduk ---
+if not filtered_orang.empty:
+    st.divider()
+    c1, c2, c3 = st.columns(3)
+    
+    with c1:
+        st.metric("Total Jiwa", len(filtered_orang))
+        
+    # Jika ada kolom 'JENIS KELAMIN'
+    if 'JENIS KELAMIN' in filtered_orang.columns:
+        with c2:
+            laki = len(filtered_orang[filtered_orang['JENIS KELAMIN'] == 'LAKI-LAKI'])
+            st.metric("Laki-laki", laki)
+        with c3:
+            perempuan = len(filtered_orang[filtered_orang['JENIS KELAMIN'] == 'PEREMPUAN'])
+            st.metric("Perempuan", perempuan)
+
+    # Tambahkan Grafik Kelompok Umur jika ada kolom 'UMUR'
+    if 'UMUR' in filtered_orang.columns:
+        st.subheader("📊 Komposisi Umur")
+        st.bar_chart(filtered_orang['UMUR'].value_counts().sort_index())
+# 1. Buat Fungsi Modal (Dialog)
+@st.dialog("📄 Rincian Data Penduduk")
+def rincian_penduduk(data):
+    st.write(f"### {data['NAMA']}")
+    st.divider()
+    
+    # Menampilkan data dalam 2 kolom agar rapi
+    c1, c2 = st.columns(2)
+    for i, (col, val) in enumerate(data.items()):
+        if i % 2 == 0:
+            c1.markdown(f"**{col}:** {val}")
+        else:
+            c2.markdown(f"**{col}:** {val}")
+    
+    st.divider()
+    if st.button("Tutup"):
+        st.rerun()
+
+# 2. Update Tampilan Hasil Pencarian (Setelah filter_orang jadi)
+if not filtered_orang.empty:
+    st.write(f"Ditemukan **{len(filtered_orang)}** jiwa.")
+    
+    # Tampilkan tabel ringkas (hanya kolom penting)
+    kolom_tampil = ['NAMA', 'JENIS KELAMIN', 'DESA'] # Sesuaikan kolom yang ada
+    # Pastikan kolom ini ada di data anda
+    kolom_fix = [c for c in kolom_tampil if c in filtered_orang.columns]
+    
+    # Looping untuk membuat tombol detail tiap orang
+    for index, row in filtered_orang.iterrows():
+        with st.container(border=True):
+            col_nama, col_tombol = st.columns([3, 1])
+            col_nama.write(f"**{row['NAMA']}** ({row.get('DESA', 'N/A')})")
+            
+            # Jika tombol diklik, panggil fungsi Modal
+            if col_tombol.button("👁️ Detail", key=f"btn_{index}"):
+                rincian_penduduk(row)
+
+else:
+    st.info("Ketik nama untuk mencari...")
