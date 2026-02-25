@@ -1,57 +1,61 @@
-# --- CSS FIX: KONTRAS TINGGI & PROFESIONAL ---
+import streamlit as st
+import pandas as pd
+
+# --- 1. KONFIGURASI HALAMAN ---
+st.set_page_config(page_title="SYAM DIGITAL - Identitas", layout="wide")
+
+# --- 2. CSS PROFESIONAL (PUTIH BERSIH & TEKS TAJAM) ---
 st.markdown("""
     <style>
-    /* Paksa Latar Belakang Modal jadi Putih Bersih */
+    /* Paksa Latar Belakang Modal jadi Putih Bersih agar Profesional */
     div[role="dialog"] { background-color: #ffffff !important; }
     
-    /* Box Foto */
+    /* Box Foto & Area Utama */
+    .stApp { background-color: #f8fafc; }
     .photo-box {
         border: 2px solid #e2e8f0;
         border-radius: 12px;
-        padding: 5px;
+        padding: 8px;
         background-color: #ffffff;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
 
-    /* Tabel Identitas: Baris Putih, Teks Hitam Tajam */
+    /* Tabel Identitas: Teks Hitam Tajam agar Tidak Buram */
     .info-row { 
         border-bottom: 1px solid #edf2f7; 
         margin-bottom: 2px;
         background-color: #ffffff; 
     }
-    
-    /* Label (Titik Bulat & Nama Kolom) - Abu-abu Tua */
     .label-cell { 
         color: #4a5568 !important; 
         font-size: 0.85rem; 
         padding: 8px; 
-        width: 40%;
+        width: 45%;
         font-weight: 500;
+        text-align: left;
     }
-    
-    /* Isi Data - Hitam Pekat */
     .value-cell { 
         color: #1a202c !important; 
         font-size: 0.95rem; 
         padding: 8px; 
         font-weight: 700;
+        text-align: left;
     }
-
-    /* Judul Identitas */
     .admin-header {
         font-size: 1.5rem;
         font-weight: 800;
-        color: #2d3748 !important;
+        color: #1a202c !important;
         margin-bottom: 15px;
-        border-bottom: 3px solid #2d3748;
+        border-bottom: 3px solid #1a202c;
         padding-bottom: 5px;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# --- FUNGSI RENDER BARIS (Pastikan Teks String) ---
+# --- 3. FUNGSI RENDER BARIS (MENCEGAH ERROR DATA KOSONG) ---
 def render_row(label, value):
-    # Memastikan data bukan None agar tidak error
-    val = str(value) if value and str(value) != 'nan' else "-"
+    val = str(value).strip() if value and str(value).lower() != 'nan' else "-"
     return f"""
     <div class="info-row">
         <table style="width:100%; border-spacing:0; background-color:white;">
@@ -63,8 +67,7 @@ def render_row(label, value):
     </div>
     """
 
-
-# --- 4. FUNGSI DIALOG (MODAL) MINIMALIS ---
+# --- 4. FUNGSI DIALOG (MODAL) MINIMALIS & PROFESIONAL ---
 @st.dialog("Identitas", width="large")
 def rincian_penduduk(data):
     col_left, col_right = st.columns([1, 2.5], gap="large")
@@ -77,9 +80,9 @@ def rincian_penduduk(data):
         else:
             st.image("https://cdn-icons-png.flaticon.com", use_container_width=True)
         
-        st.markdown(f"### {data.get('NAMA', '-')}")
-        st.markdown(f"<p style='color:#666; margin-bottom:2px;'>Nama: {data.get('NAMA', '-')}</p>", unsafe_allow_html=True)
-        st.markdown(f"<p style='color:#666;'>NIK: {data.get('NIK', '-')}</p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color:#1a202c !important;'>{data.get('NAMA', '-')}</h3>", unsafe_allow_html=True)
+        st.markdown(f"<p style='color:#4a5568 !important; margin-bottom:0;'>Nama: {data.get('NAMA', '-')}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p style='color:#4a5568 !important;'>NIK: {data.get('NIK', '-')}</p>", unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
     with col_right:
@@ -87,18 +90,18 @@ def rincian_penduduk(data):
         sub_col1, sub_col2 = st.columns(2)
         
         with sub_col1:
-            st.markdown(render_row("Nama Lengkap", data.get("NAMA", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("Tempat Lahir", data.get("TEMPATLAHIR", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("Tanggal Lahir", data.get("TANGGALLAHIR", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("Pendidikan", data.get("PENDIDIKAN_KK_ID", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("SHDK", data.get("SHDK", "-")), unsafe_allow_html=True)
+            st.markdown(render_row("Nama Lengkap", data.get("NAMA")), unsafe_allow_html=True)
+            st.markdown(render_row("Tempat Lahir", data.get("TEMPATLAHIR")), unsafe_allow_html=True)
+            st.markdown(render_row("Tanggal Lahir", data.get("TANGGALLAHIR")), unsafe_allow_html=True)
+            st.markdown(render_row("Pendidikan", data.get("PENDIDIKAN_KK_ID")), unsafe_allow_html=True)
+            st.markdown(render_row("SHDK", data.get("SHDK")), unsafe_allow_html=True)
             st.markdown(render_row("Usia", f"{data.get('UMUR', '-')} TAHUN"), unsafe_allow_html=True)
 
         with sub_col2:
-            st.markdown(render_row("Nomor KK", data.get("NO_KK", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("Jenis Kelamin", data.get("JENIS_KELAMIN", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("Agama", data.get("AGAMA", "-")), unsafe_allow_html=True)
-            st.markdown(render_row("Pekerjaan", data.get("PEKERJAAN_ID", "-")), unsafe_allow_html=True)
+            st.markdown(render_row("Nomor KK", data.get("NO_KK")), unsafe_allow_html=True)
+            st.markdown(render_row("Jenis Kelamin", data.get("JENIS_KELAMIN")), unsafe_allow_html=True)
+            st.markdown(render_row("Agama", data.get("AGAMA")), unsafe_allow_html=True)
+            st.markdown(render_row("Pekerjaan", data.get("PEKERJAAN_ID")), unsafe_allow_html=True)
             st.markdown(render_row("Desa", data.get("DESA", "Wani Lumbumpetigo")), unsafe_allow_html=True)
             st.markdown(render_row("Kecamatan", data.get("KECAMATAN", "Tanantovea")), unsafe_allow_html=True)
 
@@ -113,10 +116,7 @@ try:
 
     if menu == "Data Penduduk":
         st.title("📂 Database Kependudukan")
-        # Sesuaikan Query dengan tabel Anda
         df_p = conn.query("SELECT * FROM data_penduduk LIMIT 20;", ttl="1m")
-        
-        # Bersihkan nama kolom jadi huruf besar
         df_p.columns = [str(c).upper().strip() for c in df_p.columns]
 
         for i, row in df_p.iterrows():
