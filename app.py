@@ -38,7 +38,7 @@ st.markdown("""
         font-size: 1.2rem; 
         margin-top: 15px;
         margin-bottom: 15px;
-        text-shadow: 0 0 5px #1e40af;
+        text-shadow: 0 0 5px #ffffff;
     }
 
     /* Admin Card Header */
