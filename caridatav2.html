@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pencarian Data Penduduk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-1">Sistem Pencarian Data Penduduk</h1>
+            <p class="text-gray-600 text-sm">Masukkan nama atau NIK untuk mencari data penduduk</p>
+        </div>
+
+        <!-- Search Form -->
+        <div class="max-w-xl mx-auto mb-6">
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <div class="flex gap-3">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Masukkan nama atau NIK..."
+                        class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm"
+                    >
+                    <button 
+                        onclick="searchData()" 
+                        id="searchButton"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors duration-200 text-sm"
+                    >
+                        Cari
+                    </button>
+                </div>
+                <!-- Loading indicator -->
+                <div id="loadingIndicator" class="text-center mt-3 hidden">
+                    <div class="inline-flex items-center">
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="text-blue-600 text-sm">Memuat data...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div id="searchResults" class="max-w-4xl mx-auto hidden">
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Header Card -->
+                <div class="bg-blue-600 text-white p-4">
+                    <h2 id="resultName" class="text-xl font-bold mb-2"></h2>
+                    <div class="flex items-center gap-3 text-sm">
+                        <span class="text-blue-100">Nama:</span>
+                        <span id="resultDisplayName" class="font-medium"></span>
+                    </div>
+                    <div class="flex items-center gap-3 mt-1 text-sm">
+                        <span class="text-blue-100">NIK:</span>
+                        <span id="resultNIK" class="font-medium"></span>
+                        <button onclick="copyToClipboard('resultNIK')" class="text-blue-100 hover:text-white transition-colors duration-200" title="Copy NIK">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Identity Details -->
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b border-gray-200 pb-2">
+                        Identitas
+                    </h3>
+                    
+                    <!-- Excel-Style Data Table -->
+                    <div class="bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+                        <table class="w-full text-sm">
+                            <tbody>
+                                <!-- Row 1 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200 w-1/4">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                            <span>Nama Lengkap :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200 w-1/4" id="fullName"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200 w-1/4">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 20.5a7.962 7.962 0 01-5.652-2.209M15 17H9v-2.5A5.002 5.002 0 019 9.5h6a5.002 5.002 0 015 5v2.5z"></path>
+                                            </svg>
+                                            <span>Nomor KK :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 w-1/4">
+                                        <div class="flex items-center gap-2">
+                                            <span id="kkNumber"></span>
+                                            <button onclick="copyToClipboard('kkNumber')" class="text-gray-500 hover:text-gray-700 transition-colors duration-200" title="Copy Nomor KK">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- Row 2 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            </svg>
+                                            <span>Tempat Lahir :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="birthPlace"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                            </svg>
+                                            <span>Jenis Kelamin :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="gender"></td>
+                                </tr>
+                                
+                                <!-- Row 3 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                            </svg>
+                                            <span>Tanggal Lahir :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="birthDate"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                            </svg>
+                                            <span>Agama :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="religion"></td>
+                                </tr>
+                                
+                                <!-- Row 4 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                            </svg>
+                                            <span>Pendidikan :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="education"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                            </svg>
+                                            <span>Status Perkawinan :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="maritalStatus"></td>
+                                </tr>
+                                
+                                <!-- Row 5 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                            </svg>
+                                            <span>SHDK :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="familyStatus"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                            </svg>
+                                            <span>Alamat :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="address"></td>
+                                </tr>
+                                
+                                <!-- Row 6 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>Kewarganegaraan :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="citizenship"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-blue-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                            <span>Ayah :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="father"></td>
+                                </tr>
+                                
+                                <!-- Row 7 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-pink-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                            </svg>
+                                            <span>Ibu :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="mother"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m8 6V9a2 2 0 00-2-2H8a2 2 0 00-2 2v7.945M12 18v3"></path>
+                                            </svg>
+                                            <span>Pekerjaan :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="occupation"></td>
+                                </tr>
+                                
+                                <!-- Row 8 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>Usia :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="age"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                            </svg>
+                                            <span>Desa :</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="village"></td>
+                                </tr>
+                                
+                                <!-- Row 9 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                            </svg>
+                                            <span>Kecamatan</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="district"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                            </svg>
+                                            <span>Kabupaten</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="regency"></td>
+                                </tr>
+                                
+                                <!-- Row 10 -->
+                                <tr class="border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                            <span>Provinsi</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="province"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                                            </svg>
+                                            <span>Kode Pos</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800" id="postalCode"></td>
+                                </tr>
+                                
+                                <!-- Row 11 -->
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                                            </svg>
+                                            <span>RT/RW</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 border-r border-gray-200" id="rtRw"></td>
+                                    <td class="px-4 py-3 font-medium text-gray-600 bg-gray-50 border-r border-gray-200">
+                                        <div class="flex items-center gap-2">
+                                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 20.5a7.962 7.962 0 01-5.652-2.209M15 17H9v-2.5A5.002 5.002 0 019 9.5h6a5.002 5.002 0 015 5v2.5z"></path>
+                                            </svg>
+                                            <span>Keterangan</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No Results -->
+        <div id="noResults" class="max-w-2xl mx-auto text-center hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <div class="text-gray-400 mb-4">
+                    <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.562M15 17H9v-2.5A5.002 5.002 0 019 7h6a5.002 5.002 0 015 5v2.5z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Data Tidak Ditemukan</h3>
+                <p class="text-gray-600">Silakan periksa kembali nama atau NIK yang Anda masukkan</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Google Sheets data
+        let populationData = [];
+        const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS9aNsbkEjIXYeZ9N4mV-nUUNzjwPQh53qxYby8AVfBTeMf8-ZxfoAVTlILanryQkGoR_xiv1wfLk1G/pub?gid=536046254&single=true&output=csv';
+
+        // Load data from Google Sheets on page load with professional validation
+        async function loadDataFromSheets() {
+            try {
+                document.getElementById('loadingIndicator').classList.remove('hidden');
+                document.getElementById('searchButton').disabled = true;
+                document.getElementById('searchButton').textContent = 'Memuat...';
+                
+                console.log('🔄 Memuat data dari Google Sheets...');
+                console.log('📊 URL Sumber:', SHEET_URL);
+                
+                const response = await fetch(SHEET_URL);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+                }
+                
+                const csvText = await response.text();
+                
+                if (!csvText || csvText.trim().length === 0) {
+                    throw new Error('Data kosong dari Google Sheets');
+                }
+                
+                populationData = parseCSV(csvText);
+                
+                // Professional validation
+                if (populationData.length === 0) {
+                    throw new Error('Tidak ada data valid yang ditemukan');
+                }
+                
+                // Validate data structure
+                const sampleRecord = populationData[0];
+                const requiredFields = ['name', 'nik'];
+                const missingFields = requiredFields.filter(field => !sampleRecord.hasOwnProperty(field));
+                
+                if (missingFields.length > 0) {
+                    console.warn('⚠️ Field yang hilang:', missingFields);
+                }
+                
+                console.log('✅ Data berhasil dimuat:', populationData.length, 'records');
+                console.log('📋 Struktur data:', Object.keys(sampleRecord));
+                console.log('🔍 Contoh record pertama:', sampleRecord);
+                
+                // Validate data quality
+                const validRecords = populationData.filter(record => record.name && record.name.trim() !== '');
+                const invalidRecords = populationData.length - validRecords.length;
+                
+                if (invalidRecords > 0) {
+                    console.warn(`⚠️ ${invalidRecords} record tidak memiliki nama yang valid`);
+                }
+                
+                console.log(`📊 Statistik Data:
+                - Total Records: ${populationData.length}
+                - Valid Records: ${validRecords.length}
+                - Records dengan NIK: ${populationData.filter(r => r.nik && r.nik.trim() !== '').length}
+                - Records dengan Alamat: ${populationData.filter(r => r.address && r.address.trim() !== '').length}`);
+                
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                document.getElementById('searchButton').disabled = false;
+                document.getElementById('searchButton').textContent = 'Cari';
+                
+            } catch (error) {
+                console.error('❌ Error loading data from Google Sheets:', error);
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                document.getElementById('searchButton').disabled = false;
+                document.getElementById('searchButton').textContent = 'Cari';
+                
+                alert(`Gagal memuat data dari Google Sheets.\nError: ${error.message}\n\nSilakan periksa:\n1. Koneksi internet\n2. URL Google Sheets\n3. Izin akses spreadsheet`);
+            }
+        }
+
+        // Parse CSV data with professional accuracy
+        function parseCSV(csvText) {
+            console.log('🔍 Memulai parsing CSV...');
+            
+            // Clean the CSV text
+            const cleanedText = csvText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            const lines = cleanedText.split('\n').filter(line => line.trim() !== '');
+            
+            if (lines.length < 2) {
+                throw new Error('CSV tidak memiliki data yang cukup (minimal header + 1 baris data)');
+            }
+            
+            // Parse headers with better cleaning
+            const headerLine = lines[0];
+            const headers = parseCSVLine(headerLine).map(header => 
+                header.replace(/^["']|["']$/g, '').trim()
+            );
+            
+            console.log('📋 Headers ditemukan:', headers);
+            console.log('📊 Jumlah kolom:', headers.length);
+            
+            const data = [];
+            let processedRows = 0;
+            let skippedRows = 0;
+
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+                
+                try {
+                    const values = parseCSVLine(line);
+                    const record = {};
+                    
+                    // Map each header to its corresponding value
+                    headers.forEach((header, index) => {
+                        const fieldName = mapHeaderToField(header);
+                        let value = (values[index] || '').replace(/^["']|["']$/g, '').trim();
+                        
+                        // Clean common data issues
+                        if (value === 'NULL' || value === 'null' || value === '#N/A' || value === '') {
+                            value = '';
+                        }
+                        
+                        record[fieldName] = value;
+                    });
+                    
+                    // Professional data validation
+                    if (record.name && record.name.trim() !== '') {
+                        // Additional data cleaning
+                        record.name = record.name.replace(/\s+/g, ' ').trim();
+                        if (record.nik) {
+                            record.nik = record.nik.replace(/\D/g, ''); // Remove non-digits from NIK
+                        }
+                        
+                        data.push(record);
+                        processedRows++;
+                    } else {
+                        skippedRows++;
+                        console.warn(`⚠️ Baris ${i + 1} dilewati: tidak ada nama valid`);
+                    }
+                } catch (error) {
+                    skippedRows++;
+                    console.warn(`⚠️ Error parsing baris ${i + 1}:`, error.message);
+                }
+            }
+            
+            console.log(`✅ Parsing selesai:
+            - Total baris diproses: ${processedRows}
+            - Baris dilewati: ${skippedRows}
+            - Data valid: ${data.length}`);
+            
+            if (data.length === 0) {
+                throw new Error('Tidak ada data valid yang dapat diproses dari CSV');
+            }
+            
+            // Show sample of processed data
+            console.log('🔍 Contoh data yang berhasil diproses:', data.slice(0, 2));
+            
+            return data;
+        }
+
+        // Parse CSV line handling commas within quotes
+        function parseCSVLine(line) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < line.length; i++) {
+                const char = line[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            result.push(current.trim());
+            return result;
+        }
+
+        // Professional header mapping with comprehensive coverage
+        function mapHeaderToField(header) {
+            // Normalize header for better matching
+            const normalizedHeader = header.trim().replace(/\s+/g, ' ');
+            
+            const headerMap = {
+                // Primary identifiers
+                'Nama Lengkap': 'name',
+                'Nama': 'name',
+                'NAMA LENGKAP': 'name',
+                'NAMA': 'name',
+                'NIK': 'nik',
+                'No. NIK': 'nik',
+                'Nomor NIK': 'nik',
+                'NO NIK': 'nik',
+                
+                // Family data
+                'Nomor KK': 'kkNumber',
+                'No. KK': 'kkNumber',
+                'NO KK': 'kkNumber',
+                'KK': 'kkNumber',
+                'Ayah': 'father',
+                'AYAH': 'father',
+                'Nama Ayah': 'father',
+                'Ibu': 'mother',
+                'IBU': 'mother',
+                'Nama Ibu': 'mother',
+                
+                // Personal info
+                'Tempat Lahir': 'birthPlace',
+                'TEMPAT LAHIR': 'birthPlace',
+                'Tanggal Lahir': 'birthDate',
+                'TANGGAL LAHIR': 'birthDate',
+                'Tgl Lahir': 'birthDate',
+                'Jenis Kelamin': 'gender',
+                'JENIS KELAMIN': 'gender',
+                'JK': 'gender',
+                'Usia': 'age',
+                'USIA': 'age',
+                'Umur': 'age',
+                
+                // Status information
+                'Agama': 'religion',
+                'AGAMA': 'religion',
+                'Pendidikan': 'education',
+                'PENDIDIKAN': 'education',
+                'Status Perkawinan': 'maritalStatus',
+                'STATUS PERKAWINAN': 'maritalStatus',
+                'Status Kawin': 'maritalStatus',
+                'STATUS KAWIN': 'maritalStatus',
+                'Perkawinan': 'maritalStatus',
+                'PERKAWINAN': 'maritalStatus',
+                'Kawin': 'maritalStatus',
+                'KAWIN': 'maritalStatus',
+                'Status Nikah': 'maritalStatus',
+                'STATUS NIKAH': 'maritalStatus',
+                'SHDK': 'familyStatus',
+                'Status Hubungan': 'familyStatus',
+                'STATUS HUBUNGAN': 'familyStatus',
+                'Hubungan Keluarga': 'familyStatus',
+                'HUBUNGAN KELUARGA': 'familyStatus',
+                'Pekerjaan': 'occupation',
+                'PEKERJAAN': 'occupation',
+                'Kewarganegaraan': 'citizenship',
+                'KEWARGANEGARAAN': 'citizenship',
+                'WNI/WNA': 'citizenship',
+                'Warganegara': 'citizenship',
+                'WARGANEGARA': 'citizenship',
+                'Warga Negara': 'citizenship',
+                'WARGA NEGARA': 'citizenship',
+                'Citizenship': 'citizenship',
+                'CITIZENSHIP': 'citizenship',
+                
+                // Address information
+                'Alamat': 'address',
+                'ALAMAT': 'address',
+                'Alamat Lengkap': 'address',
+                'Desa': 'village',
+                'DESA': 'village',
+                'Kelurahan': 'village',
+                'KELURAHAN': 'village',
+                'Desa/Kelurahan': 'village',
+                'Kecamatan': 'district',
+                'KECAMATAN': 'district',
+                'Kabupaten': 'regency',
+                'KABUPATEN': 'regency',
+                'Kab': 'regency',
+                'Provinsi': 'province',
+                'PROVINSI': 'province',
+                'Prov': 'province',
+                'Kode Pos': 'postalCode',
+                'KODE POS': 'postalCode',
+                'Kodepos': 'postalCode',
+                'RT/RW': 'rtRw',
+                'RT RW': 'rtRw',
+                'RTRW': 'rtRw',
+                'RT': 'rtRw',
+                'RW': 'rtRw'
+            };
+            
+            // Direct match first
+            if (headerMap[normalizedHeader]) {
+                return headerMap[normalizedHeader];
+            }
+            
+            // Case-insensitive match
+            const lowerHeader = normalizedHeader.toLowerCase();
+            for (const [key, value] of Object.entries(headerMap)) {
+                if (key.toLowerCase() === lowerHeader) {
+                    return value;
+                }
+            }
+            
+            // Partial match for common variations
+            if (lowerHeader.includes('nama') && !lowerHeader.includes('ayah') && !lowerHeader.includes('ibu')) {
+                return 'name';
+            }
+            if (lowerHeader.includes('nik')) {
+                return 'nik';
+            }
+            if (lowerHeader.includes('alamat')) {
+                return 'address';
+            }
+            if (lowerHeader.includes('kawin') || lowerHeader.includes('nikah') || lowerHeader.includes('perkawinan')) {
+                return 'maritalStatus';
+            }
+            if (lowerHeader.includes('warga') || lowerHeader.includes('citizenship') || lowerHeader.includes('negara')) {
+                return 'citizenship';
+            }
+            if (lowerHeader.includes('shdk') || lowerHeader.includes('hubungan')) {
+                return 'familyStatus';
+            }
+            
+            // Fallback: create field name from header
+            const fallbackField = normalizedHeader.toLowerCase()
+                .replace(/[^a-z0-9\s]/g, '')
+                .replace(/\s+/g, '');
+            
+            console.warn(`⚠️ Header tidak dikenali: "${normalizedHeader}" -> menggunakan: "${fallbackField}"`);
+            return fallbackField;
+        }
+
+        // Load data when page loads
+        window.addEventListener('load', loadDataFromSheets);
+
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            
+            if (!searchTerm) {
+                alert('Silakan masukkan nama atau NIK untuk pencarian');
+                return;
+            }
+
+            if (populationData.length === 0) {
+                alert('Data masih dimuat dari Google Sheets. Silakan tunggu sebentar.');
+                return;
+            }
+
+            console.log('🔍 Mencari:', searchTerm);
+
+            // Find all potential matches with scoring system
+            const matches = populationData.map(person => {
+                const name = (person.name || '').toLowerCase().trim();
+                const nik = (person.nik || '').toString().trim();
+                let score = 0;
+                let matchType = '';
+                
+                // Exact match gets highest score
+                if (name === searchTerm) {
+                    score = 1000;
+                    matchType = 'exact_name';
+                } else if (nik === searchTerm) {
+                    score = 1000;
+                    matchType = 'exact_nik';
+                }
+                // Starts with search term (high priority)
+                else if (name.startsWith(searchTerm)) {
+                    score = 900;
+                    matchType = 'starts_with';
+                }
+                // All words match (for multi-word searches)
+                else if (searchTerm.includes(' ')) {
+                    const searchWords = searchTerm.split(/\s+/);
+                    const nameWords = name.split(/\s+/);
+                    let wordMatches = 0;
+                    
+                    for (let searchWord of searchWords) {
+                        if (searchWord.length >= 2) {
+                            for (let nameWord of nameWords) {
+                                if (nameWord === searchWord) {
+                                    wordMatches += 100;
+                                } else if (nameWord.startsWith(searchWord)) {
+                                    wordMatches += 80;
+                                } else if (nameWord.includes(searchWord)) {
+                                    wordMatches += 50;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (wordMatches > 0) {
+                        score = wordMatches;
+                        matchType = 'multi_word';
+                    }
+                }
+                // Single word partial match
+                else if (name.includes(searchTerm)) {
+                    // Prefer matches at word boundaries
+                    const nameWords = name.split(/\s+/);
+                    let bestWordScore = 0;
+                    
+                    for (let nameWord of nameWords) {
+                        if (nameWord.startsWith(searchTerm)) {
+                            bestWordScore = Math.max(bestWordScore, 700);
+                        } else if (nameWord.includes(searchTerm)) {
+                            bestWordScore = Math.max(bestWordScore, 400);
+                        }
+                    }
+                    
+                    score = bestWordScore || 300;
+                    matchType = 'partial_name';
+                }
+                // NIK partial match
+                else if (searchTerm.length >= 6 && nik.includes(searchTerm)) {
+                    score = 200;
+                    matchType = 'partial_nik';
+                }
+                
+                return { person, score, matchType, name, nik };
+            }).filter(match => match.score > 0);
+
+            // Sort by score (highest first)
+            matches.sort((a, b) => b.score - a.score);
+
+            console.log('🎯 Hasil pencarian:', matches.length, 'matches found');
+            if (matches.length > 0) {
+                console.log('🏆 Top 3 matches:');
+                matches.slice(0, 3).forEach((match, index) => {
+                    console.log(`${index + 1}. ${match.name} (Score: ${match.score}, Type: ${match.matchType})`);
+                });
+            }
+
+            if (matches.length > 0) {
+                // Return the best match
+                displayResult(matches[0].person);
+                
+                // Show warning if there are multiple high-scoring matches
+                if (matches.length > 1 && matches[1].score > 500) {
+                    console.warn('⚠️ Multiple high-quality matches found. Showing the best match.');
+                }
+            } else {
+                console.log('❌ No matches found for:', searchTerm);
+                showNoResults();
+            }
+        }
+
+        function displayResult(data) {
+            // Hide no results and show results
+            document.getElementById('noResults').classList.add('hidden');
+            document.getElementById('searchResults').classList.remove('hidden');
+
+            // Populate the result fields
+            document.getElementById('resultName').textContent = data.name;
+            document.getElementById('resultDisplayName').textContent = data.name;
+            document.getElementById('resultNIK').textContent = data.nik;
+            document.getElementById('fullName').textContent = data.name;
+            document.getElementById('kkNumber').textContent = data.kkNumber;
+            document.getElementById('birthPlace').textContent = data.birthPlace;
+            document.getElementById('gender').textContent = data.gender;
+            document.getElementById('birthDate').textContent = data.birthDate;
+            document.getElementById('religion').textContent = data.religion;
+            document.getElementById('education').textContent = data.education;
+            document.getElementById('maritalStatus').textContent = data.maritalStatus;
+            document.getElementById('familyStatus').textContent = data.familyStatus;
+            document.getElementById('address').textContent = data.address;
+            document.getElementById('citizenship').textContent = data.citizenship;
+            document.getElementById('father').textContent = data.father;
+            document.getElementById('mother').textContent = data.mother;
+            document.getElementById('occupation').textContent = data.occupation;
+            document.getElementById('age').textContent = data.age;
+            document.getElementById('village').textContent = data.village;
+            document.getElementById('district').textContent = data.district;
+            document.getElementById('regency').textContent = data.regency;
+            document.getElementById('province').textContent = data.province;
+            document.getElementById('postalCode').textContent = data.postalCode;
+            document.getElementById('rtRw').textContent = data.rtRw;
+        }
+
+        function showNoResults() {
+            document.getElementById('searchResults').classList.add('hidden');
+            document.getElementById('noResults').classList.remove('hidden');
+        }
+
+        // Copy to clipboard function
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent || element.innerText;
+            
+            if (!text || text.trim() === '') {
+                alert('Tidak ada data untuk disalin');
+                return;
+            }
+            
+            // Use modern clipboard API if available
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopySuccess();
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    fallbackCopyTextToClipboard(text);
+                });
+            } else {
+                // Fallback for older browsers
+                fallbackCopyTextToClipboard(text);
+            }
+        }
+        
+        // Fallback copy method
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess();
+                } else {
+                    alert('Gagal menyalin ke clipboard');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                alert('Gagal menyalin ke clipboard');
+            }
+            
+            document.body.removeChild(textArea);
+        }
+        
+        // Show copy success notification
+        function showCopySuccess() {
+            // Create temporary notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 transition-all duration-300';
+            notification.innerHTML = '✓ Berhasil disalin ke clipboard';
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 2 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 2000);
+        }
+
+        // Allow search on Enter key press
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchData();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'983e9c5691ed6112',t:'MTc1ODY3ODQxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

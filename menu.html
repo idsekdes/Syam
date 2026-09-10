@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Navigasi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f6f9;
+    }
+
+    /* Container Navigasi */
+    .navbar {
+      background-color: #1e293b;
+      padding: 0 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* List Utama */
+    .nav-list {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 16px 20px;
+      color: #f8fafc;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .nav-link:hover {
+      background-color: #334155;
+      color: #38bdf8;
+    }
+
+    /* Dropdown Submenu */
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #1e293b;
+      min-width: 200px;
+      list-style: none;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+
+    .dropdown-menu .nav-link {
+      padding: 12px 20px;
+      font-size: 14px;
+      border-bottom: 1px solid #334155;
+    }
+
+    .dropdown-menu .nav-link:last-child {
+      border-bottom: none;
+    }
+
+    .nav-item:hover .dropdown-menu {
+      display: block;
+    }
+
+    /* Tombol/Aksi Khusus (Daftar & Masuk) */
+    .nav-item.btn-action {
+      margin-left: auto;
+    }
+
+    .nav-item.btn-action .nav-link {
+      background-color: #0284c7;
+      border-radius: 4px;
+      padding: 8px 16px;
+      margin: 8px 4px;
+    }
+
+    .nav-item.btn-action .nav-link:hover {
+      background-color: #0369a1;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="https://www.syams.web.id/beranda" class="nav-link">Beranda</a>
+      </li>
+      <li class="nav-item">
+        <a href="https://www.syams.web.id/berandaku" class="nav-link">Berandaku</a>
+      </li>
+      
+      <!-- Dropdown Profil -->
+      <li class="nav-item">
+        <a href="#" class="nav-link">Profil ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="https://www.syams.web.id/profil" class="nav-link">Profil</a></li>
+          <li><a href="https://www.syams.web.id/profil2" class="nav-link">Profil 2</a></li>
+          <li><a href="https://www.syams.web.id/sejarah" class="nav-link">Sejarah</a></li>
+          <li><a href="https://www.syams.web.id/tupoksi" class="nav-link">Tupoksi</a></li>
+          <li><a href="https://www.syams.web.id/ppid" class="nav-link">PPID</a></li>
+        </ul>
+      </li>
+
+      <!-- Dropdown Berita & Info -->
+      <li class="nav-item">
+        <a href="#" class="nav-link">Informasi ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="https://www.syams.web.id/berdesa" class="nav-link">Berdesa</a></li>
+          <li><a href="https://www.syams.web.id/kabardesa" class="nav-link">Kabar Desa</a></li>
+          <li><a href="https://www.syams.web.id/infografis" class="nav-link">Infografis</a></li>
+          <li><a href="https://www.syams.web.id/potensi-desa" class="nav-link">Potensi Desa</a></li>
+          <li><a href="https://www.syams.web.id/lapak" class="nav-link">Lapak</a></li>
+        </ul>
+      </li>
+
+      <!-- Dropdown Data & Keuangan -->
+      <li class="nav-item">
+        <a href="#" class="nav-link">Data & Transparansi ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="https://www.syams.web.id/apbdes" class="nav-link">APBDES</a></li>
+          <li><a href="https://www.syams.web.id/pagu" class="nav-link">Pagu</a></li>
+          <li><a href="https://www.syams.web.id/penduduk2025" class="nav-link">Penduduk 2025</a></li>
+          <li><a href="https://www.syams.web.id/nik" class="nav-link">NIK</a></li>
+          <li><a href="https://www.syams.web.id/caridatav2" class="nav-link">Cari Data v2</a></li>
+          <li><a href="https://www.syams.web.id/listing" class="nav-link">Listing</a></li>
+        </ul>
+      </li>
+
+      <!-- Dropdown Verifikasi -->
+      <li class="nav-item">
+        <a href="#" class="nav-link">Verifikasi ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="https://www.syams.web.id/bukti" class="nav-link">Bukti</a></li>
+          <li><a href="https://www.syams.web.id/verifikasi" class="nav-link">Verifikasi</a></li>
+          <li><a href="https://www.syams.web.id/verifikasi-data" class="nav-link">Verifikasi Data</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a href="https://www.syams.web.id/sitemap" class="nav-link">Sitemap</a>
+      </li>
+
+      <!-- Tombol Akun -->
+      <li class="nav-item btn-action">
+        <a href="https://www.syams.web.id/masuk" class="nav-link">Masuk</a>
+      </li>
+      <li class="nav-item btn-action">
+        <a href="https://www.syams.web.id/daftar" class="nav-link">Daftar</a>
+      </li>
+    </ul>
+  </nav>
+
+</body>
+</html>
