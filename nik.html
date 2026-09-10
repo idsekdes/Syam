@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.2.7/build/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.4/vfs_fonts.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+  <!-- font-awesome@6.2.0 icon Visit -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+   <?!= include('visit')?>
+  <?!=include('css')?>
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Literata:opsz@7..72&family=Open+Sans:wght@300&display=swap');
+  *{
+  font-family: 'Literata', serif;
+font-family: 'Open Sans', sans-serif;
+  }
+body {
+  padding-bottom: 30px;
+  position: relative;
+  min-height: 100%;
+  background:#ececf4;
+
+}
+#sidebar-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+i{
+  cursor:pointer;
+}
+a {
+  transition: background 0.2s, color 0.2s;
+}
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+#wrapper {
+  padding-left: 0;
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #005689;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+.sidebar-brand {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  text-align: center;
+  padding: 20px 0;
+}
+.sidebar-brand h2 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 24px;
+  color: #fff;
+}
+
+.sidebar-nav {
+  position: absolute;
+  top: 75px;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.sidebar-nav > li {
+  text-indent: 10px;
+  line-height: 42px;
+}
+.txtlist{
+  text-indent: 10px;
+  line-height: 11px;
+}
+.sidebar-nav > li a {
+  display: block;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 18px;
+}
+.sidebar-nav > li > a:hover,
+.sidebar-nav > li.active > a {
+  text-decoration: none;
+  color: #fff;
+  background: #000000;
+}
+.sidebar-nav > li > a i.fa {
+  font-size: 24px;
+  width: 60px;
+}
+
+#navbar-wrapper {
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+#wrapper.toggled #navbar-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+#navbar-wrapper .navbar {
+  border-width: 0 0 0 0;
+  background-color: #eee;
+  font-size: 24px;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+#navbar-wrapper .navbar a {
+  color: #757575;
+}
+#navbar-wrapper .navbar a:hover {
+  color: #F8BE12;
+}
+
+#content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+  top: 100px;
+}
+#wrapper.toggled #content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+@media (min-width: 992px) {
+  #wrapper {
+    padding-left: 250px;
+  }
+  
+  #wrapper.toggled {
+    padding-left: 60px;
+  }
+
+  #sidebar-wrapper {
+    width: 250px;
+  }
+  
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0px;
+  }
+  
+  #wrapper.toggled #navbar-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+  
+  #wrapper.toggled #content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+  }
+
+  #navbar-wrapper {
+    position: relative;
+  }
+
+  #wrapper.toggled {
+    padding-left: 0px; 
+  }
+
+  #content-wrapper {
+    position: relative;
+    top: 0;
+  }
+
+  #wrapper.toggled #navbar-wrapper,
+  #wrapper.toggled #content-wrapper {
+    position: relative;
+    margin-right: 60px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  #wrapper {
+    padding-left: 60px;
+  }
+
+  #sidebar-wrapper {
+    width: 60px;
+  }
+  
+#wrapper.toggled #navbar-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+  
+  #wrapper.toggled #content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+  }
+
+  #navbar-wrapper {
+    position: relative;
+  }
+
+  #wrapper.toggled {
+    padding-left: 250px;
+  }
+
+  #content-wrapper {
+    position: relative;
+    top: 0;
+  }
+
+  #wrapper.toggled #navbar-wrapper,
+  #wrapper.toggled #content-wrapper {
+    position: relative;
+    margin-right: 250px;
+  }
+}
+
+@media (max-width: 767px) {
+  #wrapper {
+    padding-left: 0;
+  }
+
+  #sidebar-wrapper {
+    width: 0;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+  }
+  #wrapper.toggled #navbar-wrapper {
+    position: absolute;
+    margin-right: -250px;
+  }
+
+  #wrapper.toggled #content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+  }
+
+  #navbar-wrapper {
+    position: relative;
+  }
+
+  #wrapper.toggled {
+    padding-left: 250px;
+  }
+
+  #content-wrapper {
+    position: relative;
+    top: 0;
+  }
+
+  #wrapper.toggled #navbar-wrapper,
+  #wrapper.toggled #content-wrapper {
+    position: relative;
+    margin-right: 250px;
+  }
+}
+table.table td .add {
+    display: none;
+}
+td{
+  cursor:pointer;
+}
+.hide,#btnprint{
+  display:none;
+}
+#list{
+  padding:1;
+  margin:1;
+  color:#fff;
+}
+.txtlist{
+  padding:1px;
+  margin:0;
+}
+.txtlist:hover{
+  text-decoration: none;
+  color: #000;
+  background: #f5f5f5;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  color: #000;
+}
+
+.student-profile .card {
+  border-radius: 10px;
+}
+
+.student-profile .card .card-header .profile_img {
+  width: 250px;
+  /* height: 320px; */
+  object-fit: cover;
+  margin: 10px auto;
+  border: 5px solid #ccc;
+  border-radius: 5px;
+}
+
+.student-profile .card h3 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.student-profile .card p {
+  font-size: 16px;
+  color: #000;
+}
+
+.student-profile .table th,
+.student-profile .table td {
+  font-size: 14px;
+  padding: 5px 10px;
+  color: #000;
+}
+.titleSTD .add {
+    display: none;
+}
+.form-input{
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding:2px;
+}
+#wrapper{
+  display:none;
+}
+.hide{
+  display:none;
+}
+</style>
+<body>  
+
+  <?!=include('login')?>
+  <div id="wrapper">
+
+    <aside id="sidebar-wrapper" class="shadow">
+      <div class="sidebar-brand">
+        <h2>Data Penduduk 2024</h2>
+      </div>
+      <ul class="sidebar-nav">
+        <li class="active">
+          <a href="https://lumbumpetigo.berdesa.id/"><i class="fa fa-home"></i> Website</a>
+        </li>
+        <li class="">
+          <a href="https://docs.google.com/spreadsheets/d/1DsAGrBhxMVsHXQdCTNHlLj3jNBF4B9IXTgmA7YNF1Ig/edit?gid=536046254#gid=536046254"><i class="fa fa-edit"></i> Data Penduduk</a>
+        </li>
+         <li class="">
+          <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+            aria-controls="collapseExample"><i class="fa fa-images"></i> Edit Foto</a>
+        </li>
+        <li class="">
+          <a href="#page2"><i class="fa fa-file-alt"></i> Dokumen</a>
+        </li>
+        <li class="">
+          <a href="https://www.syamdigital.online/"><i class="fa fa-poll"></i> Data</a>
+        </li>
+       <li class="">
+          <a href="https://www.syamdigital.online/#"><i class="fa fa-globe"></i> site</a>
+        </li>
+      </ul>
+    </aside>
+
+    <div id="navbar-wrapper">
+      <nav class="navbar bg-body-tertiary shadow" style="background:#005689">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" id="sidebar-toggle"><i class="fa fa-bars"></i> Sistem Informasi Desa Wani Lumbumpetigo</a>
+          <div class="d-flex" role="search">
+               <button class="btn btn-danger" type="button" onclick="reLoad()">KELUAR</button>
+          </div>
+        </div>
+      </nav>
+
+    </div>
+
+    <section id="content-wrapper">
+      <!-- Student Profile -->
+      <div class="student-profile py-4">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card shadow-sm">
+                <div class="card-header bg-transparent text-center">
+                  <img class="profile_img" src="" id="imgSTD" alt="">
+                  <h3 id="stdname"></h3>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                      <form onsubmit="formEditIMG(this)">
+                        <div class="row g-3">
+                          <div class="col-8">
+                            <input type="text" class="form-control" id="idSTD2" name="idSTD2" style="display:none">
+                            <input type="file" class="form-control" id="fileIMG" name="myFileIMG">
+                          </div>
+                          <div class="col-4">
+                            <button type="submit" class="btn btn-primary">Upload</button>
+                          </div>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="mb-0"><strong class="pr-1" id="stdID"></strong></p>
+                  <p class="mb-0"><strong class="pr-1" id="stdID2"></strong></p>
+                  <p class="mb-0"><strong class="pr-1" id="roomname"></strong></p>
+                  <!-- <p class="mb-0"><strong class="pr-1">Section:</strong>A</p> -->
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8" >
+              <div class="card shadow-sm">
+                <div class="card-header bg-transparent border-0">
+                  <h3 class="titleSTD"> Identitas <a class="add" title="Add"
+                      data-toggle="tooltip"><i class="bx bxs-save bx-sm"></i></a><a class="edit" title="Edit"
+                      data-toggle="tooltip"><i class="bx bxs-edit bx-sm"></i></a></h3>
+                </div>
+                <div class="card-body pt-0">
+                  <table class="table" id="TabelSiswa"></table>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-12 mt-3" id="page2">
+              <div class="card shadow-sm">
+                <div class="card-header bg-transparent border-0">
+                  <h4>Dokumen </h4>
+                  <button type="button" class="btn btn-success btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="resetForm()">Tambah</button>
+                  <?!=include('table')?>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 mt-3" id="page3">
+              <div class="card shadow-sm">
+                <div class="card-header bg-transparent border-0">
+                  <h4>Tabel</h4>
+                  <?!=include('NilaiSiswa')?>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Dokumen</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form onsubmit="saveForm(this)" id="myF">
+              <div class="row mb-3">
+                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Jenis</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control form-control-sm" id="idNum" name="idNum" style="display:none">
+                  <input type="text" class="form-control form-control-sm" id="idSTD3" name="idSTD3" style="display:none" >
+                  <input type="text" class="form-control form-control-sm" id="input1" name="input1" >
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nomor</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control form-control-sm" id="input2" name="input2" >
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Nama</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control form-control-sm" id="input3" name="input3" >
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">File</label>
+                <div class="col-sm-9">
+                  <input type="file" class="form-control form-control-sm" id="file1" name="myFile1" >
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<section>
+  <div class="main-form-container" id="formLog">
+    <div id="form_section" class="form-container">
+      <div class="login-form form-wraper ">
+        <div>
+          <div class="form-title">
+            <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1751184767/logo-1-1536x496_dmlbgt.png"width="50%">
+            <h2><b>Syam Digital</b></h2>
+          </div>
+          <div class="input-group">
+            <div class="box">
+              <span>
+                <input placeholder="Masukkan NIK" id="searchID" class="myInput" type="text" />
+              </span>
+            </div>
+          </div>
+
+          <div class="action-button">
+            <button  onclick="searchLogin()" >LOGIN</button>
+          </div>
+        </div>
+      </div>
+      <div class="signUp-form form-wraper">
+        <div>
+          <div class="form-title">
+            <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1751184767/logo-1-1536x496_dmlbgt.png"width="50%">
+            <h2>OpenSID @By Syam</h2>
+          </div>
+          <p><b>Sistem Informasi Desa</b></p>
+          <p>SID adalah Sebuah Sistem Informasi Desa yang dikembangkan oleh Sekretaris Desa Wani Lumbumpetigo,Mendukung Fungsi dan tugas Administrasi Pemerintahan Desa Wani Lumbumpetigo seperti Administrasi Kependudukan,Layanan Informasi Publik dan lainnya.
+</p>
+<p>
+<center><a href="https://wa.me/6285150531572?text=Assalamualaikum,,Info%20Tentang%20Desa%20Wani%20Lumbumpetigo,,"><img src="https://res.cloudinary.com/di8stbg60/image/upload/v1741444819/chat-wa_orig_ziaure.gif" width="100%"></a></center>
+  </p>
+        </div>
+      </div>
+    </div>
+    <div id="multiple-btn" class="bg-btn-container">
+      <div class="action-button">
+        <button>LOGIN</button>
+      </div>
+      <div class="action-button">
+        <button>Informasi @Syam</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjy7gy6jFHRk1G3j1PD1UNcMdeodo5as_oWIMuXJqfONKjQvtxm4pOvZadEBBvkDn-yp5UIvRDr0feO8xbomOM1eqrVAEcUC_r_CPA3Y_UgVKJT6pgWF47dDqON8qygJHoxM5Xrbq7bfZFdK39-GEGxCwKpgdYXVlAJgqjiibc7nPu-Nm0nLf8wmBEf8L4/s4990/flat-lay-photo-office-desk-with-laptop-copy-space-background.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 700px;
+  font-family: "Montserrat", sans-serif;
+  background-repeat: no-repeat;
+
+}
+.box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #edf3f9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.box::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  transition: all 0.3s ease;
+}
+.box::before {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  transition: all 0.3s ease;
+}
+.box-animation::before {
+  animation: animateInputBorder 4s linear infinite;
+  animation-delay: -2s;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #f44336
+  );
+}
+.box-animation::after {
+  animation: animateInputBorder 4s linear infinite;
+  background-image: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    #2986cc
+  );
+}
+@keyframes animateInputBorder {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.box span {
+  position: absolute;
+  inset: 3px;
+  background-color: #edf3f9;
+  border-radius: 10px;
+  z-index: 2;
+}
+.box span input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  color: black;
+  font-size: 20px;
+  padding: 16px;
+  position: relative;
+}
+.box span input:focus {
+  outline: none;
+  box-shadow: none;
+}
+.form-container {
+  padding: 70px 0px;
+  background-color: #d0deec;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  width: 50%;
+  transition: 0.3s;
+  min-height: 540px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+.left-right .login-form {
+  transform: translateX(-100%);
+}
+.form-wraper .input-group:not(:last-child) {
+  margin-bottom: 30px;
+}
+.signUp-form {
+  transform: translateX(100%);
+}
+.left-right .signUp-form {
+  transform: translateX(0%);
+}
+.form-wraper {
+  padding: 0px 40px;
+  position: absolute;
+  width: 100%;
+  transition: 0.3s;
+}
+.action-button button {
+  border-radius: 10px;
+  font-family: "Avenir Next";
+  font-size: 20px;
+  padding: 0.5rem 3rem;
+  color: black;
+  box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
+  border: solid 3px transparent;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(101deg, #2986cc, #f44336);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  box-shadow: none;
+  color: #edf3f9;
+  width: 100%;
+  padding: 10px;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+}
+.action-button button:hover {
+  color: rgb(20, 20, 20);
+  box-shadow: 2px 1000px 1px #edf3f9 inset;
+}
+.form-title {
+  margin-bottom: 30px;
+}
+.main-form-container {
+  min-width: 800px;
+  background-color: rgba(0, 0, 0, 0.152);
+  border-radius: 10px;
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+}
+.bg-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+.left-right {
+  transform: translateX(100%);
+}
+.section {
+  min-height: 800px;
+}
+
+  </style>
+  <script>
+    const inputs = document.querySelectorAll("input");
+inputs.forEach(function (input) {
+  input.addEventListener("focus", function () {
+    const parentElement = input.parentElement.parentElement;
+    parentElement.classList.add("box-animation");
+  });
+  input.addEventListener("blur", function () {
+    const parentElement = input.parentElement.parentElement;
+    parentElement.classList.remove("box-animation");
+  });
+});
+
+const buttons = document.querySelectorAll("#multiple-btn button");
+const form_container = document.getElementById('form_section')
+buttons.forEach((button) => {
+button.addEventListener("click", () => {
+form_container.classList.toggle("left-right");
+
+});
+});
+    </script>
+  <?!=include('TabelSiswa')?>
+  <?!=include('js')?>
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+ <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+ <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+ <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet"> 
+ <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<table id="showTable" class="display" width="100%"></table>
+<link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+ <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+ <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+ <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css" rel="stylesheet"> 
+ <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<table id="showTableG" class="display" width="100%" ></table>
+<script>
+ 
+function tableAllGread(result){
+      new DataTable('#showTableG', {
+          data:result,
+          destroy: true,
+          responsive: true,
+          columns: [
+              { title: 'No NIK' },
+              { title: 'No.KK' },
+              { title: 'Nama Lengkap' },
+              { title: 'Alamat' },
+              { title: 'Jenis Kelamin' },
+              { title: 'Status' },
+              { title: 'SHDK' },
+
+          ],
+       columnDefs:[{
+          targets: [1,2,3],
+          className: 'all',
+          },
+          ],
+      order: [[0, 'desc']],
+      });
+        }
+</script>
+<script>
+
+function tableAll(item){
+  if(item) {
+      let result = "<div><table>"+
+                   "<thead class='text-white' style='background:#005689'>"+ 
+                   "<tr>"+                                                                        
+                  "<th with='20px' class='text-center'>No</th>"+ 
+                  "<th with='20px' class='hide text-center'>NIK</th>"+ 
+                  "<th with='40px' class='text-center'>Jenis</th>"+ 
+                  "<th with='100px' class='text-center'>Nomor</th>"+ 
+                  "<th with='100px' class='text-center'>Nama</th>"+
+                  "<th with='20px' class='text-center'>Aksi</th>"+
+                  "</tr>"+                            
+                  "</thead>";
+          var n=1
+           for(var i=0; i<item.length; i++) {
+               result += "<tr class='text-center'>";
+               result += "<td>"+[n]+"</td>" 
+               result += "<td class='hide'>"+item[i][0]+"</td>" 
+               result += "<td>"+item[i][2]+"</td>" 
+               result += "<td>"+item[i][3]+"</td>" 
+               result += "<td>"+item[i][4]+"</td>" 
+               result += '<td><a href="'+item[i][5]+'" target="_blank"> <i class="bx bxs-file-jpg bx-sm"></i></a><span class="text-warning" onclick="editData(this);" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="bx bx-edit bx-sm"></i></span>  <span class="text-danger" onclick="delData(this);"><i class="bx bx-trash bx-sm"></i></span></td>' 
+               result += "</tr>";
+               n++
+              }
+        $("#showTable").html(result)
+      new DataTable('#showTable', {
+      destroy: true,    
+      responsive : true,
+         columnDefs:[{
+          targets: [1,2,3],
+          className: 'all',
+          },
+          ],
+      order: [[0, 'desc']],
+});
+
+    }
+}
+
+</script>
+
+
+<script>
+function editData(el){
+let id1 = el.parentNode.parentNode.cells[1].innerHTML; 
+let id2 = el.parentNode.parentNode.cells[2].innerHTML; 
+let id3 = el.parentNode.parentNode.cells[3].innerHTML; 
+let id4 = el.parentNode.parentNode.cells[4].innerHTML; 
+$('#idNum').val(id1)
+$('#input1').val(id2)
+$('#input2').val(id3)
+$('#input3').val(id4)
+}
+
+
+function delData(el){
+var idDel = el.parentNode.parentNode.cells[0].innerHTML; 
+Swal.fire({
+  title: 'Apakah Anda ingin menghapus data ini?',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Ys, Hspus!'
+}).then((result) => {
+  if (result.isConfirmed) {
+      google.script.run.withSuccessHandler(()=>{
+          Swal.fire(
+            'Berhasil dihapus',
+          )
+google.script.run.withSuccessHandler(tableAll).getData('Dokumen')
+        }).deleteData(idDel)
+   }
+})
+ }
+
+</script>
+
+  <script>
+    const $button  = document.querySelector('#sidebar-toggle');
+const $wrapper = document.querySelector('#wrapper');
+$button.addEventListener('click', (e) => {
+  e.preventDefault();
+  $wrapper.classList.toggle('toggled');
+});
+  </script>
+
+  <!-- bootstrap js -->
+  <script src="https://cdn.jsdelivr.net/npm/js-loading-overlay@1.1.0/dist/js-loading-overlay.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+function createTable(datas) {
+          if(datas){
+            let result = "";
+            for(let i = 0; i < datas.length; i++) {
+               result +="<tr class='hide' >";
+               result +="<td><i class='bx bxs-check-circle'></i> Data</td>";
+               result +="<td class='form-data'>"+datas[i][1]+"</td>";
+               result +="</tr>";
+               result +="<tr >";
+               result +="<td><i class='bx bxs-check-circle'></i> Nama Lengkap</td>";
+               result +="<td class='form-data'>"+datas[i][2]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Nomor KK</td>";
+               result +="<td class='form-data'>"+datas[i][3]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Tempat Lahir</td>";
+               result +="<td class='form-data'>"+datas[i][4]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Jenis Kelamin</td>";
+               result +="<td class='form-data'>"+datas[i][5]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Tanggal Lahir</td>";
+               result +="<td class='form-data'>"+datas[i][6]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Agama</td>";
+               result +="<td class='form-data'>"+datas[i][7]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Pendidikan</td>";
+               result +="<td class='form-data'>"+datas[i][8]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Status Perkawinan</td>";
+               result +="<td class='form-data'>"+datas[i][9]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> SHDK</td>";
+               result +="<td class='form-data'>"+datas[i][10]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Alamat</td>";
+               result +="<td class='form-data'>"+datas[i][11]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Kewarganegaraan</td>";
+               result +="<td class='form-data'>"+datas[i][12]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Ayah</td>";
+               result +="<td class='form-data'>"+datas[i][13]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> IBU</td>";
+               result +="<td class='form-data'>"+datas[i][14]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Pekerjaan</td>";
+               result +="<td class='form-data'>"+datas[i][15]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Usia</td>";
+               result +="<td class='form-data'>"+datas[i][16]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Desa</td>";
+               result +="<td class='form-data'>"+datas[i][17]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Kecamatan</td>";
+               result +="<td class='form-data'>"+datas[i][18]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Kabupaten</td>";
+               result +="<td class='form-data'>"+datas[i][19]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> Provinsi</td>";
+               result +="<td class='form-data'>"+datas[i][20]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Kode Pos</td>";
+               result +="<td class='form-data'>"+datas[i][21]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i> RT/RW</td>";
+               result +="<td class='form-data'>"+datas[i][22]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i>-</td>";
+               result +="<td class='form-data'>"+datas[i][23]+"</td>";
+               result +="</tr>";
+               result +="<tr>";
+               result +="<td><i class='bx bxs-check-circle'></i>-</td>";
+               result +="<td class='form-data'>"+datas[i][24]+"</td>";
+               result +="<td><i class='bx bxs-check-circle'></i> Keterangan</td>";
+               result +="<td class='form-data'>"+datas[i][25]+"</td>";
+               result +="</tr>";      
+
+            }
+
+            document.getElementById('TabelSiswa').innerHTML = result;
+
+        }
+      }
+
+// Tombol Edit
+  $(document).on("click", ".edit", function(){    
+    $(this).parents(this).find(".form-data:nth-child(2n+2)").each(function(){
+    $(this).html('<input type="text" class="form-input" value="' + $(this).text() + '">');
+    });   
+     $(this).parents(".titleSTD").find(".add, .edit").toggle();  
+      });
+
+
+// Tombol Simpan
+  $(document).on("click", ".add", function(){ 
+      if(confirm("Apakah Ingin mengedit??")){ 
+        JsLoadingOverlay.show();  
+
+      let datax = []
+      $('.form-input').each(function () {
+          const radioValue = [this.value]
+          datax.push(radioValue);
+        });
+
+      google.script.run.withSuccessHandler((result)=>{
+        JsLoadingOverlay.hide();  
+          Swal.fire(
+            'Berhasil Diedit',
+          )   
+          
+          $(this).parents(".titleSTD").find(".add, .edit").toggle();
+          google.script.run.withSuccessHandler((result)=>{
+              dataSTD =result
+              searchLogin()
+          }).getData('Data')
+
+       }).saveEdit(datax)
+
+        } else{
+       $(this).parents(".titleSTD").find(".add, .edit").toggle();
+          google.script.run.withSuccessHandler((result)=>{
+              dataSTD =result
+              searchLogin()
+          }).getData('Data')
+
+
+        }
+       });
+
+</script>
+<script>
+  var dataSTD
+  google.script.run.withSuccessHandler((result)=>{
+      dataSTD =result
+  }).getData('Data')
+
+  var dataFile
+  google.script.run.withSuccessHandler((result)=>{
+      dataFile =result
+  }).getData('Dokumen')
+
+function searchLogin(){
+  let id = $('#searchID').val()
+  let item = dataSTD.filter(r=>r[1]==id)  // Informasi siswa
+  let item2 = dataFile.filter(r=>r[1]==id) // Cari file
+  if(item!=""||item2!=""){
+             $('#wrapper').show()
+             $('#formLog').hide()
+             $('#idSTD2').val(item[0][1])
+             $('#idSTD').text(item[0][1])
+             $('#idSTD3').val(item[0][1])
+             $('#stdname').text(item[0][2])
+             $('#imgSTD').attr("src",item[0][26]);
+            $('#roomname').text("NIK : "+item[0][1])
+            $('#stdID').text("Nama : "+item[0][2])
+            google.script.run.withSuccessHandler(tableAllGread).search(item[0][1]) // Tabel nilai
+            createTable(item) // Tabel informasi dasar
+            tableAll(item2)  // Tabel lampiran file
+      }else{
+             Swal.fire(
+            'Kata sandinya salah.!',            
+          )    
+          }
+
+}
+
+// Dokument Prestasi
+  function saveForm(obj){
+    event.preventDefault()
+       JsLoadingOverlay.show();
+      google.script.run.withSuccessHandler(()=>{
+          JsLoadingOverlay.hide(); 
+              Swal.fire(
+            'Berhasil disimpan.',            
+          )      
+          google.script.run.withSuccessHandler((result)=>{
+              dataFile =result
+              searchLogin()
+          }).getData('Dokumen')
+  
+      $('#exampleModal').modal('hide')
+    }).saveData(obj)
+
+  }
+
+//Edit Gambar
+  function formEditIMG(obj){
+    event.preventDefault()
+       JsLoadingOverlay.show();
+      google.script.run.withSuccessHandler(()=>{
+          JsLoadingOverlay.hide(); 
+              Swal.fire(
+            'Berhasil disimpan.',            
+          )    
+          google.script.run.withSuccessHandler((result)=>{
+              dataSTD =result
+              searchLogin()
+          }).getData('Data')
+
+    }).saveEditIMG(obj)
+  }
+
+
+   function reLoad() {
+          Swal.fire(
+            'Anda Berhasil Keluar',
+          )   
+       google.script.run.withSuccessHandler(function(url){
+          window.open(url,'_top');
+      }).getURL();
+    }
+
+function resetForm(){
+   $('#idNum').val('')
+   $('#input1').val('')
+   $('#input2').val('')
+   $('#input3').val('')
+   $('#file1').val('')
+}
+
+ function openYTByMethod(){
+    window.open("https://www.youtube.com/@wanilumbumpetigo7395/videos")
+   }
+ function openSiteByMethod(){
+    window.open("https://desawanilumbumpetigo.blogspot.com/")
+   }
+   
+</script>
+<style>
+
+
+ .fab-container2 {
+	position: fixed;
+	bottom: 80px;
+	right: 1px;
+	z-index: 999;
+	cursor: pointer;
+}
+
+.fab-label2 {
+    padding: 2px 5px;
+    align-self: center;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 3px;
+    font-size: 16px;
+    background: #666666;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    /* margin-right: 10px; */
+}
+
+ .fab-container {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	z-index: 999;
+	cursor: pointer;
+}
+
+.fab-icon-holder {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	background: #6dd4fc;
+
+	box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.fab-icon-holder:hover{
+	opacity: 0.8;
+}
+
+.fab-icon-holder i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+	font-size: 25px;
+	color: #000000;
+}
+
+.fab {
+	width: 56px;
+	height: 56px;
+	background: #6dd4fc;
+}
+
+.fab-options {
+	list-style-type: none;
+	margin: 0;
+
+	position: absolute;
+	bottom: 70px;
+	right: 0;
+
+	opacity: 0;
+
+	transition: all 0.3s ease;
+	transform: scale(0);
+	transform-origin: 85% bottom;
+}
+
+.fab:hover + .fab-options, .fab-options:hover {
+	opacity: 1;
+	transform: scale(1);
+}
+
+.fab-options li {
+	display: flex;
+	justify-content: flex-end;
+	padding: 5px;
+}
+
+.fab-label {
+	padding: 2px 5px;
+	align-self: center;
+	user-select: none;
+	white-space: nowrap;
+	border-radius: 3px;
+	font-size: 16px;
+	background: #666666;
+	color: #ffffff;
+	box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+	margin-right: 10px;
+} 
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+</style>
+
+  <!-- ------------------------------ Visit ------------------------------- -->
+	<div class="fab-container2">
+    <p class="fab-label2">Visit</p>
+  </div>
+	<div class="fab-container">
+		<div class="fab fab-icon-holder">
+			<i><img src="https://res.cloudinary.com/di8stbg60/image/upload/v1751216145/SYAM-DIGITAL-25_od2p7c.gif" style="width: 75px;" /></i>
+		</div>
+
+		<ul class="fab-options">
+			<li>
+				<span class="fab-label">Youtube</span>
+				<div class="fab-icon-holder">
+					<a target="_blank" href="https://www.youtube.com/@wanilumbumpetigo7395/videos"><i class="fa-brands fa-youtube"></i></a>
+				</div>
+			</li>
+			<li style="margin-bottom: 60px;">
+				<span class="fab-label">Website</span>
+				<div class="fab-icon-holder">
+					
+				</div>
+			</li>
+			
+				
+		</ul>
+	</div>
+<script>
+/**  Source Code by Javabitpro  **/
+var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Tools')
+var idForder = ss.getRange('B2').getDisplayValues()
+var idSheet = ss.getRange('B3').getDisplayValues()
+var folder = DriveApp.getFolderById(idForder)
+
+
+function doGet() {
+  return HtmlService.createTemplateFromFile('index').evaluate()
+  .setTitle('Syam Digital')
+  .addMetaTag('viewport', 'width=device-width, initial-scale=1')
+  .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+}
+/** Config include */
+function include(file){ return HtmlService.createHtmlOutputFromFile(file).getContent()}
+
+/** Config URL */
+function getURL() { return url = ScriptApp.getService().getUrl();}
+
+
+/**  Mengambil Data  **/
+function getData(wsName){
+  return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(wsName).getDataRange().getDisplayValues().slice(1)
+}
+
+/**  Edit Data */
+function saveEdit(datax){
+  let ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Data') 
+  const data = ss.getDataRange().getDisplayValues()
+  const row = data.findIndex(r=>r[1]==datax[0])+1
+       for(j = 0; j < 25; j++ ){
+         ss.getRange(row,j+2).setValue("'"+datax[j])
+       }
+  return true
+}
+
+/**  Edit Foto*/
+function saveEditIMG(e){
+  let ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Data') 
+  const data = ss.getDataRange().getDisplayValues()
+  const row = data.findIndex(r=>r[1]==e.idSTD2)+1
+  if(e.myFileIMG.length>1){
+  var file1 = folder.createFile(e.myFileIMG).getId()
+  var imglh ="https://lh5.googleusercontent.com/d/"+file1
+  }
+if(row>1){
+  ss.getRange(row,27).setValue(imglh)
+}
+}
+
+function saveData(e){
+    const ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Dokumen');
+    const data = ss.getDataRange().getDisplayValues()
+    var row = data.findIndex(r=>r[0]==e.idNum)+1
+    console.log(row)
+  if(e.myFile1.length>1){
+  var file1 = folder.createFile(e.myFile1).getUrl()
+  }else{
+      file1 =""
+  }
+if(row>1){
+    ss.getRange(row,3).setValue(e.input1)
+    ss.getRange(row,4).setValue(e.input2)
+    ss.getRange(row,5).setValue(e.input3)
+    if(e.myFile1.length>1){
+    ss.getRange(row,6).setValue(file1)
+    }
+
+}else{
+    ss.appendRow([
+      "",
+      e.idSTD3,
+      e.input1,
+      e.input2,
+      e.input3,
+      file1
+    ])
+}
+
+}
+
+
+function deleteData(id) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Dokumen')
+  var data = ss.getDataRange().getDisplayValues()
+  let rowID = data.findIndex(r => r[0] == id) + 1
+  if (rowID > 0) {
+    ss.deleteRow(rowID);
+  }
+  return true;
+}
+
+/**  Mengambil semua sheet  **/
+function getSheetName() {
+  let ss = SpreadsheetApp.openById(idSheet)
+  let output = new Array()
+  const sheets = ss.getSheets();
+  for (i = 0; i < sheets.length; i++)
+    output.push([sheets[i].getName()])
+  return output
+}
+
+function search(searchtext) {
+  const rangeList = SpreadsheetApp.openById(idSheet)
+  .createTextFinder(searchtext)  
+  .matchEntireCell(true)
+  .findAll()
+  .map((r) => `${r.getSheet().getSheetName()}!${r.getA1Notation()}`);
+
+let arrNew = []
+rangeList.map((m,i)=>{
+var cell = SpreadsheetApp.openById(idSheet).getRange(m+":K"+m.split("A")[1]).getDisplayValues()[0];
+arrNew.push(cell)
+})
+console.log(arrNew)
+return arrNew
+}
+</script>
+</body>
+
+</html>
