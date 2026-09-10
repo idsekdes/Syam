@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor By Name By Address</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Admin Profile -->
+        <div class="flex justify-between items-start mb-6">
+            <div class="flex items-center space-x-4 bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-600">
+                <img src="https://res.cloudinary.com/di8stbg60/image/upload/v1751214851/SYAM-DIGITAL_qp3cfw.png" 
+                     alt="Admin Profile" 
+                     class="w-16 h-16 rounded-full object-cover border-2 border-blue-200 shadow-sm">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">SYAMSUDDIN</h3>
+                    <p class="text-sm text-blue-600 font-medium">Administrator</p>
+                    <p class="text-xs text-gray-500">Editor By Name By Address</p>
+                </div>
+            </div>
+            <div class="text-right text-xs text-gray-500">
+                <p>Login: <span class="text-green-600 font-medium">Active</span></p>
+                <p id="currentDateTime"></p>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Editor By Name By Address</h1>
+            <p class="text-gray-600">Aplikasi untuk mengelola data penduduk dengan integrasi Google Sheets</p>
+            
+            <!-- Google Sheets Status -->
+            <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg max-w-4xl mx-auto">
+                <h3 class="text-lg font-semibold text-green-800 mb-2">✅ Google Sheets Terintegrasi</h3>
+                <div class="text-sm text-green-700 text-left space-y-2">
+                    <p><strong>Status Integrasi:</strong> Aktif dan Terhubung</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
+                        <div>
+                            <p><strong>📊 Spreadsheet:</strong></p>
+                            <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ-s_MEGI7KBq6-Pq_-ounMcBEUUpB8G9N5JKNYuDmSARrfrZQLgdpWLvLX3C9lWUAfHdPxxydBFrjP/pubhtml?gid=0&single=true" 
+                               class="text-blue-600 underline text-xs break-all" target="_blank">
+                               Lihat Data di Google Sheets
+                            </a>
+                        </div>
+                        <div>
+                            <p><strong>🔗 Web App:</strong></p>
+                            <span class="text-xs text-gray-600">AKfycbwlx9Z6ZKK15TdO2Gj76ykEccn48GU8fIz3moa-odO661HCxpiQjixsnczQGqOvkKXklw</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-green-600 mt-2">💾 Data otomatis tersimpan ke Google Sheets + backup lokal</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-6xl mx-auto">
+            <!-- Control Panel -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <button onclick="showAddForm()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        + Tambah Data Baru
+                    </button>
+                    <button onclick="exportData()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        📊 Export Data
+                    </button>
+                    <button onclick="clearAllData()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        🗑️ Hapus Semua
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="searchInput" placeholder="Cari berdasarkan nama atau alamat..." 
+                           class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <button onclick="searchData()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        🔍 Cari
+                    </button>
+                </div>
+            </div>
+
+    <!-- Data Form Modal -->
+    <div id="dataFormModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full mx-4 max-h-[95vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0" id="dataFormModalContent">
+            <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-t-2xl">
+                <div class="flex items-center space-x-4">
+                    <img src="https://res.cloudinary.com/di8stbg60/image/upload/v1751214851/SYAM-DIGITAL_qp3cfw.png" 
+                         alt="Profile" 
+                         class="w-16 h-16 rounded-full object-cover border-3 border-white shadow-lg">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white" id="formTitle">Tambah Data Baru</h2>
+                        <p class="text-blue-100 mt-1">Lengkapi formulir di bawah ini dengan data yang valid</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="personForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                        <input type="text" name="nama" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">NIK</label>
+                        <input type="text" name="nik" required maxlength="16" pattern="[0-9]{16}" oninput="validateNIK(this)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">Harus 16 digit angka</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">No. KK</label>
+                        <input type="text" name="nokk" required maxlength="16" pattern="[0-9]{16}" oninput="validateNoKK(this)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <p class="text-xs text-gray-500 mt-1">Harus 16 digit angka</p>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                        <select name="jeniskelamin" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="Laki-laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tempat Lahir</label>
+                        <input type="text" name="tempatlahir" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Lahir</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <select name="hari" required class="px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">Hari</option>
+                            </select>
+                            <select name="bulan" required class="px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">Bulan</option>
+                                <option value="01">Januari</option>
+                                <option value="02">Februari</option>
+                                <option value="03">Maret</option>
+                                <option value="04">April</option>
+                                <option value="05">Mei</option>
+                                <option value="06">Juni</option>
+                                <option value="07">Juli</option>
+                                <option value="08">Agustus</option>
+                                <option value="09">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
+                            </select>
+                            <select name="tahun" required class="px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                <option value="">Tahun</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="tanggallahir" id="tanggallahir">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Agama</label>
+                        <select name="agama" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="Islam">Islam</option>
+                            <option value="Kristen">Kristen</option>
+                            <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Konghucu">Konghucu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pendidikan</label>
+                        <select name="pendidikan" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="Tidak/Belum Sekolah">Tidak/Belum Sekolah</option>
+                            <option value="Belum Tamat SD/Sederajat">Belum Tamat SD/Sederajat</option>
+                            <option value="Tamat SD/Sederajat">Tamat SD/Sederajat</option>
+                            <option value="SLTP/Sederajat">SLTP/Sederajat</option>
+                            <option value="SLTA/Sederajat">SLTA/Sederajat</option>
+                            <option value="Diploma I/II">Diploma I/II</option>
+                            <option value="Akademi/Diploma III/Sarjana Muda">Akademi/Diploma III/Sarjana Muda</option>
+                            <option value="Diploma IV/Strata I">Diploma IV/Strata I</option>
+                            <option value="Strata II">Strata II</option>
+                            <option value="Strata III">Strata III</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Pekerjaan</label>
+                        <div class="space-y-2">
+                            <!-- Filter Buttons -->
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <button type="button" onclick="filterPekerjaan('all')" class="px-2 py-1 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded transition-colors" id="filter-all">Semua</button>
+                                <button type="button" onclick="filterPekerjaan('A')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-A">A</button>
+                                <button type="button" onclick="filterPekerjaan('B')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-B">B</button>
+                                <button type="button" onclick="filterPekerjaan('C')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-C">C</button>
+                                <button type="button" onclick="filterPekerjaan('D')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-D">D</button>
+                                <button type="button" onclick="filterPekerjaan('E')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-E">E</button>
+                                <button type="button" onclick="filterPekerjaan('F')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-F">F</button>
+                                <button type="button" onclick="filterPekerjaan('G')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-G">G</button>
+                                <button type="button" onclick="filterPekerjaan('H')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-H">H</button>
+                                <button type="button" onclick="filterPekerjaan('I')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-I">I</button>
+                                <button type="button" onclick="filterPekerjaan('J')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-J">J</button>
+                                <button type="button" onclick="filterPekerjaan('K')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-K">K</button>
+                                <button type="button" onclick="filterPekerjaan('L')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-L">L</button>
+                                <button type="button" onclick="filterPekerjaan('M')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-M">M</button>
+                                <button type="button" onclick="filterPekerjaan('N')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-N">N</button>
+                                <button type="button" onclick="filterPekerjaan('O')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-O">O</button>
+                                <button type="button" onclick="filterPekerjaan('P')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-P">P</button>
+                                <button type="button" onclick="filterPekerjaan('Q')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-Q">Q</button>
+                                <button type="button" onclick="filterPekerjaan('R')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-R">R</button>
+                                <button type="button" onclick="filterPekerjaan('S')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-S">S</button>
+                                <button type="button" onclick="filterPekerjaan('T')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-T">T</button>
+                                <button type="button" onclick="filterPekerjaan('U')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-U">U</button>
+                                <button type="button" onclick="filterPekerjaan('V')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-V">V</button>
+                                <button type="button" onclick="filterPekerjaan('W')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-W">W</button>
+                                <button type="button" onclick="filterPekerjaan('X')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-X">X</button>
+                                <button type="button" onclick="filterPekerjaan('Y')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-Y">Y</button>
+                                <button type="button" onclick="filterPekerjaan('Z')" class="px-2 py-1 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded transition-colors" id="filter-Z">Z</button>
+                            </div>
+                            <select name="pekerjaan" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" id="pekerjaanSelect">
+                                <option value="">Pilih...</option>
+                                <option value="ABK (Anak Buah Kapal)">ABK (Anak Buah Kapal)</option>
+                                <option value="Akuntan">Akuntan</option>
+                                <option value="Analis Sistem">Analis Sistem</option>
+                                <option value="Anggota DPRD Kabupaten">Anggota DPRD Kabupaten</option>
+                                <option value="Anggota DPRD Provinsi">Anggota DPRD Provinsi</option>
+                                <option value="Anggota Lembaga Tinggi">Anggota Lembaga Tinggi</option>
+                                <option value="Apoteker">Apoteker</option>
+                                <option value="Arsitek">Arsitek</option>
+                                <option value="Asisten Ahli">Asisten Ahli</option>
+                                <option value="Belum/Tidak Bekerja">Belum/Tidak Bekerja</option>
+                                <option value="Biarawati">Biarawati</option>
+                                <option value="Bidan">Bidan</option>
+                                <option value="Bupati">Bupati</option>
+                                <option value="Buruh Harian Lepas">Buruh Harian Lepas</option>
+                                <option value="Buruh Nelayan/Perikanan">Buruh Nelayan/Perikanan</option>
+                                <option value="Buruh Peternakan">Buruh Peternakan</option>
+                                <option value="Buruh Tani/Perkebunan">Buruh Tani/Perkebunan</option>
+                                <option value="Desainer">Desainer</option>
+                                <option value="Direktur">Direktur</option>
+                                <option value="Dokter">Dokter</option>
+                                <option value="Dosen">Dosen</option>
+                                <option value="Duta Besar">Duta Besar</option>
+                                <option value="Editor">Editor</option>
+                                <option value="Fotografer">Fotografer</option>
+                                <option value="Gubernur">Gubernur</option>
+                                <option value="Guru">Guru</option>
+                                <option value="Hakim">Hakim</option>
+                                <option value="Industri Rumah Tangga">Industri Rumah Tangga</option>
+                                <option value="Investor">Investor</option>
+                                <option value="Jaksa">Jaksa</option>
+                                <option value="Juru Masak">Juru Masak</option>
+                                <option value="Karyawan BUMD">Karyawan BUMD</option>
+                                <option value="Karyawan BUMN">Karyawan BUMN</option>
+                                <option value="Karyawan Honorer">Karyawan Honorer</option>
+                                <option value="Karyawan Swasta">Karyawan Swasta</option>
+                                <option value="Konsultan">Konsultan</option>
+                                <option value="Lainnya">Lainnya</option>
+                                <option value="Manajer">Manajer</option>
+                                <option value="Masinis">Masinis</option>
+                                <option value="Mekanik">Mekanik</option>
+                                <option value="Mengurus Rumah Tangga">Mengurus Rumah Tangga</option>
+                                <option value="Montir">Montir</option>
+                                <option value="Nahkoda">Nahkoda</option>
+                                <option value="Nelayan">Nelayan</option>
+                                <option value="Notaris">Notaris</option>
+                                <option value="Pastur">Pastur</option>
+                                <option value="Pedagang">Pedagang</option>
+                                <option value="Pegawai Asuransi">Pegawai Asuransi</option>
+                                <option value="Pegawai Bank">Pegawai Bank</option>
+                                <option value="Pegawai Bea Cukai">Pegawai Bea Cukai</option>
+                                <option value="Pegawai Imigrasi">Pegawai Imigrasi</option>
+                                <option value="Pegawai Pajak">Pegawai Pajak</option>
+                                <option value="Pegawai Perusahaan Startup">Pegawai Perusahaan Startup</option>
+                                <option value="Pelajar/Mahasiswa">Pelajar/Mahasiswa</option>
+                                <option value="Pemandu Wisata">Pemandu Wisata</option>
+                                <option value="Pembantu Rumah Tangga">Pembantu Rumah Tangga</option>
+                                <option value="Penata Rambut">Penata Rambut</option>
+                                <option value="Penata Rias">Penata Rias</option>
+                                <option value="Pendeta">Pendeta</option>
+                                <option value="Peneliti">Peneliti</option>
+                                <option value="Penerjemah">Penerjemah</option>
+                                <option value="Pengacara">Pengacara</option>
+                                <option value="Pengrajin">Pengrajin</option>
+                                <option value="Penjaga Toko">Penjaga Toko</option>
+                                <option value="Penjaga Warung">Penjaga Warung</option>
+                                <option value="Penulis">Penulis</option>
+                                <option value="Penyiar">Penyiar</option>
+                                <option value="Pensiunan">Pensiunan</option>
+                                <option value="Perawat">Perawat</option>
+                                <option value="Petani">Petani</option>
+                                <option value="Peternak">Peternak</option>
+                                <option value="Petugas Kebersihan">Petugas Kebersihan</option>
+                                <option value="Pilot">Pilot</option>
+                                <option value="PNS (Pegawai Negeri Sipil)">PNS (Pegawai Negeri Sipil)</option>
+                                <option value="POLRI">POLRI</option>
+                                <option value="Pramugari/Pramugara">Pramugari/Pramugara</option>
+                                <option value="Presenter">Presenter</option>
+                                <option value="Programmer">Programmer</option>
+                                <option value="Promotor Acara">Promotor Acara</option>
+                                <option value="Psikiater">Psikiater</option>
+                                <option value="Psikolog">Psikolog</option>
+                                <option value="Satpam">Satpam</option>
+                                <option value="Seniman">Seniman</option>
+                                <option value="Sopir">Sopir</option>
+                                <option value="Swasta">Swasta</option>
+                                <option value="Teknisi">Teknisi</option>
+                                <option value="Tenaga Pengajar">Tenaga Pengajar</option>
+                                <option value="Tenaga Tata Usaha">Tenaga Tata Usaha</option>
+                                <option value="TNI (Tentara Nasional Indonesia)">TNI (Tentara Nasional Indonesia)</option>
+                                <option value="Travel Agent">Travel Agent</option>
+                                <option value="Tukang Batu">Tukang Batu</option>
+                                <option value="Tukang Cukur">Tukang Cukur</option>
+                                <option value="Tukang Gigi">Tukang Gigi</option>
+                                <option value="Tukang Jahit">Tukang Jahit</option>
+                                <option value="Tukang Kayu">Tukang Kayu</option>
+                                <option value="Tukang Las/Pandai Besi">Tukang Las/Pandai Besi</option>
+                                <option value="Tukang Listrik">Tukang Listrik</option>
+                                <option value="Tukang Sol Sepatu">Tukang Sol Sepatu</option>
+                                <option value="Ustadz/Mubaligh">Ustadz/Mubaligh</option>
+                                <option value="Videografer">Videografer</option>
+                                <option value="Waiter/Waitress">Waiter/Waitress</option>
+                                <option value="Wakil Bupati">Wakil Bupati</option>
+                                <option value="Wakil Gubernur">Wakil Gubernur</option>
+                                <option value="Wartawan">Wartawan</option>
+                                <option value="Wiraswasta">Wiraswasta</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                        <select name="status" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="Belum Kawin">Belum Kawin</option>
+                            <option value="Kawin">Kawin</option>
+                            <option value="Cerai Hidup">Cerai Hidup</option>
+                            <option value="Cerai Mati">Cerai Mati</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">SHDK</label>
+                        <select name="shdk" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="Kepala Keluarga">Kepala Keluarga</option>
+                            <option value="Istri">Istri</option>
+                            <option value="Anak">Anak</option>
+                            <option value="Menantu">Menantu</option>
+                            <option value="Cucu">Cucu</option>
+                            <option value="Orang Tua">Orang Tua</option>
+                            <option value="Mertua">Mertua</option>
+                            <option value="Famili Lain">Famili Lain</option>
+                            <option value="Pembantu">Pembantu</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
+                        <select name="alamat" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="JL.Latsitrda Dusun I">JL.Latsitrda Dusun I</option>
+                            <option value="JL.Kayuriva Dusun II">JL.Kayuriva Dusun II</option>
+                            <option value="JL.Kayuriva Dusun III">JL.Kayuriva Dusun III</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">WNI</label>
+                        <select name="wni" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih...</option>
+                            <option value="WNI">WNI</option>
+                            <option value="WNA">WNA</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Ayah</label>
+                        <input type="text" name="ayah" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Nama Ibu</label>
+                        <input type="text" name="ibu" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Umur</label>
+                        <input type="number" name="umur" required readonly class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 focus:ring-2 focus:ring-blue-500 cursor-not-allowed">
+                        <p class="text-xs text-gray-500 mt-1">Otomatis dihitung dari tanggal lahir</p>
+                    </div>
+                </form>
+            </div>
+            <div class="p-6 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
+                <div class="flex gap-4 justify-end">
+                    <button onclick="cancelForm()" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        ❌ Batal
+                    </button>
+                    <button onclick="saveData()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        💾 Simpan Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <!-- Data Table -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-2xl font-bold text-gray-800">Data Penduduk</h2>
+                    <p class="text-gray-600 mt-1">Total: <span id="totalCount">0</span> orang</p>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIK</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Umur</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTableBody" class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                                    Belum ada data. Klik "Tambah Data Baru" untuk memulai.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="successModalContent">
+            <div class="p-8 text-center">
+                <!-- Success Icon -->
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                    <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                
+                <!-- Success Message -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Berhasil!</h3>
+                <p class="text-gray-600 mb-6" id="successMessage">Data Anda berhasil tersimpan</p>
+                
+                <!-- Close Button -->
+                <button onclick="closeSuccessModal()" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200 transform hover:scale-105">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning Modal -->
+    <div id="warningModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="warningModalContent">
+            <div class="p-8 text-center">
+                <!-- Warning Icon -->
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-6">
+                    <svg class="h-8 w-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                </div>
+                
+                <!-- Warning Message -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Peringatan!</h3>
+                <p class="text-gray-600 mb-6" id="warningMessage">Format tidak valid</p>
+                
+                <!-- Close Button -->
+                <button onclick="closeWarningModal()" class="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-8 rounded-lg transition-colors duration-200 transform hover:scale-105">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full mx-4 max-h-[95vh] overflow-y-auto transform transition-all duration-300">
+            <!-- Header with Profile Photo -->
+            <div class="p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-t-2xl">
+                <div class="flex items-center space-x-4">
+                    <img src="https://res.cloudinary.com/di8stbg60/image/upload/v1751214851/SYAM-DIGITAL_qp3cfw.png" 
+                         alt="Profile" 
+                         class="w-16 h-16 rounded-full object-cover border-3 border-white shadow-lg">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Detail Data Penduduk</h2>
+                        <p class="text-blue-100 mt-1">Informasi lengkap data penduduk</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div id="detailContent" class="p-8 bg-gray-50">
+                <!-- Detail content will be inserted here -->
+            </div>
+            
+            <!-- Footer -->
+            <div class="p-6 border-t border-gray-200 bg-white rounded-b-2xl">
+                <div class="flex justify-end">
+                    <button onclick="closeDetailModal()" class="bg-gray-600 hover:bg-gray-700 text-white px-8 py-3 rounded-lg font-medium transition-colors transform hover:scale-105">
+                        ✖️ Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced data loading with recovery system
+        function loadPermanentData() {
+            try {
+                // Try to load from localStorage first
+                let data = localStorage.getItem('peopleData');
+                if (data) {
+                    return JSON.parse(data);
+                }
+                
+                // If localStorage is empty, try backup
+                let backup = localStorage.getItem('peopleDataBackup');
+                if (backup) {
+                    const backupData = JSON.parse(backup);
+                    console.log('Data dipulihkan dari backup:', backupData.timestamp);
+                    return backupData.data || [];
+                }
+                
+                // If both fail, try sessionStorage
+                let sessionData = sessionStorage.getItem('peopleDataSession');
+                if (sessionData) {
+                    console.log('Data dipulihkan dari session storage');
+                    return JSON.parse(sessionData);
+                }
+                
+                return [];
+            } catch (error) {
+                console.error('Error loading data:', error);
+                return [];
+            }
+        }
+
+        let peopleData = loadPermanentData();
+        let editingIndex = -1;
+
+        function showAddForm() {
+            const modal = document.getElementById('dataFormModal');
+            const modalContent = document.getElementById('dataFormModalContent');
+            
+            document.getElementById('formTitle').textContent = 'Tambah Data Baru';
+            document.getElementById('personForm').reset();
+            // Reset date picker selects
+            document.querySelector('select[name="hari"]').value = '';
+            document.querySelector('select[name="bulan"]').value = '';
+            document.querySelector('select[name="tahun"]').value = '';
+            document.getElementById('tanggallahir').value = '';
+            editingIndex = -1;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Animate modal appearance
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function cancelForm() {
+            const modal = document.getElementById('dataFormModal');
+            const modalContent = document.getElementById('dataFormModalContent');
+            
+            // Animate modal disappearance
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                
+                document.getElementById('personForm').reset();
+                // Reset date picker selects
+                document.querySelector('select[name="hari"]').value = '';
+                document.querySelector('select[name="bulan"]').value = '';
+                document.querySelector('select[name="tahun"]').value = '';
+                document.getElementById('tanggallahir').value = '';
+                editingIndex = -1;
+            }, 300);
+        }
+
+        // Validation functions for NIK and No.KK
+        function validateNIK(input) {
+            // Remove non-numeric characters
+            input.value = input.value.replace(/[^0-9]/g, '');
+            
+            // Check if length is exactly 16 digits when user stops typing
+            if (input.value.length > 0 && input.value.length !== 16) {
+                input.style.borderColor = '#ef4444';
+                input.style.backgroundColor = '#fef2f2';
+            } else if (input.value.length === 16) {
+                input.style.borderColor = '#10b981';
+                input.style.backgroundColor = '#f0fdf4';
+            } else {
+                input.style.borderColor = '#d1d5db';
+                input.style.backgroundColor = '#ffffff';
+            }
+        }
+
+        function validateNoKK(input) {
+            // Remove non-numeric characters
+            input.value = input.value.replace(/[^0-9]/g, '');
+            
+            // Check if length is exactly 16 digits when user stops typing
+            if (input.value.length > 0 && input.value.length !== 16) {
+                input.style.borderColor = '#ef4444';
+                input.style.backgroundColor = '#fef2f2';
+            } else if (input.value.length === 16) {
+                input.style.borderColor = '#10b981';
+                input.style.backgroundColor = '#f0fdf4';
+            } else {
+                input.style.borderColor = '#d1d5db';
+                input.style.backgroundColor = '#ffffff';
+            }
+        }
+
+        function showWarningModal(message) {
+            const modal = document.getElementById('warningModal');
+            const modalContent = document.getElementById('warningModalContent');
+            const messageElement = document.getElementById('warningMessage');
+            
+            messageElement.textContent = message;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Animate modal appearance
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeWarningModal() {
+            const modal = document.getElementById('warningModal');
+            const modalContent = document.getElementById('warningModalContent');
+            
+            // Animate modal disappearance
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        async function saveData() {
+            const form = document.getElementById('personForm');
+            const formData = new FormData(form);
+            const person = {};
+            
+            for (let [key, value] of formData.entries()) {
+                person[key] = value;
+            }
+
+            // Validate NIK and No.KK before saving
+            const nik = person.nik;
+            const nokk = person.nokk;
+            
+            if (!nik || nik.length !== 16 || !/^\d{16}$/.test(nik)) {
+                showWarningModal('NIK harus berisi tepat 16 digit angka!');
+                return;
+            }
+            
+            if (!nokk || nokk.length !== 16 || !/^\d{16}$/.test(nokk)) {
+                showWarningModal('No. KK harus berisi tepat 16 digit angka!');
+                return;
+            }
+
+            const isEditing = editingIndex >= 0;
+            
+            // Show loading state
+            const saveButton = document.querySelector('button[onclick="saveData()"]');
+            const originalText = saveButton.innerHTML;
+            saveButton.innerHTML = '⏳ Menyimpan...';
+            saveButton.disabled = true;
+
+            try {
+                // Send data to Google Sheets (only for new data, not edits)
+                if (!isEditing) {
+                    await sendToGoogleSheets(person);
+                }
+                
+                if (isEditing) {
+                    peopleData[editingIndex] = person;
+                } else {
+                    peopleData.push(person);
+                }
+
+                // Enhanced permanent storage with error handling
+                localStorage.setItem('peopleData', JSON.stringify(peopleData));
+                localStorage.setItem('peopleDataBackup', JSON.stringify({
+                    data: peopleData,
+                    timestamp: new Date().toISOString(),
+                    count: peopleData.length
+                }));
+                
+                // Additional storage in sessionStorage as backup
+                sessionStorage.setItem('peopleDataSession', JSON.stringify(peopleData));
+                
+                console.log('Data berhasil disimpan secara permanen:', peopleData.length, 'records');
+                
+                renderTable();
+                cancelForm();
+                
+                // Show success message
+                const message = isEditing ? 
+                    'Data berhasil diperbarui dan tersimpan permanen!' : 
+                    'Data berhasil tersimpan ke Google Sheets dan browser Anda!';
+                showSuccessModal(message);
+                
+            } catch (error) {
+                console.error('Error saving data:', error);
+                
+                // Still save locally even if Google Sheets fails
+                if (isEditing) {
+                    peopleData[editingIndex] = person;
+                } else {
+                    peopleData.push(person);
+                }
+                localStorage.setItem('peopleData', JSON.stringify(peopleData));
+                renderTable();
+                cancelForm();
+                
+                showWarningModal('Data tersimpan lokal, tetapi gagal mengirim ke Google Sheets. Periksa koneksi internet Anda.');
+            } finally {
+                // Reset button state
+                saveButton.innerHTML = originalText;
+                saveButton.disabled = false;
+            }
+        }
+
+        async function sendToGoogleSheets(person) {
+            // Your actual Google Apps Script web app URL
+            const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwlx9Z6ZKK15TdO2Gj76ykEccn48GU8fIz3moa-odO661HCxpiQjixsnczQGqOvkKXklw/exec';
+            
+            // Prepare data for Google Sheets
+            const sheetData = {
+                timestamp: new Date().toISOString(),
+                nama: person.nama,
+                nik: person.nik,
+                nokk: person.nokk,
+                jeniskelamin: person.jeniskelamin,
+                tempatlahir: person.tempatlahir,
+                tanggallahir: person.tanggallahir,
+                agama: person.agama,
+                pendidikan: person.pendidikan,
+                pekerjaan: person.pekerjaan,
+                status: person.status,
+                shdk: person.shdk,
+                alamat: person.alamat,
+                wni: person.wni,
+                ayah: person.ayah,
+                ibu: person.ibu,
+                umur: person.umur
+            };
+
+            // Send to Google Sheets using fetch
+            const response = await fetch(SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sheetData)
+            });
+
+            // Note: Due to CORS policy, we can't read the response
+            // But the data should still be sent to Google Sheets
+            console.log('Data sent to Google Sheets');
+        }
+
+        function editData(index) {
+            const person = peopleData[index];
+            const form = document.getElementById('personForm');
+            const modal = document.getElementById('dataFormModal');
+            const modalContent = document.getElementById('dataFormModalContent');
+            
+            Object.keys(person).forEach(key => {
+                if (key === 'tanggallahir') {
+                    populateDateFromString(person[key]);
+                } else {
+                    const input = form.querySelector(`[name="${key}"]`);
+                    if (input) {
+                        input.value = person[key];
+                    }
+                }
+            });
+
+            document.getElementById('formTitle').textContent = 'Edit Data';
+            editingIndex = index;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Animate modal appearance
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function deleteData(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                peopleData.splice(index, 1);
+                localStorage.setItem('peopleData', JSON.stringify(peopleData));
+                renderTable();
+                alert('Data berhasil dihapus!');
+            }
+        }
+
+        function viewDetail(index) {
+            const person = peopleData[index];
+            const detailContent = document.getElementById('detailContent');
+            
+            detailContent.innerHTML = `
+                <!-- Personal Information Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Informasi Pribadi</h3>
+                            <p class="text-gray-600 text-sm">Data identitas dan biodata</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg border-l-4 border-blue-500">
+                            <div class="text-sm text-blue-600 font-medium mb-1">Nama Lengkap</div>
+                            <div class="text-lg font-bold text-gray-800">${person.nama}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg border-l-4 border-green-500">
+                            <div class="text-sm text-green-600 font-medium mb-1">NIK</div>
+                            <div class="text-lg font-bold text-gray-800">${person.nik}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg border-l-4 border-purple-500">
+                            <div class="text-sm text-purple-600 font-medium mb-1">No. KK</div>
+                            <div class="text-lg font-bold text-gray-800">${person.nokk}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-pink-50 to-pink-100 p-4 rounded-lg border-l-4 border-pink-500">
+                            <div class="text-sm text-pink-600 font-medium mb-1">Jenis Kelamin</div>
+                            <div class="text-lg font-bold text-gray-800">${person.jeniskelamin}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-lg border-l-4 border-yellow-500">
+                            <div class="text-sm text-yellow-600 font-medium mb-1">Tempat Lahir</div>
+                            <div class="text-lg font-bold text-gray-800">${person.tempatlahir}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-4 rounded-lg border-l-4 border-indigo-500">
+                            <div class="text-sm text-indigo-600 font-medium mb-1">Tanggal Lahir</div>
+                            <div class="text-lg font-bold text-gray-800">${person.tanggallahir}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg border-l-4 border-red-500">
+                            <div class="text-sm text-red-600 font-medium mb-1">Umur</div>
+                            <div class="text-lg font-bold text-gray-800">${person.umur} tahun</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-teal-50 to-teal-100 p-4 rounded-lg border-l-4 border-teal-500">
+                            <div class="text-sm text-teal-600 font-medium mb-1">Agama</div>
+                            <div class="text-lg font-bold text-gray-800">${person.agama}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-lg border-l-4 border-orange-500">
+                            <div class="text-sm text-orange-600 font-medium mb-1">WNI</div>
+                            <div class="text-lg font-bold text-gray-800">${person.wni}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Work Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Pendidikan & Pekerjaan</h3>
+                            <p class="text-gray-600 text-sm">Informasi pendidikan dan karir</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-6 rounded-lg border-l-4 border-emerald-500">
+                            <div class="text-sm text-emerald-600 font-medium mb-2">Pendidikan Terakhir</div>
+                            <div class="text-xl font-bold text-gray-800">${person.pendidikan}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 p-6 rounded-lg border-l-4 border-cyan-500">
+                            <div class="text-sm text-cyan-600 font-medium mb-2">Pekerjaan</div>
+                            <div class="text-xl font-bold text-gray-800">${person.pekerjaan}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Family & Status Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Keluarga & Status</h3>
+                            <p class="text-gray-600 text-sm">Informasi keluarga dan status pernikahan</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-gradient-to-br from-rose-50 to-rose-100 p-4 rounded-lg border-l-4 border-rose-500">
+                            <div class="text-sm text-rose-600 font-medium mb-1">Status Pernikahan</div>
+                            <div class="text-lg font-bold text-gray-800">${person.status}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-violet-50 to-violet-100 p-4 rounded-lg border-l-4 border-violet-500">
+                            <div class="text-sm text-violet-600 font-medium mb-1">SHDK</div>
+                            <div class="text-lg font-bold text-gray-800">${person.shdk}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-sky-50 to-sky-100 p-4 rounded-lg border-l-4 border-sky-500">
+                            <div class="text-sm text-sky-600 font-medium mb-1">Nama Ayah</div>
+                            <div class="text-lg font-bold text-gray-800">${person.ayah}</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-amber-50 to-amber-100 p-4 rounded-lg border-l-4 border-amber-500">
+                            <div class="text-sm text-amber-600 font-medium mb-1">Nama Ibu</div>
+                            <div class="text-lg font-bold text-gray-800">${person.ibu}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">Alamat Tempat Tinggal</h3>
+                            <p class="text-gray-600 text-sm">Lokasi domisili saat ini</p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-lg border-l-4 border-slate-500">
+                        <div class="text-sm text-slate-600 font-medium mb-2">Alamat Lengkap</div>
+                        <div class="text-xl font-bold text-gray-800">${person.alamat}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('detailModal').classList.remove('hidden');
+            document.getElementById('detailModal').classList.add('flex');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+            document.getElementById('detailModal').classList.remove('flex');
+        }
+
+        function showSuccessModal(message) {
+            const modal = document.getElementById('successModal');
+            const modalContent = document.getElementById('successModalContent');
+            const messageElement = document.getElementById('successMessage');
+            
+            messageElement.textContent = message;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Animate modal appearance
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('successModal');
+            const modalContent = document.getElementById('successModalContent');
+            
+            // Animate modal disappearance
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        function searchData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = peopleData.filter(person => 
+                person.nama.toLowerCase().includes(searchTerm) || 
+                person.alamat.toLowerCase().includes(searchTerm)
+            );
+            renderTable(filteredData);
+        }
+
+        function exportData() {
+            if (peopleData.length === 0) {
+                alert('Tidak ada data untuk diekspor!');
+                return;
+            }
+
+            const headers = ['No', 'Nama', 'NIK', 'No.KK', 'Jenis Kelamin', 'Tempat Lahir', 'Tanggal Lahir', 'Agama', 'Pendidikan', 'Pekerjaan', 'Status', 'SHDK', 'Alamat', 'WNI', 'Ayah', 'Ibu', 'Umur'];
+            let csvContent = headers.join(',') + '\n';
+            
+            peopleData.forEach((person, index) => {
+                const row = [
+                    index + 1,
+                    person.nama,
+                    person.nik,
+                    person.nokk,
+                    person.jeniskelamin,
+                    person.tempatlahir,
+                    person.tanggallahir,
+                    person.agama,
+                    person.pendidikan,
+                    person.pekerjaan,
+                    person.status,
+                    person.shdk,
+                    `"${person.alamat}"`,
+                    person.wni,
+                    person.ayah,
+                    person.ibu,
+                    person.umur
+                ];
+                csvContent += row.join(',') + '\n';
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data_penduduk.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function clearAllData() {
+            if (confirm('Apakah Anda yakin ingin menghapus semua data? Tindakan ini tidak dapat dibatalkan!')) {
+                peopleData = [];
+                localStorage.removeItem('peopleData');
+                renderTable();
+                alert('Semua data berhasil dihapus!');
+            }
+        }
+
+        function renderTable(dataToRender = peopleData) {
+            const tbody = document.getElementById('dataTableBody');
+            const totalCount = document.getElementById('totalCount');
+            
+            totalCount.textContent = dataToRender.length;
+
+            if (dataToRender.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">
+                            ${peopleData.length === 0 ? 'Belum ada data. Klik "Tambah Data Baru" untuk memulai.' : 'Tidak ada data yang sesuai dengan pencarian.'}
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = dataToRender.map((person, index) => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${index + 1}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${person.nama}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${person.nik}</td>
+                    <td class="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">${person.alamat}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${person.umur} tahun</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <button onclick="viewDetail(${peopleData.indexOf(person)})" class="text-blue-600 hover:text-blue-900">👁️ Lihat</button>
+                        <button onclick="editData(${peopleData.indexOf(person)})" class="text-indigo-600 hover:text-indigo-900">✏️ Edit</button>
+                        <button onclick="deleteData(${peopleData.indexOf(person)})" class="text-red-600 hover:text-red-900">🗑️ Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Initialize date picker
+        function initializeDatePicker() {
+            // Populate days (1-31)
+            const hariSelect = document.querySelector('select[name="hari"]');
+            for (let i = 1; i <= 31; i++) {
+                const option = document.createElement('option');
+                option.value = i.toString().padStart(2, '0');
+                option.textContent = i;
+                hariSelect.appendChild(option);
+            }
+
+            // Populate years (1900 - current year)
+            const tahunSelect = document.querySelector('select[name="tahun"]');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear; i >= 1900; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                tahunSelect.appendChild(option);
+            }
+
+            // Add event listeners to update hidden field
+            const dateSelects = document.querySelectorAll('select[name="hari"], select[name="bulan"], select[name="tahun"]');
+            dateSelects.forEach(select => {
+                select.addEventListener('change', updateDateField);
+            });
+        }
+
+        function updateDateField() {
+            const hari = document.querySelector('select[name="hari"]').value;
+            const bulan = document.querySelector('select[name="bulan"]').value;
+            const tahun = document.querySelector('select[name="tahun"]').value;
+            
+            if (hari && bulan && tahun) {
+                const dateString = `${tahun}-${bulan}-${hari}`;
+                document.getElementById('tanggallahir').value = dateString;
+                
+                // Calculate and update age automatically
+                calculateAge(dateString);
+            }
+        }
+
+        function calculateAge(birthDate) {
+            if (!birthDate) return;
+            
+            const birth = new Date(birthDate);
+            const today = new Date();
+            
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDiff = today.getMonth() - birth.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            
+            // Update the age field
+            document.querySelector('input[name="umur"]').value = age;
+        }
+
+        function populateDateFromString(dateString) {
+            if (dateString) {
+                const [tahun, bulan, hari] = dateString.split('-');
+                document.querySelector('select[name="hari"]').value = hari;
+                document.querySelector('select[name="bulan"]').value = bulan;
+                document.querySelector('select[name="tahun"]').value = tahun;
+                document.getElementById('tanggallahir').value = dateString;
+                
+                // Calculate age when editing existing data
+                calculateAge(dateString);
+            }
+        }
+
+        // Auto-save function to ensure data persistence
+        function autoSaveData() {
+            if (peopleData.length > 0) {
+                try {
+                    localStorage.setItem('peopleData', JSON.stringify(peopleData));
+                    localStorage.setItem('peopleDataBackup', JSON.stringify({
+                        data: peopleData,
+                        timestamp: new Date().toISOString(),
+                        count: peopleData.length
+                    }));
+                    sessionStorage.setItem('peopleDataSession', JSON.stringify(peopleData));
+                } catch (error) {
+                    console.error('Auto-save failed:', error);
+                }
+            }
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(autoSaveData, 30000);
+
+        // Save data when page is about to be closed
+        window.addEventListener('beforeunload', function(e) {
+            autoSaveData();
+        });
+
+        // Save data when page loses focus
+        window.addEventListener('blur', function() {
+            autoSaveData();
+        });
+
+        // Filter function for Pekerjaan dropdown
+        function filterPekerjaan(letter) {
+            const select = document.getElementById('pekerjaanSelect');
+            const options = select.querySelectorAll('option');
+            
+            // Reset all filter buttons
+            document.querySelectorAll('[id^="filter-"]').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            // Highlight active filter
+            const activeBtn = document.getElementById(`filter-${letter}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-gray-100', 'text-gray-700');
+                activeBtn.classList.add('bg-blue-100', 'text-blue-700');
+            }
+            
+            // Show/hide options based on filter
+            options.forEach(option => {
+                if (option.value === '') {
+                    option.style.display = 'block'; // Always show "Pilih..." option
+                    return;
+                }
+                
+                if (letter === 'all') {
+                    option.style.display = 'block';
+                } else {
+                    const firstLetter = option.textContent.charAt(0).toUpperCase();
+                    option.style.display = firstLetter === letter ? 'block' : 'none';
+                }
+            });
+            
+            // Reset selection if current selection is now hidden
+            const currentValue = select.value;
+            if (currentValue && letter !== 'all') {
+                const currentOption = select.querySelector(`option[value="${currentValue}"]`);
+                if (currentOption && currentOption.style.display === 'none') {
+                    select.value = '';
+                }
+            }
+        }
+
+        // Real-time clock function
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'Asia/Jakarta'
+            };
+            const dateTimeString = now.toLocaleDateString('id-ID', options);
+            const dateTimeElement = document.getElementById('currentDateTime');
+            if (dateTimeElement) {
+                dateTimeElement.textContent = dateTimeString;
+            }
+        }
+
+        // Update clock every second
+        setInterval(updateDateTime, 1000);
+        updateDateTime(); // Initial call
+
+        // Initialize the application
+        initializeDatePicker();
+        renderTable();
+        
+        // Show data recovery message if data was found
+        if (peopleData.length > 0) {
+            console.log(`Data permanen berhasil dimuat: ${peopleData.length} records`);
+        }
+
+        // Add enter key support for search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchData();
+            }
+        });
+
+        // Clear search when input is empty
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            if (e.target.value === '') {
+                renderTable();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97114d12948a44ae',t:'MTc1NTUxODk1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informasi Pembayaran Perpanjangan Layanan 2026</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="h-full w-full overflow-auto bg-slate-100">
+   <!-- Navigation Tabs -->
+   <div class="sticky top-0 z-10 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex gap-0">
+      <button id="tab-payment" class="flex-1 px-6 py-4 font-semibold text-emerald-700 border-b-2 border-emerald-600 bg-emerald-50 transition-all">
+       <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </svg> Informasi Pembayaran </button> <button id="tab-proof" class="flex-1 px-6 py-4 font-semibold text-gray-600 border-b-2 border-transparent hover:text-emerald-700 transition-all">
+       <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+       </svg> Bukti Pembayaran </button>
+     </div>
+    </div>
+   </div>
+   <div class="min-h-full py-8 px-4 sm:px-6 lg:px-8">
+    <!-- Payment Info Tab -->
+    <article id="payment-section" class="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden"><!-- Header -->
+     <header class="bg-emerald-600 px-6 py-8 text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+       </svg>
+      </div>
+      <h1 id="main-title" class="text-2xl sm:text-3xl font-bold text-white">Informasi Pembayaran</h1>
+      <p class="text-emerald-100 mt-2 text-lg">Perpanjangan Layanan Tahun 2026</p>
+     </header><!-- Content -->
+     <div class="px-6 py-8 space-y-6"><!-- Introduction -->
+      <section class="text-gray-700 leading-relaxed">
+       <p class="text-base">Sehubungan dengan <strong class="text-emerald-700">perpanjangan layanan untuk tahun 2026</strong>, kami informasikan bahwa pembayaran sewa dapat dilakukan melalui:</p>
+      </section><!-- Bank Details Card -->
+      <section class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-200">
+       <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center">
+         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+         </svg>
+        </div>
+        <h2 class="text-lg font-semibold text-emerald-800">Detail Rekening Bank</h2>
+       </div>
+       <div class="space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><span class="text-gray-600 text-sm font-medium min-w-[120px]">Bank</span> <span id="bank-name" class="text-gray-900 font-semibold text-lg">Bank NTB Syariah</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><span class="text-gray-600 text-sm font-medium min-w-[120px]">No. Rekening</span> <span id="account-number" class="text-emerald-700 font-bold text-xl tracking-wider bg-white px-4 py-2 rounded-lg border-2 border-emerald-300 inline-block">-</span>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3"><span class="text-gray-600 text-sm font-medium min-w-[120px]">Atas Nama</span> <span id="account-name" class="text-gray-900 font-semibold">CV. Elit Media Informatika</span>
+        </div>
+       </div>
+      </section><!-- Confirmation Section -->
+      <section class="bg-amber-50 rounded-xl p-6 border border-amber-200">
+       <div class="flex items-start gap-3">
+        <div class="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-semibold text-amber-800 text-lg mb-2">Konfirmasi Pembayaran</h3>
+         <p class="text-amber-900 leading-relaxed">Setelah melakukan pembayaran, Bapak/Ibu dapat melakukan konfirmasi melalui tautan berikut atau scan QR Code di bawah ini:</p>
+        </div>
+       </div>
+      </section><!-- QR Code & Button Section -->
+      <section class="text-center space-y-6"><!-- QR Code Placeholder -->
+       <div class="inline-block bg-white p-4 rounded-xl border-2 border-gray-200 shadow-sm">
+        <div class="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center border border-dashed border-gray-300">
+         <div class="text-center text-gray-500">
+          <svg class="w-12 h-12 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+          </svg>
+          <p class="text-sm font-medium">QR Code</p>
+          <p class="text-xs">Scan untuk konfirmasi</p>
+         </div>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">Scan QR Code di atas</p>
+       </div><!-- Confirmation Button -->
+       <div><a href="https://forms.gle/f8dFXM1tRvGgXaURA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+         </svg> Konfirmasi Pembayaran 
+         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+         </svg></a>
+       </div>
+      </section>
+     </div><!-- Footer -->
+     <footer class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+      <p class="text-center text-gray-500 text-sm">Terima kasih atas kerjasamanya 🙏</p>
+     </footer>
+    </article><!-- Proof of Payment Tab -->
+    <article id="proof-section" class="hidden max-w-2xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
+     <header class="bg-blue-600 px-6 py-8 text-center">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4">
+       <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+       </svg>
+      </div>
+      <h1 id="proof-title" class="text-2xl sm:text-3xl font-bold text-white">BUKTI PEMBAYARAN SEWA SERVER</h1>
+      <p id="proof-subtitle" class="text-blue-100 mt-2 text-lg">APLIKASI SISKEUDES TAHUN 2026</p>
+      <p id="village-name" class="text-blue-100 mt-1 text-base font-medium">DESA WANI LUMBUMPETIGO</p>
+     </header>
+     <div class="px-6 py-8 space-y-6">
+      <div class="flex items-center justify-center bg-blue-50 rounded-xl p-8 border border-blue-200 min-h-[500px]">
+       <div class="text-center text-gray-500">
+        <svg class="w-16 h-16 mx-auto mb-4 text-blue-300" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+<iframe src="https://drive.google.com/file/d/1vHwZwLZXvi9YSkfQQwJpB7L3uopOAtGV/preview" width="640" height="480"></iframe>
+        <p class="text-base font-medium text-gray-600">Dokumen bukti pembayaran akan ditampilkan di sini</p>
+        <p class="text-sm text-gray-500 mt-2">Silakan upload file bukti pembayaran</p>
+       </div>
+      </div>
+      <div class="bg-blue-50 rounded-xl p-6 border border-blue-200">
+       <h3 class="font-semibold text-blue-800 mb-2">Informasi Dokumen</h3>
+       <p class="text-blue-900 text-sm leading-relaxed">Halaman ini menampilkan bukti resmi pembayaran sewa server aplikasi SISKEUDES untuk tahun 2026. Dokumen ini dapat dicetak dan digunakan untuk keperluan administrasi desa.</p>
+      </div><!-- Share Section -->
+      <div class="flex gap-3 justify-center"><button id="share-whatsapp" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+        <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004c-1.537 0-2.852-.731-2.852-2.479 0-1.748 1.315-2.479 2.852-2.479s2.853.731 2.853 2.479c0 1.748-1.316 2.479-2.853 2.479" />
+        </svg> Bagikan ke WhatsApp </button> <button id="print-button" class="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        </svg> Cetak </button>
+      </div>
+     </div>
+     <footer class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+      <p class="text-center text-gray-500 text-sm">Dokumen ini diterbitkan untuk keperluan administratif 📄</p>
+     </footer>
+    </article>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: 'Informasi Pembayaran',
+      bank_name: 'Bank NTB Syariah',
+      account_number: '-',
+      account_name: 'CV. Elit Media Informatika',
+      proof_title: 'BUKTI PEMBAYARAN SEWA SERVER',
+      village_name: 'DESA WANI LUMBUMPETIGO',
+      background_color: '#f1f5f9',
+      header_color: '#059669',
+      text_color: '#374151',
+      accent_color: '#047857',
+      button_color: '#059669'
+    };
+
+    async function onConfigChange(config) {
+      document.getElementById('main-title').textContent = config.main_title || defaultConfig.main_title;
+      document.getElementById('bank-name').textContent = config.bank_name || defaultConfig.bank_name;
+      document.getElementById('account-number').textContent = config.account_number || defaultConfig.account_number;
+      document.getElementById('account-name').textContent = config.account_name || defaultConfig.account_name;
+      document.getElementById('proof-title').textContent = config.proof_title || defaultConfig.proof_title;
+      document.getElementById('village-name').textContent = config.village_name || defaultConfig.village_name;
+      
+      document.getElementById('app-wrapper').style.backgroundColor = config.background_color || defaultConfig.background_color;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.header_color || defaultConfig.header_color,
+            set: (value) => {
+              config.header_color = value;
+              window.elementSdk.setConfig({ header_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.button_color || defaultConfig.button_color,
+            set: (value) => {
+              config.button_color = value;
+              window.elementSdk.setConfig({ button_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['bank_name', config.bank_name || defaultConfig.bank_name],
+        ['account_number', config.account_number || defaultConfig.account_number],
+        ['account_name', config.account_name || defaultConfig.account_name],
+        ['proof_title', config.proof_title || defaultConfig.proof_title],
+        ['village_name', config.village_name || defaultConfig.village_name]
+      ]);
+    }
+
+    // Tab Navigation
+    document.getElementById('tab-payment').addEventListener('click', function() {
+      document.getElementById('payment-section').classList.remove('hidden');
+      document.getElementById('proof-section').classList.add('hidden');
+      this.classList.add('text-emerald-700', 'border-emerald-600', 'bg-emerald-50');
+      this.classList.remove('text-gray-600', 'border-transparent');
+      document.getElementById('tab-proof').classList.remove('text-emerald-700', 'border-emerald-600', 'bg-emerald-50');
+      document.getElementById('tab-proof').classList.add('text-gray-600', 'border-transparent');
+    });
+
+    document.getElementById('tab-proof').addEventListener('click', function() {
+      document.getElementById('proof-section').classList.remove('hidden');
+      document.getElementById('payment-section').classList.add('hidden');
+      this.classList.add('text-blue-700', 'border-blue-600', 'bg-blue-50');
+      this.classList.remove('text-gray-600', 'border-transparent');
+      document.getElementById('tab-payment').classList.remove('text-blue-700', 'border-blue-600', 'bg-blue-50');
+      document.getElementById('tab-payment').classList.add('text-emerald-700', 'border-emerald-600', 'bg-emerald-50');
+    });
+
+    // WhatsApp Share
+    document.getElementById('share-whatsapp').addEventListener('click', function() {
+      const proofTitle = document.getElementById('proof-title').textContent;
+      const villageInfo = document.getElementById('village-name').textContent;
+      const message = encodeURIComponent(
+        `📋 *${proofTitle}*\n\n` +
+        `${villageInfo}\n` +
+        `Tahun 2026\n\n` +
+        `Dokumen bukti pembayaran sewa server aplikasi SISKEUDES telah diterbitkan.`
+      );
+      window.open(`https://wa.me/?text=${message}`, '_blank');
+    });
+
+    // Print Function
+    document.getElementById('print-button').addEventListener('click', function() {
+      window.print();
+    });
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d663a7ed18b8213',t:'MTc3MjUxNTYxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

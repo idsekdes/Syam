@@ -1,0 +1,574 @@
+<head><style type="text/css" data-tag-name="trix-editor">trix-editor {
+    display: block;
+}
+
+trix-editor:empty::before {
+    content: attr(placeholder);
+    color: graytext;
+    cursor: text;
+    pointer-events: none;
+    white-space: pre-line;
+}
+
+trix-editor a[contenteditable=false] {
+    cursor: text;
+}
+
+trix-editor img {
+    max-width: 100%;
+    height: auto;
+}
+
+trix-editor [data-trix-attachment] figcaption textarea {
+    resize: none;
+}
+
+trix-editor [data-trix-attachment] figcaption textarea.trix-autoresize-clone {
+    position: absolute;
+    left: -9999px;
+    max-height: 0px;
+}
+
+trix-editor [data-trix-attachment] figcaption[data-trix-placeholder]:empty::before {
+    content: attr(data-trix-placeholder);
+    color: graytext;
+}
+
+trix-editor [data-trix-cursor-target] {
+    display: inline-block !important;
+    width: 1px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+trix-editor [data-trix-cursor-target=left] {
+    vertical-align: top !important;
+    margin-left: -1px !important;
+}
+
+trix-editor [data-trix-cursor-target=right] {
+    vertical-align: bottom !important;
+    margin-right: -1px !important;
+}</style><style type="text/css" data-tag-name="trix-toolbar">trix-toolbar {
+  display: block;
+}
+
+trix-toolbar {
+  white-space: nowrap;
+}
+
+trix-toolbar [data-trix-dialog] {
+  display: none;
+}
+
+trix-toolbar [data-trix-dialog][data-trix-active] {
+  display: block;
+}
+
+trix-toolbar [data-trix-dialog] [data-trix-validate]:invalid {
+  background-color: #ffdddd;
+}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="fIOa8Sshcgwbm1asEU7HhXjOUJ1OXtfxa7Fod8a9">
+
+    
+    <title>Beranda | Website Resmi Desa Wani Lumbumpetigo</title>
+
+    
+    
+            <meta name="description" content="Portal Resmi Desa Wani Lumbumpetigo. Informasi transparansi anggaran, kependudukan, dan kabar berita terbaru.">
+    
+    
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1757601398/android-chrome-192x192_l5kj9j.png">
+
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://petigoweb.netlify">
+    <meta property="og:title" content="Beranda">
+    <meta property="og:description" content="Portal Resmi Desa Wani Lumbumpetigo">
+    <meta property="og:image" content="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1757601398/android-chrome-192x192_l5kj9j.png">
+
+
+
+    
+    <link rel="preload" as="style" href="https://petigoweb.netlify.app/profil"><link rel="preload" as="style" href="https://wani-lumbumpetigo-tanantovea.updesa.online/build/assets/app-DKaCiqoV.css"><link rel="modulepreload" as="script" href="https://wani-lumbumpetigo-tanantovea.updesa.online/build/assets/app-BVmKpBPV.js"><link rel="stylesheet" href="https://wani-lumbumpetigo-tanantovea.updesa.online/build/assets/app-DsA4urly.css"><link rel="stylesheet" href="https://wani-lumbumpetigo-tanantovea.updesa.online/build/assets/app-DKaCiqoV.css"><script type="module" src="https://wani-lumbumpetigo-tanantovea.updesa.online/build/assets/app-BVmKpBPV.js"></script>    
+    <style>
+        [x-cloak] { display: none !important; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+    </style>
+<style>:root{--swal2-outline: 0 0 0 3px rgba(100, 150, 200, 0.5);--swal2-container-padding: 0.625em;--swal2-backdrop: rgba(0, 0, 0, 0.4);--swal2-backdrop-transition: background-color 0.15s;--swal2-width: 32em;--swal2-padding: 0 0 1.25em;--swal2-border: none;--swal2-border-radius: 0.3125rem;--swal2-background: white;--swal2-color: #545454;--swal2-show-animation: swal2-show 0.3s;--swal2-hide-animation: swal2-hide 0.15s forwards;--swal2-icon-zoom: 1;--swal2-icon-animations: true;--swal2-title-padding: 0.8em 1em 0;--swal2-html-container-padding: 1em 1.6em 0.3em;--swal2-input-border: 1px solid #d9d9d9;--swal2-input-border-radius: 0.1875em;--swal2-input-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;--swal2-input-background: transparent;--swal2-input-transition: border-color 0.2s, box-shadow 0.2s;--swal2-input-hover-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px transparent;--swal2-input-focus-border: 1px solid #b4dbed;--swal2-input-focus-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.06), 0 0 0 3px rgba(100, 150, 200, 0.5);--swal2-progress-step-background: #add8e6;--swal2-validation-message-background: #f0f0f0;--swal2-validation-message-color: #666;--swal2-footer-border-color: #eee;--swal2-footer-background: transparent;--swal2-footer-color: inherit;--swal2-timer-progress-bar-background: rgba(0, 0, 0, 0.3);--swal2-close-button-position: initial;--swal2-close-button-inset: auto;--swal2-close-button-font-size: 2.5em;--swal2-close-button-color: #ccc;--swal2-close-button-transition: color 0.2s, box-shadow 0.2s;--swal2-close-button-outline: initial;--swal2-close-button-box-shadow: inset 0 0 0 3px transparent;--swal2-close-button-focus-box-shadow: inset var(--swal2-outline);--swal2-close-button-hover-transform: none;--swal2-actions-justify-content: center;--swal2-actions-width: auto;--swal2-actions-margin: 1.25em auto 0;--swal2-actions-padding: 0;--swal2-actions-border-radius: 0;--swal2-actions-background: transparent;--swal2-action-button-transition: background-color 0.2s, box-shadow 0.2s;--swal2-action-button-hover: black 10%;--swal2-action-button-active: black 10%;--swal2-confirm-button-box-shadow: none;--swal2-confirm-button-border-radius: 0.25em;--swal2-confirm-button-background-color: #7066e0;--swal2-confirm-button-color: #fff;--swal2-deny-button-box-shadow: none;--swal2-deny-button-border-radius: 0.25em;--swal2-deny-button-background-color: #dc3741;--swal2-deny-button-color: #fff;--swal2-cancel-button-box-shadow: none;--swal2-cancel-button-border-radius: 0.25em;--swal2-cancel-button-background-color: #6e7881;--swal2-cancel-button-color: #fff;--swal2-toast-show-animation: swal2-toast-show 0.5s;--swal2-toast-hide-animation: swal2-toast-hide 0.1s forwards;--swal2-toast-border: none;--swal2-toast-box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.075), 0 1px 2px hsl(0deg 0% 0% / 0.075), 1px 2px 4px hsl(0deg 0% 0% / 0.075), 1px 3px 8px hsl(0deg 0% 0% / 0.075), 2px 4px 16px hsl(0deg 0% 0% / 0.075)}[data-swal2-theme=dark]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white);--swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.7)}@media(prefers-color-scheme: dark){[data-swal2-theme=auto]{--swal2-dark-theme-black: #19191a;--swal2-dark-theme-white: #e1e1e1;--swal2-background: var(--swal2-dark-theme-black);--swal2-color: var(--swal2-dark-theme-white);--swal2-footer-border-color: #555;--swal2-input-background: color-mix(in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10%);--swal2-validation-message-background: color-mix( in srgb, var(--swal2-dark-theme-black), var(--swal2-dark-theme-white) 10% );--swal2-validation-message-color: var(--swal2-dark-theme-white);--swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.7)}}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto !important}body.swal2-no-backdrop .swal2-container{background-color:rgba(0,0,0,0) !important;pointer-events:none}body.swal2-no-backdrop .swal2-container .swal2-popup{pointer-events:all}body.swal2-no-backdrop .swal2-container .swal2-modal{box-shadow:0 0 10px var(--swal2-backdrop)}body.swal2-toast-shown .swal2-container{box-sizing:border-box;width:360px;max-width:100%;background-color:rgba(0,0,0,0);pointer-events:none}body.swal2-toast-shown .swal2-container.swal2-top{inset:0 auto auto 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{inset:0 0 auto auto}body.swal2-toast-shown .swal2-container.swal2-top-start,body.swal2-toast-shown .swal2-container.swal2-top-left{inset:0 auto auto 0}body.swal2-toast-shown .swal2-container.swal2-center-start,body.swal2-toast-shown .swal2-container.swal2-center-left{inset:50% auto auto 0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{inset:50% auto auto 50%;transform:translate(-50%, -50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{inset:50% 0 auto auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-start,body.swal2-toast-shown .swal2-container.swal2-bottom-left{inset:auto auto 0 0}body.swal2-toast-shown .swal2-container.swal2-bottom{inset:auto auto 0 50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{inset:auto 0 0 auto}@media print{body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown){overflow-y:scroll !important}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop,.swal2-toast-shown) .swal2-container{position:static !important}}div:where(.swal2-container){display:grid;position:fixed;z-index:1060;inset:0;box-sizing:border-box;grid-template-areas:"top-start     top            top-end" "center-start  center         center-end" "bottom-start  bottom-center  bottom-end";grid-template-rows:minmax(min-content, auto) minmax(min-content, auto) minmax(min-content, auto);height:100%;padding:var(--swal2-container-padding);overflow-x:hidden;transition:var(--swal2-backdrop-transition);-webkit-overflow-scrolling:touch}div:where(.swal2-container).swal2-backdrop-show,div:where(.swal2-container).swal2-noanimation{background:var(--swal2-backdrop)}div:where(.swal2-container).swal2-backdrop-hide{background:rgba(0,0,0,0) !important}div:where(.swal2-container).swal2-top-start,div:where(.swal2-container).swal2-center-start,div:where(.swal2-container).swal2-bottom-start{grid-template-columns:minmax(0, 1fr) auto auto}div:where(.swal2-container).swal2-top,div:where(.swal2-container).swal2-center,div:where(.swal2-container).swal2-bottom{grid-template-columns:auto minmax(0, 1fr) auto}div:where(.swal2-container).swal2-top-end,div:where(.swal2-container).swal2-center-end,div:where(.swal2-container).swal2-bottom-end{grid-template-columns:auto auto minmax(0, 1fr)}div:where(.swal2-container).swal2-top-start>.swal2-popup{align-self:start}div:where(.swal2-container).swal2-top>.swal2-popup{grid-column:2;place-self:start center}div:where(.swal2-container).swal2-top-end>.swal2-popup,div:where(.swal2-container).swal2-top-right>.swal2-popup{grid-column:3;place-self:start end}div:where(.swal2-container).swal2-center-start>.swal2-popup,div:where(.swal2-container).swal2-center-left>.swal2-popup{grid-row:2;align-self:center}div:where(.swal2-container).swal2-center>.swal2-popup{grid-column:2;grid-row:2;place-self:center center}div:where(.swal2-container).swal2-center-end>.swal2-popup,div:where(.swal2-container).swal2-center-right>.swal2-popup{grid-column:3;grid-row:2;place-self:center end}div:where(.swal2-container).swal2-bottom-start>.swal2-popup,div:where(.swal2-container).swal2-bottom-left>.swal2-popup{grid-column:1;grid-row:3;align-self:end}div:where(.swal2-container).swal2-bottom>.swal2-popup{grid-column:2;grid-row:3;place-self:end center}div:where(.swal2-container).swal2-bottom-end>.swal2-popup,div:where(.swal2-container).swal2-bottom-right>.swal2-popup{grid-column:3;grid-row:3;place-self:end end}div:where(.swal2-container).swal2-grow-row>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-column:1/4;width:100%}div:where(.swal2-container).swal2-grow-column>.swal2-popup,div:where(.swal2-container).swal2-grow-fullscreen>.swal2-popup{grid-row:1/4;align-self:stretch}div:where(.swal2-container).swal2-no-transition{transition:none !important}div:where(.swal2-container)[popover]{width:auto;border:0}div:where(.swal2-container) div:where(.swal2-popup){display:none;position:relative;box-sizing:border-box;grid-template-columns:minmax(0, 100%);width:var(--swal2-width);max-width:100%;padding:var(--swal2-padding);border:var(--swal2-border);border-radius:var(--swal2-border-radius);background:var(--swal2-background);color:var(--swal2-color);font-family:inherit;font-size:1rem;container-name:swal2-popup}div:where(.swal2-container) div:where(.swal2-popup):focus{outline:none}div:where(.swal2-container) div:where(.swal2-popup).swal2-loading{overflow-y:hidden}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable{cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-draggable div:where(.swal2-icon){cursor:grab}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging{cursor:grabbing}div:where(.swal2-container) div:where(.swal2-popup).swal2-dragging div:where(.swal2-icon){cursor:grabbing}div:where(.swal2-container) h2:where(.swal2-title){position:relative;max-width:100%;margin:0;padding:var(--swal2-title-padding);color:inherit;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;overflow-wrap:break-word;cursor:initial}div:where(.swal2-container) div:where(.swal2-actions){display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:var(--swal2-actions-justify-content);width:var(--swal2-actions-width);margin:var(--swal2-actions-margin);padding:var(--swal2-actions-padding);border-radius:var(--swal2-actions-border-radius);background:var(--swal2-actions-background)}div:where(.swal2-container) div:where(.swal2-loader){display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 rgba(0,0,0,0) #2778c4 rgba(0,0,0,0)}div:where(.swal2-container) button:where(.swal2-styled){margin:.3125em;padding:.625em 1.1em;transition:var(--swal2-action-button-transition);border:none;box-shadow:0 0 0 3px rgba(0,0,0,0);font-weight:500}div:where(.swal2-container) button:where(.swal2-styled):not([disabled]){cursor:pointer}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm){border-radius:var(--swal2-confirm-button-border-radius);background:initial;background-color:var(--swal2-confirm-button-background-color);box-shadow:var(--swal2-confirm-button-box-shadow);color:var(--swal2-confirm-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):hover{background-color:color-mix(in srgb, var(--swal2-confirm-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm):active{background-color:color-mix(in srgb, var(--swal2-confirm-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny){border-radius:var(--swal2-deny-button-border-radius);background:initial;background-color:var(--swal2-deny-button-background-color);box-shadow:var(--swal2-deny-button-box-shadow);color:var(--swal2-deny-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):hover{background-color:color-mix(in srgb, var(--swal2-deny-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-deny):active{background-color:color-mix(in srgb, var(--swal2-deny-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel){border-radius:var(--swal2-cancel-button-border-radius);background:initial;background-color:var(--swal2-cancel-button-background-color);box-shadow:var(--swal2-cancel-button-box-shadow);color:var(--swal2-cancel-button-color);font-size:1em}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):hover{background-color:color-mix(in srgb, var(--swal2-cancel-button-background-color), var(--swal2-action-button-hover))}div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-cancel):active{background-color:color-mix(in srgb, var(--swal2-cancel-button-background-color), var(--swal2-action-button-active))}div:where(.swal2-container) button:where(.swal2-styled):focus-visible{outline:none;box-shadow:var(--swal2-action-button-focus-box-shadow)}div:where(.swal2-container) button:where(.swal2-styled)[disabled]:not(.swal2-loading){opacity:.4}div:where(.swal2-container) button:where(.swal2-styled)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-footer){margin:1em 0 0;padding:1em 1em 0;border-top:1px solid var(--swal2-footer-border-color);background:var(--swal2-footer-background);color:var(--swal2-footer-color);font-size:1em;text-align:center;cursor:initial}div:where(.swal2-container) .swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;grid-column:auto !important;overflow:hidden;border-bottom-right-radius:var(--swal2-border-radius);border-bottom-left-radius:var(--swal2-border-radius)}div:where(.swal2-container) div:where(.swal2-timer-progress-bar){width:100%;height:.25em;background:var(--swal2-timer-progress-bar-background)}div:where(.swal2-container) img:where(.swal2-image){max-width:100%;margin:2em auto 1em;cursor:initial}div:where(.swal2-container) button:where(.swal2-close){position:var(--swal2-close-button-position);inset:var(--swal2-close-button-inset);z-index:2;align-items:center;justify-content:center;width:1.2em;height:1.2em;margin-top:0;margin-right:0;margin-bottom:-1.2em;padding:0;overflow:hidden;transition:var(--swal2-close-button-transition);border:none;border-radius:var(--swal2-border-radius);outline:var(--swal2-close-button-outline);background:rgba(0,0,0,0);color:var(--swal2-close-button-color);font-family:monospace;font-size:var(--swal2-close-button-font-size);cursor:pointer;justify-self:end}div:where(.swal2-container) button:where(.swal2-close):hover{transform:var(--swal2-close-button-hover-transform);background:rgba(0,0,0,0);color:#f27474}div:where(.swal2-container) button:where(.swal2-close):focus-visible{outline:none;box-shadow:var(--swal2-close-button-focus-box-shadow)}div:where(.swal2-container) button:where(.swal2-close)::-moz-focus-inner{border:0}div:where(.swal2-container) div:where(.swal2-html-container){z-index:1;justify-content:center;margin:0;padding:var(--swal2-html-container-padding);overflow:auto;color:inherit;font-size:1.125em;font-weight:normal;line-height:normal;text-align:center;overflow-wrap:break-word;word-break:break-word;cursor:initial}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea),div:where(.swal2-container) select:where(.swal2-select),div:where(.swal2-container) div:where(.swal2-radio),div:where(.swal2-container) label:where(.swal2-checkbox){margin:1em 2em 3px}div:where(.swal2-container) input:where(.swal2-input),div:where(.swal2-container) input:where(.swal2-file),div:where(.swal2-container) textarea:where(.swal2-textarea){box-sizing:border-box;width:auto;transition:var(--swal2-input-transition);border:var(--swal2-input-border);border-radius:var(--swal2-input-border-radius);background:var(--swal2-input-background);box-shadow:var(--swal2-input-box-shadow);color:inherit;font-size:1.125em}div:where(.swal2-container) input:where(.swal2-input).swal2-inputerror,div:where(.swal2-container) input:where(.swal2-file).swal2-inputerror,div:where(.swal2-container) textarea:where(.swal2-textarea).swal2-inputerror{border-color:#f27474 !important;box-shadow:0 0 2px #f27474 !important}div:where(.swal2-container) input:where(.swal2-input):hover,div:where(.swal2-container) input:where(.swal2-file):hover,div:where(.swal2-container) textarea:where(.swal2-textarea):hover{box-shadow:var(--swal2-input-hover-box-shadow)}div:where(.swal2-container) input:where(.swal2-input):focus,div:where(.swal2-container) input:where(.swal2-file):focus,div:where(.swal2-container) textarea:where(.swal2-textarea):focus{border:var(--swal2-input-focus-border);outline:none;box-shadow:var(--swal2-input-focus-box-shadow)}div:where(.swal2-container) input:where(.swal2-input)::placeholder,div:where(.swal2-container) input:where(.swal2-file)::placeholder,div:where(.swal2-container) textarea:where(.swal2-textarea)::placeholder{color:#ccc}div:where(.swal2-container) .swal2-range{margin:1em 2em 3px;background:var(--swal2-background)}div:where(.swal2-container) .swal2-range input{width:80%}div:where(.swal2-container) .swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}div:where(.swal2-container) .swal2-range input,div:where(.swal2-container) .swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}div:where(.swal2-container) .swal2-input{height:2.625em;padding:0 .75em}div:where(.swal2-container) .swal2-file{width:75%;margin-right:auto;margin-left:auto;background:var(--swal2-input-background);font-size:1.125em}div:where(.swal2-container) .swal2-textarea{height:6.75em;padding:.75em}div:where(.swal2-container) .swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:var(--swal2-input-background);color:inherit;font-size:1.125em}div:where(.swal2-container) .swal2-radio,div:where(.swal2-container) .swal2-checkbox{align-items:center;justify-content:center;background:var(--swal2-background);color:inherit}div:where(.swal2-container) .swal2-radio label,div:where(.swal2-container) .swal2-checkbox label{margin:0 .6em;font-size:1.125em}div:where(.swal2-container) .swal2-radio input,div:where(.swal2-container) .swal2-checkbox input{flex-shrink:0;margin:0 .4em}div:where(.swal2-container) label:where(.swal2-input-label){display:flex;justify-content:center;margin:1em auto 0}div:where(.swal2-container) div:where(.swal2-validation-message){align-items:center;justify-content:center;margin:1em 0 0;padding:.625em;overflow:hidden;background:var(--swal2-validation-message-background);color:var(--swal2-validation-message-color);font-size:1em;font-weight:300}div:where(.swal2-container) div:where(.swal2-validation-message)::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}div:where(.swal2-container) .swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:1.25em auto;padding:0;background:rgba(0,0,0,0);font-weight:600}div:where(.swal2-container) .swal2-progress-steps li{display:inline-block;position:relative}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:var(--swal2-progress-step-background);color:#fff}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:var(--swal2-progress-step-background)}div:where(.swal2-container) .swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}div:where(.swal2-icon){position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:2.5em auto .6em;zoom:var(--swal2-icon-zoom);border:.25em solid rgba(0,0,0,0);border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;user-select:none}div:where(.swal2-icon) .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}div:where(.swal2-icon).swal2-error{border-color:#f27474;color:#f27474}div:where(.swal2-icon).swal2-error .swal2-x-mark{position:relative;flex-grow:1}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}@container swal2-popup style(--swal2-icon-animations:true){div:where(.swal2-icon).swal2-error.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-error.swal2-icon-show .swal2-x-mark{animation:swal2-animate-error-x-mark .5s}}div:where(.swal2-icon).swal2-warning{border-color:#f8bb86;color:#f8bb86}@container swal2-popup style(--swal2-icon-animations:true){div:where(.swal2-icon).swal2-warning.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-warning.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .5s}}div:where(.swal2-icon).swal2-info{border-color:#3fc3ee;color:#3fc3ee}@container swal2-popup style(--swal2-icon-animations:true){div:where(.swal2-icon).swal2-info.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-info.swal2-icon-show .swal2-icon-content{animation:swal2-animate-i-mark .8s}}div:where(.swal2-icon).swal2-question{border-color:#87adbd;color:#87adbd}@container swal2-popup style(--swal2-icon-animations:true){div:where(.swal2-icon).swal2-question.swal2-icon-show{animation:swal2-animate-error-icon .5s}div:where(.swal2-icon).swal2-question.swal2-icon-show .swal2-icon-content{animation:swal2-animate-question-mark .8s}}div:where(.swal2-icon).swal2-success{border-color:#a5dc86;color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;border-radius:50%}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}div:where(.swal2-icon).swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}div:where(.swal2-icon).swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-0.25em;left:-0.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}div:where(.swal2-icon).swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}div:where(.swal2-icon).swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}@container swal2-popup style(--swal2-icon-animations:true){div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-animate-success-line-tip .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-animate-success-line-long .75s}div:where(.swal2-icon).swal2-success.swal2-icon-show .swal2-success-circular-line-right{animation:swal2-rotate-success-circular-line 4.25s ease-in}}[class^=swal2]{-webkit-tap-highlight-color:rgba(0,0,0,0)}.swal2-show{animation:var(--swal2-show-animation)}.swal2-hide{animation:var(--swal2-hide-animation)}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{margin-right:initial;margin-left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}.swal2-toast{box-sizing:border-box;grid-column:1/4 !important;grid-row:1/4 !important;grid-template-columns:min-content auto min-content;padding:1em;overflow-y:hidden;border:var(--swal2-toast-border);background:var(--swal2-background);box-shadow:var(--swal2-toast-box-shadow);pointer-events:all}.swal2-toast>*{grid-column:2}.swal2-toast h2:where(.swal2-title){margin:.5em 1em;padding:0;font-size:1em;text-align:initial}.swal2-toast .swal2-loading{justify-content:center}.swal2-toast input:where(.swal2-input){height:2em;margin:.5em;font-size:1em}.swal2-toast .swal2-validation-message{font-size:1em}.swal2-toast div:where(.swal2-footer){margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-toast button:where(.swal2-close){grid-column:3/3;grid-row:1/99;align-self:center;width:.8em;height:.8em;margin:0;font-size:2em}.swal2-toast div:where(.swal2-html-container){margin:.5em 1em;padding:0;overflow:initial;font-size:1em;text-align:initial}.swal2-toast div:where(.swal2-html-container):empty{padding:0}.swal2-toast .swal2-loader{grid-column:1;grid-row:1/99;align-self:center;width:2em;height:2em;margin:.25em}.swal2-toast .swal2-icon{grid-column:1;grid-row:1/99;align-self:center;width:2em;min-width:2em;height:2em;margin:0 .5em 0 0}.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:bold}.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-toast div:where(.swal2-actions){justify-content:flex-start;height:auto;margin:0;margin-top:.5em;padding:0 .5em}.swal2-toast button:where(.swal2-styled){margin:.25em .5em;padding:.4em .6em;font-size:1em}.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;border-radius:50%}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-0.8em;left:-0.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-0.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}@container swal2-popup style(--swal2-icon-animations:true){.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{animation:swal2-toast-animate-success-line-tip .75s}.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{animation:swal2-toast-animate-success-line-long .75s}}.swal2-toast.swal2-show{animation:var(--swal2-toast-show-animation)}.swal2-toast.swal2-hide{animation:var(--swal2-toast-hide-animation)}@keyframes swal2-show{0%{transform:translate3d(0, -50px, 0) scale(0.9);opacity:0}100%{transform:translate3d(0, 0, 0) scale(1);opacity:1}}@keyframes swal2-hide{0%{transform:translate3d(0, 0, 0) scale(1);opacity:1}100%{transform:translate3d(0, -50px, 0) scale(0.9);opacity:0}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-0.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(0.4);opacity:0}50%{margin-top:1.625em;transform:scale(0.4);opacity:0}80%{margin-top:-0.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0deg);opacity:1}}@keyframes swal2-rotate-loading{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes swal2-animate-question-mark{0%{transform:rotateY(-360deg)}100%{transform:rotateY(0)}}@keyframes swal2-animate-i-mark{0%{transform:rotateZ(45deg);opacity:0}25%{transform:rotateZ(-25deg);opacity:.4}50%{transform:rotateZ(15deg);opacity:.8}75%{transform:rotateZ(-5deg);opacity:1}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-toast-show{0%{transform:translateY(-0.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(0.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0deg)}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-0.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}</style></head>
+<body class="text-gray-600 bg-gray-50 antialiased font-sans flex flex-col min-h-screen">
+
+    
+    <div class="bg-emerald-900 text-white py-2 text-xs md:text-sm relative z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-2 md:gap-0">
+            <div class="flex items-center gap-4">
+                                            </div>
+            <div class="flex items-center gap-3 text-emerald-100 text-[11px] md:text-xs">
+                <span>Senin - Jumat: 08.00 - 16.00</span>
+            </div>
+        </div>
+    </div>
+
+    
+    <nav class="sticky top-0 w-full z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                
+                <a href="/" class="flex-shrink-0 flex items-center gap-3 cursor-pointer group">
+                                            <div class="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center text-emerald-900 shadow-md group-hover:scale-105 transition-transform">
+                            <span class="font-serif font-bold text-lg">W</span>
+                        </div>
+                                        <div>
+                        <h1 class="font-bold text-lg md:text-xl text-emerald-900 leading-none font-serif uppercase tracking-tight">
+                            DESA Wani Lumbumpetigo
+                        </h1>
+                        <p class="text-[10px] md:text-xs text-emerald-600 font-medium tracking-wide uppercase">
+                            Kab. Kabupaten Donggala
+                        </p>
+                    </div>
+                </a>
+
+                
+                <div class="hidden md:flex space-x-6 lg:space-x-8 items-center">
+                    <a href="https://syam-id.netlify.app/beranda" class="text-sm font-semibold transition-colors text-emerald-700 border-b-2 border-emerald-600">
+                        Beranda
+                    </a>
+                    <a href="https://syam-id.netlify.app/profil" class="text-sm font-semibold transition-colors text-gray-600 hover:text-emerald-600">
+                        Profil
+                    </a>
+                    <a href="https://syam-id.netlify.app/kabardesa" class="text-sm font-semibold transition-colors text-gray-600 hover:text-emerald-600">
+                        Kabar Desa
+                    </a>
+                    <a href="https://syam-id.netlify.app/galeri" class="text-sm font-semibold transition-colors text-gray-600 hover:text-emerald-600">
+                        Galeri
+                    </a>
+                    <a href="https://syam-id.netlify.app/apak" class="text-sm font-semibold transition-colors text-gray-600 hover:text-emerald-600">
+                        Lapak
+                    </a>
+                    <a href="https://syam-id.netlify.app/apbdes" class="text-sm font-semibold transition-colors text-gray-600 hover:text-emerald-600">
+                        APBDes
+                    </a>
+
+                    
+                                    </div>
+
+                
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="/masuk" class="px-5 py-2.5 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-all shadow-md hover:shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                        Layanan Mandiri
+                    </a>
+                </div>
+
+                
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="text-gray-600 hover:text-emerald-600 focus:outline-none p-2">
+                        <svg id="menuIcon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        <svg id="closeIcon" class="h-6 w-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div id="mobileMenuDropdown" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-xl max-h-[80vh] overflow-y-auto">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="https://syam-id.netlify.app/beranda" class="block px-3 py-3 text-base font-medium rounded-md text-emerald-700 bg-emerald-50">Beranda</a>
+                <a href="https://syam-id.netlify.app/profil" class="block px-3 py-3 text-base font-medium rounded-md text-gray-700 hover:text-emerald-600 hover:bg-emerald-50">Profil Desa</a>
+                <a href="https://syam-id.netlify.app/kabardesa" class="block px-3 py-3 text-base font-medium rounded-md text-gray-700 hover:text-emerald-600 hover:bg-emerald-50">Kabar Desa</a>
+                <a href="https://syam-id.netlify.app/lapak" class="block px-3 py-3 text-base font-medium rounded-md text-gray-700 hover:text-emerald-600 hover:bg-emerald-50">Lapak Desa</a>
+                <a href="https://syam-id.netlify.app/apbdes" class="block px-3 py-3 text-base font-medium rounded-md text-gray-700 hover:text-emerald-600 hover:bg-emerald-50">Transparansi</a>
+
+                <div class="pt-4 mt-4 border-t border-gray-100">
+                    <a href="https://www.lumbumpetigo.berdesa.id/layanan-mandiri/masuk" class="block w-full text-center px-4 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 shadow-sm">
+                        Masuk Layanan Mandiri
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <main class="flex-grow">
+        
+    
+    
+    
+    <header class="relative pt-16 pb-20 lg:pt-24 lg:pb-32 overflow-hidden bg-gray-50">
+        <div class="absolute inset-0 opacity-30 z-0" style="background-image: linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px); background-size: 24px 24px;"></div>
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-emerald-50 to-transparent z-0"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
+            <div class="lg:w-1/2 text-center lg:text-left">
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-sm font-medium mb-6 border border-emerald-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-600 mr-2 animate-pulse"></span>
+                    Website Resmi Pemerintah Desa
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-gray-900 leading-tight mb-6">
+                    Membangun Desa <br>
+                    <span class="text-emerald-600">Cerdas &amp; Berbudaya</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                    Selamat datang di website resmi Desa Wani Lumbumpetigo. Dapatkan akses informasi publik, layanan administrasi online, dan kabar terbaru seputar pembangunan desa secara transparan.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                    <a href="https://www.lumbumpetigo.berdesa.id/layanan-mandiri/masuk" class="px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-200 transform hover:-translate-y-1">
+                        Urus Surat Online
+                    </a>
+                    <a href="https://syam-id.netlify.app/profil" class="px-8 py-4 bg-white text-emerald-800 font-semibold rounded-lg hover:bg-emerald-50 border border-emerald-200 transition-all flex items-center justify-center gap-2">
+                        Jelajahi Profil Desa
+                    </a>
+                </div>
+            </div>
+
+    
+<div class="lg:w-1/2 relative">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                    <div class="bg-gray-200 aspect-video w-full relative flex items-center justify-center bg-cover bg-center" style="background-image: url('https://res.cloudinary.com/dpr2vc3b0/image/upload/v1771509584/Kantor_Desa_Wani_Lumbumpetigo_bio3cs.jpg;fit=crop&amp;w=1000&amp;q=80');">
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100 hidden md:block">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500">Total Penduduk</p>
+                                <p class="text-lg font-bold text-gray-900">3,450 Jiwa</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    
+    <div class="bg-emerald-800 py-10 border-y border-emerald-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-emerald-700/50">
+                <div class="p-2">
+                    <p class="text-3xl font-bold text-white mb-1">45.2 <span class="text-sm text-emerald-300">181 Ha</span></p>
+                    <p class="text-emerald-200 text-sm">Luas Wilayah</p>
+                </div>
+                <div class="p-2">
+                    <p class="text-3xl font-bold text-white mb-1">372 KK</p>
+                    <p class="text-emerald-200 text-sm">Kepala Keluarga</p>
+                </div>
+                <div class="p-2">
+                    <p class="text-3xl font-bold text-white mb-1">NIHIL</p>
+                    <p class="text-emerald-200 text-sm">Rukun Tetangga</p>
+                </div>
+                <div class="p-2">
+                    <p class="text-3xl font-bold text-white mb-1">3</p>
+                    <p class="text-emerald-200 text-sm">Dusun</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <section id="profil" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12 bg-white rounded-2xl p-6 md:p-12 border border-gray-100 shadow-xl">
+                <div class="w-full md:w-1/3 flex justify-center">
+                    <div class="relative">
+                        <div class="w-64 h-80 bg-gray-200 rounded-lg overflow-hidden shadow-md">
+                      <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
+                                      <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767168283/download_9_jsnydx.jpg" alt="Foto Kepala Desa" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                                                    </div>
+                        <div class="absolute -bottom-4 -right-4 bg-yellow-400 text-emerald-900 px-6 py-2 rounded-lg font-bold shadow-lg text-sm">
+                            Kepala Desa
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3">
+                    <h2 class="text-3xl font-serif font-bold text-gray-900 mb-4">Sambutan Kepala Desa</h2>
+                    <p class="text-emerald-600 font-medium mb-6">Bapak Kepala Desa</p>
+                    <div class="prose text-gray-600 leading-relaxed mb-6">
+                                                    <p>"Assalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+                            <p>Selamat datang di website resmi Pemerintah Desa Wani Lumbumpetigo. Website ini kami hadirkan sebagai wujud komitmen kami dalam mewujudkan transparansi informasi dan peningkatan pelayanan publik. Melalui media ini, kami berharap masyarakat dapat lebih mudah mengakses informasi pembangunan serta mengurus administrasi kependudukan."</p>
+                                            </div>
+                    <div class="h-12 w-32 border-b-2 border-dashed border-gray-300 opacity-50 flex items-end pb-1 text-xs italic text-gray-400">Tanda Tangan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="layanan" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm">Pelayanan Terpadu</span>
+                <h2 class="text-3xl font-serif font-bold text-gray-900 mt-2 mb-4">Layanan Administrasi Desa</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Kami siap melayani kebutuhan administrasi Anda dengan cepat dan mudah.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border-t-4 border-emerald-500 group">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 011.414.586l5.414 5.414a1 1 0 01.586 1.414V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Surat Pengantar</h3>
+                    <p class="text-gray-500 mb-6 text-sm">Pembuatan Surat Pengantar KTP, KK, SKCK, dan surat keterangan lainnya secara mandiri.</p>
+                    <a href="https://www.lumbumpetigo.berdesa.id/layanan-mandiri/masuk" class="text-emerald-600 font-semibold hover:text-emerald-700 flex items-center gap-2 text-sm">
+                        Buat Surat <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border-t-4 border-blue-500 group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Data Kependudukan</h3>
+                    <p class="text-gray-500 mb-6 text-sm">Cek data kependudukan, mutasi penduduk, kelahiran, dan kematian.</p>
+                    <a href="https://syam.digital/penduduk2025.html" class="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-2 text-sm">
+                        Cek Data <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border-t-4 border-yellow-500 group">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-lg flex items-center justify-center text-yellow-600 mb-6 group-hover:bg-yellow-500 group-hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Lapor &amp; Pengaduan</h3>
+                    <p class="text-gray-500 mb-6 text-sm">Saluran aspirasi dan pengaduan masyarakat untuk pembangunan desa yang lebih baik.</p>
+                    <a href="https://www.lumbumpetigo.berdesa.id/layanan-mandiri/masuk" class="text-yellow-600 font-semibold hover:text-yellow-700 flex items-center gap-2 text-sm">
+                        Kirim Aduan <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="berita" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-serif font-bold text-gray-900 mb-2">Kabar Desa Terbaru</h2>
+                    <p class="text-gray-500">Ikuti perkembangan kegiatan dan informasi terkini.</p>
+                </div>
+                <a href="https://syam-id.netlify.app/kabardesa" class="hidden md:block text-emerald-600 font-semibold hover:underline">Lihat Semua Berita →</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                                    <article class="flex flex-col group">
+                        <div class="relative overflow-hidden rounded-xl mb-4 h-56 bg-gray-200 group">
+                       <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1771510434/20240116_175748_krhtni.jpg" alt="Kegiatan"
+                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">Gotong Royong</div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                            <span>18 Feb 2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                            <a href="#">Gotong Royong Bersih Desa Menyambut Musim Panen</a>
+                        </h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">Warga Desa antusias mengikuti kegiatan kerja bakti...</p>
+                    </article>
+
+                    <article class="flex flex-col group">
+
+                        <div class="relative overflow-hidden rounded-xl mb-4 h-56 bg-gray-200 group">
+                       <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1771509584/Kantor_Desa_Wani_Lumbumpetigo_bio3cs.jpg" alt="Musrenbang"
+                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">Musrenbang</div>
+                        </div>
+                        <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                            <span>15 Feb 2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                            <a href="#">Musyawarah Perencanaan Pembangunan Desa</a>
+                        </h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">Pemerintah Desa menggelar musyawarah untuk penetapan prioritas...</p>
+                    </article>
+
+
+
+                    <article class="flex flex-col group">
+                         <div class="relative overflow-hidden rounded-xl mb-4 h-56 bg-gray-200 group">
+                       <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1771511319/lansia_h4rkj2.jpg" alt="Kesehatan"
+                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">Kesehatan</div>
+                        </div>
+
+                        <div class="flex items-center gap-4 text-xs text-gray-400 mb-3">
+                            <span>10 Feb 2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                            <a href="#">Jadwal Posyandu Balita &amp; Lansia</a>
+                        </h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">Pemeriksaan kesehatan gratis dan pemberian vitamin A...</p>
+                    </article>
+                            </div>
+            
+            <div class="mt-8 text-center md:hidden">
+                <a href="https://syam-id.netlify.app/kabardesa" class="inline-block px-6 py-3 border border-emerald-600 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-50">Lihat Semua Berita</a>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="pasar" class="py-20 bg-emerald-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-emerald-600 font-bold tracking-wider uppercase text-sm">Ekonomi Digital</span>
+                <h2 class="text-3xl font-serif font-bold text-gray-900 mt-2 mb-4">Lapak Produk Desa</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Dukung UMKM lokal dengan membeli produk asli dari BUMDes dan warga desa kami.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    <div class="col-span-full py-16 text-center bg-white rounded-xl border-2 border-dashed border-emerald-100">
+                        <div class="inline-flex items-center justify-center w-20 h-20 bg-emerald-50 rounded-full mb-6">
+                            <svg class="w-10 h-10 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900">Belum ada produk</h3>
+                        <p class="text-gray-500 mt-2">Nantikan produk unggulan dari desa kami segera.</p>
+                    </div>
+                            </div>
+
+            <div class="mt-12 text-center">
+                <a href="https://syam-id.netlify.app/lapak" class="inline-flex items-center gap-2 px-8 py-3 bg-white border border-emerald-200 text-emerald-700 font-semibold rounded-lg hover:bg-emerald-600 hover:text-white hover:border-emerald-600 transition-all shadow-sm hover:shadow-lg transform hover:-translate-y-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    Jelajahi Semua Produk
+                </a>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    
+    <footer class="bg-emerald-900 text-white pt-16 pb-8 border-t border-emerald-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-emerald-900 shadow-lg">
+                                                            <span class="font-bold">W</span>
+                                                    </div>
+                        <h3 class="font-serif font-bold text-lg tracking-wider">PEMDES WANI LUMBUMPETIGO</h3>
+                    </div>
+                    <p class="text-emerald-200 text-sm leading-relaxed mb-6">
+                        Website resmi Pemerintah Desa sebagai wujud transparansi dan peningkatan pelayanan publik.
+                    </p>
+                    
+                    <div class="flex space-x-3">
+                                                                    </div>
+                </div>
+
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-emerald-300 font-serif">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-emerald-100 text-sm">
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-emerald-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <span>Kecamatan Tanantovea, Kab. Kabupaten Donggala</span>
+                        </li>
+                                                                    </ul>
+                </div>
+
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-emerald-300 font-serif">Jelajahi</h4>
+                    <ul class="space-y-2 text-emerald-100 text-sm">
+                        <li><a href="https://syam-id.netlify.app/profil" class="hover:text-white hover:translate-x-1 transition-all inline-block">Profil Pemerintahan</a></li>
+                        <li><a href="https://syam-id.netlify.app/apbdes" class="hover:text-white hover:translate-x-1 transition-all inline-block">Transparansi Anggaran</a></li>
+                        <li><a href="https://syam-id.netlify.app/kabardesa" class="hover:text-white hover:translate-x-1 transition-all inline-block">Kabar Desa</a></li>
+                        <li><a href="https://syam-id.netlify.app/lapak" class="hover:text-white hover:translate-x-1 transition-all inline-block">Produk Hukum &amp; Pasar</a></li>
+                    </ul>
+                </div>
+
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-emerald-300 font-serif">Jam Pelayanan</h4>
+                    <div class="bg-emerald-800 p-4 rounded-lg text-sm text-emerald-100 border border-emerald-700/50">
+                        <div class="flex justify-between mb-2">
+                            <span>Senin - Kamis</span>
+                            <span>08:00 - 16:00</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span>Jumat</span>
+                            <span>08:00 - 15:00</span>
+                        </div>
+                        <div class="flex justify-between border-t border-emerald-700 pt-2 mt-2">
+                            <span>Sabtu - Minggu</span>
+                            <span class="text-red-300 font-semibold">Tutup</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-emerald-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-emerald-400">
+                <p>© 2026 Pemerintah Desa Wani Lumbumpetigo. Hak Cipta Dilindungi.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white">Kebijakan Privasi</a>
+                    <a href="https://syam-id.netlify.app/feed" target="_blank" class="hover:text-white">Peta Situs</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+    <style>
+    @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    .animate-marquee {
+        display: inline-block;
+        animation: marquee 20s linear infinite;
+    }
+</style>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Menu Toggle
+            const btn = document.getElementById('mobileMenuBtn');
+            const menu = document.getElementById('mobileMenuDropdown');
+            const menuIcon = document.getElementById('menuIcon');
+            const closeIcon = document.getElementById('closeIcon');
+            
+            if(btn && menu) {
+                btn.addEventListener('click', function() {
+                    const isHidden = menu.classList.contains('hidden');
+                    if (isHidden) {
+                        menu.classList.remove('hidden');
+                        menuIcon.classList.add('hidden');
+                        closeIcon.classList.remove('hidden');
+                    } else {
+                        menu.classList.add('hidden');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Navbar Scroll Effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.replace('bg-white/95', 'bg-white/100');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.replace('bg-white/100', 'bg-white/95');
+                }
+            });
+        });
+    </script>
+
+</body>
