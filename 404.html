@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>404 - File Not Found | Syam Digital</title>
-
-  <meta name="description" content="Halaman yang Anda cari tidak ditemukan. Kembali ke beranda Syam Digital untuk menjelajahi informasi dan layanan digital.">
+  <title>404 - Halaman Tidak Ditemukan | Syam Digital</title>
+  <meta name="description" content="Halaman tidak ditemukan. Kembali ke beranda Syam Digital.">
 
   <style>
     * {
@@ -15,280 +13,96 @@
       box-sizing: border-box;
     }
 
-    :root {
-      --primary: #00c6ff;
-      --secondary: #0072ff;
-      --text: #ffffff;
-      --muted: #cbd5e1;
-      --glass: rgba(255, 255, 255, 0.10);
-      --border: rgba(255, 255, 255, 0.18);
-    }
-
     body {
       min-height: 100vh;
-      min-height: 100dvh; /* Menggunakan dvh untuk mobile browser yang lebih akurat */
-      font-family: Arial, Helvetica, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,198,255,.20), transparent 30%),
-        radial-gradient(circle at 80% 80%, rgba(0,114,255,.25), transparent 30%),
-        linear-gradient(135deg, #020617, #0f172a 50%, #001d3d);
+      min-height: 100dvh;
+      font-family: system-ui, -apple-system, sans-serif;
+      color: #f8fafc;
+      background: radial-gradient(circle at 50% 30%, #0f172a, #020617);
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
-      overflow-y: auto;
-      position: relative;
-      padding: 20px 12px;
-    }
-
-    /* Background bubbles - Disesuaikan agar tidak memicu scrollbar di HP */
-    body::before,
-    body::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(2px);
-      opacity: .35;
-      animation: floating 8s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    body::before {
-      width: clamp(180px, 30vw, 280px);
-      height: clamp(180px, 30vw, 280px);
-      background: var(--primary);
-      top: -80px;
-      left: -80px;
-    }
-
-    body::after {
-      width: clamp(220px, 35vw, 350px);
-      height: clamp(220px, 35vw, 350px);
-      background: var(--secondary);
-      right: -100px;
-      bottom: -100px;
-      animation-delay: -3s;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 900px;
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      margin: auto;
+      padding: 24px 16px;
     }
 
     .card {
-      padding: clamp(25px, 6vw, 55px) clamp(16px, 4vw, 35px);
-      border: 1px solid var(--border);
-      border-radius: clamp(16px, 4vw, 30px);
-      background: var(--glass);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        inset 0 1px 0 rgba(255,255,255,.12);
-      animation: appear .8s ease-out;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      padding: 40px 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: clamp(15px, 3vw, 25px);
-      font-size: clamp(15px, 2.5vw, 18px);
+      gap: 8px;
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .brand-icon {
-      width: clamp(34px, 5vw, 42px);
-      height: clamp(34px, 5vw, 42px);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 8px 25px rgba(0,198,255,.30);
+      letter-spacing: 1.5px;
+      color: #38bdf8;
+      margin-bottom: 20px;
     }
 
     .error-code {
-      font-size: clamp(80px, 20vw, 200px);
-      line-height: .8;
+      font-size: clamp(80px, 18vw, 120px);
       font-weight: 900;
-      letter-spacing: clamp(-8px, -1.5vw, -4px);
-      background: linear-gradient(
-        135deg,
-        #ffffff 10%,
-        #00c6ff 45%,
-        #0072ff 90%
-      );
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff, #38bdf8);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 20px 60px rgba(0,198,255,.15);
-      animation: float404 4s ease-in-out infinite;
-      word-break: keep-all;
-    }
-
-    .file-icon {
-      font-size: clamp(32px, 5vw, 42px);
-      margin: clamp(15px, 3vw, 30px) 0 12px;
-      animation: bounce 2.5s ease-in-out infinite;
+      margin-bottom: 12px;
     }
 
     h1 {
-      font-size: clamp(22px, 4.5vw, 42px);
-      margin-bottom: 12px;
-      font-weight: 800;
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      font-size: clamp(14px, 2vw, 17px);
-      color: var(--muted);
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-
-    .description {
-      max-width: 650px;
-      margin: auto;
-      color: #94a3b8;
-      line-height: 1.7;
-      font-size: clamp(13px, 1.8vw, 15px);
-    }
-
-    .highlight {
-      color: #fff;
+      font-size: clamp(20px, 4vw, 26px);
       font-weight: 700;
+      margin-bottom: 12px;
     }
 
-    .message {
-      margin: clamp(18px, 3vw, 25px) auto;
-      padding: clamp(12px, 2.5vw, 18px) clamp(15px, 3vw, 22px);
-      max-width: 600px;
-      border-radius: 16px;
-      background: rgba(0,198,255,.07);
-      border: 1px solid rgba(0,198,255,.15);
-      color: #dbeafe;
+    p {
+      color: #94a3b8;
+      font-size: 15px;
       line-height: 1.6;
-      font-size: clamp(13px, 1.8vw, 15px);
+      margin-bottom: 28px;
     }
 
     .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 8px;
-      padding: 14px 28px;
-      width: auto;
-      max-width: 100%;
-      color: #fff;
+      padding: 12px 28px;
+      color: #0f172a;
+      background: #38bdf8;
       text-decoration: none;
-      font-weight: 700;
-      font-size: clamp(14px, 2vw, 16px);
-      border-radius: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      box-shadow: 0 12px 30px rgba(0,114,255,.35);
-      transition: all .3s ease;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 99px;
+      transition: all 0.2s ease;
     }
 
     .button:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 18px 40px rgba(0,198,255,.35);
-    }
-
-    .button:active {
-      transform: scale(.97);
-    }
-
-    .tagline {
-      margin-top: clamp(20px, 4vw, 30px);
-      font-size: clamp(12px, 1.8vw, 14px);
-      color: #94a3b8;
-      font-style: italic;
+      background: #7dd3fc;
+      transform: translateY(-2px);
     }
 
     .footer {
-      margin-top: clamp(18px, 3vw, 25px);
-      font-size: clamp(11px, 1.6vw, 13px);
-      color: #64748b;
-      line-height: 1.5;
+      margin-top: 32px;
+      font-size: 12px;
+      color: #475569;
     }
 
-    .footer strong {
-      color: #94a3b8;
-    }
-
-    /* Decorative dots - Tersembunyi di layar sangat kecil agar tidak berantakan */
-    .dot {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #00c6ff;
-      opacity: .6;
-      animation: pulse 3s infinite;
-      pointer-events: none;
-    }
-
-    .dot:nth-child(1) { top: 10%; left: 8%; }
-    .dot:nth-child(2) { top: 15%; right: 10%; animation-delay: 1s; }
-    .dot:nth-child(3) { bottom: 12%; left: 10%; animation-delay: 2s; }
-    .dot:nth-child(4) { bottom: 10%; right: 8%; animation-delay: .5s; }
-
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(.97);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes float404 {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    @keyframes floating {
-      0%, 100% { transform: translate(0,0); }
-      50% { transform: translate(20px,30px); }
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: .3; }
-      50% { transform: scale(2); opacity: .8; }
-    }
-
-    /* Penyesuaian Media Queries Khusus */
     @media (max-width: 480px) {
+      .card {
+        padding: 32px 16px;
+      }
       .button {
-        width: 100%; /* Tombol memenuhi lebar layar pada ponsel kecil */
-      }
-      
-      .dot {
-        display: none; /* Sembunyikan titik dekorasi di layar HP mini */
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
+        width: 100%;
       }
     }
   </style>
@@ -296,63 +110,24 @@
 
 <body>
 
-  <!-- Decorative elements -->
-  <span class="dot"></span>
-  <span class="dot"></span>
-  <span class="dot"></span>
-  <span class="dot"></span>
+  <main class="card">
+    <div class="brand">✦ SYAM DIGITAL</div>
+    
+    <div class="error-code">404</div>
+    
+    <h1>Halaman Tidak Ditemukan</h1>
+    
+    <p>
+      Maaf, halaman yang Anda cari mungkin telah dipindahkan atau tidak lagi tersedia.
+    </p>
 
-  <main class="container">
+    <a href="https://www.syams.web.id/" class="button">
+      Kembali ke Beranda
+    </a>
 
-    <section class="card">
-
-      <!-- Brand -->
-      <div class="brand">
-        <div class="brand-icon">✦</div>
-        <span>SYAM DIGITAL</span>
-      </div>
-
-      <!-- Error -->
-      <div class="error-code">404</div>
-
-      <div class="file-icon">📄</div>
-
-      <h1>File Not Found</h1>
-
-      <p class="subtitle">
-        Oops! Halaman yang Anda cari tidak ditemukan.
-      </p>
-
-      <p class="description">
-        Sepertinya halaman yang Anda tuju sedang
-        <span class="highlight">dipindahkan, diperbarui,</span>
-        atau mungkin alamatnya sudah tidak tersedia.
-      </p>
-
-      <div class="message">
-        🔍 Jangan khawatir — tidak ada yang hilang selamanya.
-        <br>
-        Silakan kembali ke beranda <strong>Syam Digital</strong>
-        dan lanjutkan menjelajahi berbagai informasi,
-        layanan, dan karya digital yang tersedia.
-      </div>
-
-      <!-- Button -->
-      <a href="https://www.syams.web.id/" class="button">
-        ← Kembali ke Beranda
-      </a>
-
-      <div class="tagline">
-        ✨ Tetap terhubung. Tetap berkarya. Tetap digital.
-      </div>
-
-      <div class="footer">
-        <strong>Syam Digital</strong><br>
-        Solusi Digital untuk Informasi, Kreativitas & Pelayanan
-      </div>
-
-    </section>
-
+    <div class="footer">
+      &copy; Syam Digital
+    </div>
   </main>
 
 </body>
