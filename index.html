@@ -1,111 +1,1596 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desa Wani Lumbumpetigo | Digital</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com" rel="stylesheet">
-</head>
-<body class="bg-slate-50 font-sans text-slate-800">
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Desa Wani Lumbumpetigo</title>
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/di8stbg60/image/upload/v1763356194/Lambang_Kabupaten_Donggala_1_cvywgs.png">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <!-- NAVIGATION -->
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white shadow-lg">
-                    <i class="fas fa-mosque"></i>
-                </div>
-                <span class="font-bold text-xl tracking-tight">Wani <span class="text-blue-600">Lumbumpetigo</span></span>
-            </div>
-            <div class="hidden md:flex gap-8 font-medium">
-                <a href="#" class="hover:text-blue-600 transition">Profil</a>
-                <a href="#" class="hover:text-blue-600 transition">Layanan</a>
-                <a href="#" class="hover:text-blue-600 transition">Wisata</a>
-                <a href="https://wanilumbumpetigo.digitaldesa.id" class="bg-blue-600 text-white px-5 py-2 rounded-full hover:bg-blue-700 transition shadow-md">Layanan Mandiri</a>
-            </div>
-        </div>
-    </nav>
+    .gradient-bg {
+      background: linear-gradient(135deg, #1a1a2e 0%, #8b0000 100%);
+    }
 
-    <!-- HERO SECTION -->
-    <header class="relative bg-slate-900 text-white py-24 px-4 overflow-hidden">
-        <div class="absolute inset-0 opacity-40">
-            <img src="https://images.unsplash.com" alt="Sawah" class="w-full h-full object-cover">
-        </div>
-        <div class="relative max-w-4xl mx-auto text-center">
-            <span class="bg-blue-600/30 text-blue-300 px-4 py-1 rounded-full text-sm font-semibold mb-6 inline-block border border-blue-500/30">Kecamatan Tanantovea</span>
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">Membangun Desa Digital dari Jantung Donggala</h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto">Selamat datang di portal resmi Desa Wani Lumbumpetigo. Pusat informasi pelayanan publik, transparansi, dan potensi desa.</p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#statistik" class="bg-white text-slate-900 px-8 py-3 rounded-xl font-bold hover:bg-slate-100 transition shadow-xl">Jelajahi Desa</a>
-                <a href="#" class="bg-transparent border-2 border-white/30 px-8 py-3 rounded-xl font-bold hover:bg-white/10 transition">Video Profil</a>
-            </div>
-        </div>
-    </header>
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-    <!-- STATISTIK (DUMMY DATA) -->
-    <section id="statistik" class="py-16 max-w-6xl mx-auto px-4">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
-                <p class="text-3xl font-bold text-blue-600 mb-1">1.465</p>
-                <p class="text-slate-500 text-sm font-medium uppercase">Penduduk</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
-                <p class="text-3xl font-bold text-blue-600 mb-1">3</p>
-                <p class="text-slate-500 text-sm font-medium uppercase">Dusun</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
-                <p class="text-3xl font-bold text-blue-600 mb-1">426</p>
-                <p class="text-slate-500 text-sm font-medium uppercase">Kepala Keluarga</p>
-            </div>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
-                <p class="text-3xl font-bold text-blue-600 mb-1">24 Jam</p>
-                <p class="text-slate-500 text-sm font-medium uppercase">Akses Online</p>
-            </div>
-        </div>
-    </section>
+    .card-hover:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
 
-    <!-- FEATURE SECTION -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Layanan Digital Unggulan</h2>
-                <p class="text-slate-500">Kemudahan administrasi bagi warga dalam genggaman</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-10">
-                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-blue-600 hover:text-white transition duration-500">
-                    <i class="fas fa-file-signature text-3xl text-blue-600 group-hover:text-white mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3">Persuratan Online</h3>
-                    <p class="opacity-80">Urus surat domisili, keterangan usaha, dan lainnya tanpa harus antre lama.</p>
-                </div>
-                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-blue-600 hover:text-white transition duration-500">
-                    <i class="fas fa-bullhorn text-3xl text-blue-600 group-hover:text-white mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3">Pengaduan Warga</h3>
-                    <p class="opacity-80">Sampaikan aspirasi atau keluhan langsung ke perangkat desa secara transparan.</p>
-                </div>
-                <div class="group p-8 rounded-3xl bg-slate-50 hover:bg-blue-600 hover:text-white transition duration-500">
-                    <i class="fas fa-store text-3xl text-blue-600 group-hover:text-white mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3">UMKM Desa</h3>
-                    <p class="opacity-80">Promosikan produk lokal Wani Lumbumpetigo ke pasar yang lebih luas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    .smooth-scroll {
+      scroll-behavior: smooth;
+    }
 
-    <!-- FOOTER -->
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-                <p class="font-bold text-white">&copy; 2024 Pemerintah Desa Wani Lumbumpetigo</p>
-                <p class="text-sm">Jl. Kayuriva, Kec. Tanantovea, Kab. Donggala, Sulawesi Tengah</p>
-            </div>
-            <div class="flex gap-6 text-xl">
-                <a href="#" class="hover:text-white"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="hover:text-white"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:wani.lumbumpetigo10@gmail.com" class="hover:text-white"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-    </footer>
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease;
+    }
 
-</body>
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .section-fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .mobile-menu.active {
+      max-height: 500px;
+    }
+
+    .dropdown-container:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dropdown-container:hover .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      z-index: 50;
+    }
+
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 12px 28px rgba(249, 115, 22, 0.6);
+    }
+
+    .back-to-top:active {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .back-to-top svg {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+
+    .back-to-top:hover svg {
+      animation: none;
+      transform: translateY(-3px);
+    }
+
+    .whatsapp-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+      z-index: 999;
+    }
+
+    .whatsapp-button.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .whatsapp-button:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 12px 28px rgba(37, 211, 102, 0.6);
+    }
+
+    .whatsapp-button:active {
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .whatsapp-button svg {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .whatsapp-button:hover svg {
+      animation: none;
+      transform: scale(1.15);
+    }
+
+    .clickable-image {
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .clickable-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #imageModal {
+      backdrop-filter: blur(5px);
+    }
+
+    #imageModal.active {
+      display: flex !important;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full smooth-scroll" style="font-family: 'Inter', 'Segoe UI', sans-serif;">
+  <div class="w-full h-full overflow-auto"><!-- WhatsApp Button --> <a href="https://wa.me/6282345678901?text=Halo%20Desa%20Wani%20Lumbumpetigo" target="_blank" rel="noopener noreferrer" id="whatsappBtn" class="whatsapp-button" aria-label="Hubungi via WhatsApp">
+    <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg></a> <!-- Back to Top Button --> <button id="backToTop" class="back-to-top" aria-label="Kembali ke atas">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
+    </svg></button> <!-- Navigation -->
+   <nav class="gradient-bg text-white fixed w-full top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="flex justify-between items-center py-4">
+      <div class="flex items-center space-x-3"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1741455583/A2_ylqowm.png" alt="Logo Kabupaten Donggala" class="w-12 h-12 object-contain" onerror="this.style.display='none';">
+       <div>
+        <h1 id="nav-village-name" class="text-xl font-bold">Desa Wani Lumbumpetigo</h1>
+        <p id="nav-tagline" class="text-xs opacity-90">Kecamatan Tanantovea - Kabupaten Donggala</p>
+       </div>
+      </div><!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-8 items-center"><a href="#beranda" class="nav-link text-sm font-medium">Beranda</a> <a href="#tentang" class="nav-link text-sm font-medium">Tentang</a> <a href="#struktur" class="nav-link text-sm font-medium">Struktur</a>
+       <div class="relative dropdown-container"><button class="nav-link text-sm font-medium flex items-center space-x-1 dropdown-trigger"> <span>Pemerintahan</span>
+         <svg class="w-4 h-4 transition-transform dropdown-arrow" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+         </svg></button>
+        <div class="dropdown-menu absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl py-2 min-w-[200px] opacity-0 invisible transition-all"><a href="https://www.lumbumpetigo.site/pemdes" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition"> Pemdes </a> <a href="https://www.lumbumpetigo.site/tupoksi" target="_blank" rel="noopener noreferrer" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-50 hover:text-purple-600 transition"> Tupoksi </a>
+        </div>
+       </div><a href="#layanan" class="nav-link text-sm font-medium">Layanan</a> <a href="#berita" class="nav-link text-sm font-medium">Berita</a> <a href="#galeri" class="nav-link text-sm font-medium">Galeri</a> <a href="#kontak" class="nav-link text-sm font-medium">Kontak</a>
+      </div><!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+       </svg></button>
+     </div><!-- Mobile Menu -->
+     <div id="mobile-menu" class="mobile-menu md:hidden pb-4"><a href="#beranda" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Beranda</a> <a href="#tentang" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Tentang</a> <a href="#struktur" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Struktur Organisasi</a>
+      <div class="mobile-dropdown"><button class="mobile-dropdown-trigger w-full text-left py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition flex items-center justify-between"> <span>Pemerintahan</span>
+        <svg class="w-4 h-4 transition-transform mobile-dropdown-arrow" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg></button>
+       <div class="mobile-dropdown-content hidden pl-4"><a href="https://www.lumbumpetigo.site/pemdes" target="_blank" rel="noopener noreferrer" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition text-sm">Pemdes</a> <a href="https://www.lumbumpetigo.site/tupoksi" target="_blank" rel="noopener noreferrer" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition text-sm">Tupoksi</a>
+       </div>
+      </div><a href="#layanan" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Layanan</a> <a href="#berita" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Berita</a> <a href="#galeri" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Galeri</a> <a href="#kontak" class="block py-2 px-4 hover:bg-white hover:bg-opacity-20 rounded transition">Kontak</a>
+     </div>
+    </div>
+   </nav><!-- Hero Section -->
+   <section id="beranda" class="relative pt-20 pb-32 px-4" style="background-image: url('https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766848611/KANTOR_DESA_jk43sf.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(26, 26, 46, 0.85) 0%, rgba(74, 4, 4, 0.85) 100%);"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+     <div class="text-center text-white py-20 section-fade-in">
+      <h2 id="hero-title" class="text-5xl md:text-6xl font-bold mb-6">Selamat Datang di Desa Wani Lumbumpetigo</h2>
+      <p id="hero-description" class="text-xl md:text-2xl mb-12 opacity-90 max-w-3xl mx-auto">Desa di Sulawesi Tengah yang berkembang dengan potensi alam, pertanian, dan masyarakat yang gotong royong membangun masa depan bersama</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center"><a href="#layanan" class="bg-white text-purple-700 px-8 py-4 rounded-full font-semibold hover:bg-opacity-90 transition shadow-lg">Layanan Kami</a> <a href="#tentang" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-700 transition">Pelajari Lebih Lanjut</a>
+      </div>
+     </div>
+    </div>
+   </section><!-- Statistik -->
+   <section class="py-16 px-4 -mt-16 relative z-10" style="background-color: #16213e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg p-6 text-white text-center card-hover border border-red-900">
+       <div class="text-4xl font-bold mb-2">
+        1.455
+       </div>
+       <div class="text-sm opacity-90">
+        Jumlah Penduduk
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-red-900 to-red-950 rounded-xl shadow-lg p-6 text-white text-center card-hover border border-red-800">
+       <div class="text-4xl font-bold mb-2">
+        411
+       </div>
+       <div class="text-sm opacity-90">
+        Kepala Keluarga
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-gray-800 to-red-950 rounded-xl shadow-lg p-6 text-white text-center card-hover border border-red-900">
+       <div class="text-4xl font-bold mb-2">
+        782
+       </div>
+       <div class="text-sm opacity-90">
+        Laki-laki
+       </div>
+      </div>
+      <div class="bg-gradient-to-br from-red-950 to-gray-900 rounded-xl shadow-lg p-6 text-white text-center card-hover border border-red-900">
+       <div class="text-4xl font-bold mb-2">
+        673
+       </div>
+       <div class="text-sm opacity-90">
+        Perempuan
+       </div>
+      </div>
+     </div><!-- Data per Dusun -->
+     <div class="bg-gradient-to-br from-gray-900 to-gray-950 rounded-2xl shadow-xl p-8 border border-red-900">
+      <h3 class="text-2xl font-bold text-gray-200 mb-6 text-center">Data Penduduk Per Dusun</h3>
+      <div class="grid md:grid-cols-3 gap-6"><!-- Dusun 1 -->
+       <div class="bg-gray-800 rounded-xl shadow-lg p-6 card-hover border-t-4 border-red-800">
+        <div class="flex items-center justify-between mb-4">
+         <h4 class="text-xl font-bold text-gray-200">Dusun 1 Petigo</h4><span class="text-3xl">🏘️</span>
+        </div>
+        <p class="text-sm text-gray-400 mb-4 font-semibold">Kadus: HERMAN L</p>
+        <div class="space-y-3">
+         <div class="flex justify-between items-center pb-2 border-b border-gray-700"><span class="text-gray-400 text-sm">Kepala Keluarga</span> <span class="font-bold text-red-400">72 KK</span>
+         </div>
+         <div class="flex justify-between items-center pb-2 border-b border-gray-700"><span class="text-gray-400 text-sm">Total Penduduk</span> <span class="font-bold text-gray-200">224 jiwa</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Laki-laki</span> <span class="font-semibold text-red-400">114</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Perempuan</span> <span class="font-semibold text-red-300">110</span>
+         </div>
+        </div>
+       </div><!-- Dusun 2 -->
+       <div class="bg-gray-800 rounded-xl shadow-lg p-6 card-hover border-t-4 border-red-700">
+        <div class="flex items-center justify-between mb-4">
+         <h4 class="text-xl font-bold text-gray-200">Dusun 2 Lumbum</h4><span class="text-3xl">🏡</span>
+        </div>
+        <p class="text-sm text-gray-400 mb-4 font-semibold">Kadus: TAJRIN</p>
+        <div class="space-y-3">
+         <div class="flex justify-between items-center pb-2 border-b border-gray-700"><span class="text-gray-400 text-sm">Kepala Keluarga</span> <span class="font-bold text-red-400">161 KK</span>
+         </div>
+         <div class="flex justify-between items-center pb-2 border-b border-gray-700"><span class="text-gray-400 text-sm">Total Penduduk</span> <span class="font-bold text-gray-200">558 jiwa</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Laki-laki</span> <span class="font-semibold text-red-400">290</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Perempuan</span> <span class="font-semibold text-red-300">268</span>
+         </div>
+        </div>
+       </div><!-- Dusun 3 -->
+       <div class="bg-gray-800 rounded-xl shadow-lg p-6 card-hover border-t-4 border-red-900">
+        <div class="flex items-center justify-between mb-4">
+         <h4 class="text-xl font-bold text-gray-200">Dusun 3 Kavatua</h4><span class="text-3xl">��</span>
+        </div>
+        <p class="text-sm text-gray-400 mb-4 font-semibold">Kadus: RUSLIN DG MAROTJA</p>
+        <div class="space-y-3">
+         <div class="flex justify-between items-center pb-2 border-b border-gray-700"><span class="text-gray-400 text-sm">Kepala Keluarga</span> <span class="font-bold text-red-400">178 KK</span>
+         </div>
+         <div class="flex justify-between items-center pb-2 border-b border-gray-700"><span class="text-gray-400 text-sm">Total Penduduk</span> <span class="font-bold text-gray-200">607 jiwa</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Laki-laki</span> <span class="font-semibold text-red-400">312</span>
+         </div>
+         <div class="flex justify-between items-center"><span class="text-gray-400 text-sm">Perempuan</span> <span class="font-semibold text-red-300">295</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <p class="text-xs text-gray-500 text-center mt-6 italic">Data Penduduk Desa Wani Lumbumpetigo - Kecamatan Tanantovea</p>
+     </div>
+    </div>
+   </section><!-- Tentang Desa -->
+   <section id="tentang" class="py-20 px-4" style="background-color: #0f0f1e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 id="about-title" class="text-4xl font-bold text-white mb-4">Tentang Desa Wani Lumbumpetigo</h2>
+      <div class="w-24 h-1 bg-red-800 mx-auto rounded"></div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+       <p id="about-description" class="text-white leading-relaxed text-lg">Desa Wani Lumbumpetigo merupakan desa yang terletak di Kecamatan Tanantovea, Kabupaten Donggala, Sulawesi Tengah. Masyarakat kami hidup rukun dengan mengedepankan nilai gotong royong dan kearifan lokal dalam setiap aktivitas pembangunan desa.</p>
+       <div class="space-y-4">
+        <div class="flex items-start space-x-3">
+         <svg class="w-6 h-6 text-red-400 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+         <p class="text-white">Potensi pertanian dan perkebunan yang subur</p>
+        </div>
+        <div class="flex items-start space-x-3">
+         <svg class="w-6 h-6 text-red-400 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+         <p class="text-white">Destinasi wisata alam yang menarik</p>
+        </div>
+        <div class="flex items-start space-x-3">
+         <svg class="w-6 h-6 text-red-400 flex-shrink-0 mt-1" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+         <p class="text-white">Budaya dan tradisi yang masih terjaga</p>
+        </div>
+       </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden shadow-2xl clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766848611/KANTOR_DESA_jk43sf.jpg" alt="Foto Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'bg-gray-200 rounded-2xl flex items-center justify-center h-96\'><p class=\'text-gray-500\'>Foto tidak dapat dimuat</p></div>';">
+      </div>
+     </div>
+    </div>
+   </section><!-- Struktur Organisasi -->
+   <section id="struktur" class="py-20 px-4" style="background-color: #16213e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-200 mb-4">Struktur Organisasi Pemerintah Desa</h2>
+      <div class="w-24 h-1 bg-red-800 mx-auto rounded"></div>
+      <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Susunan Organisasi dan Tata Kerja Pemerintah Desa Wani Lumbumpetigo</p>
+     </div>
+     <div class="bg-gray-900 rounded-xl shadow-2xl p-6 md:p-8 border border-red-900">
+      <div class="overflow-x-auto"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1758032552/Susunan_Organisasi_dan_Tata_Kerja_Pemerintah_Desa_xkgl9f.png" alt="Struktur Organisasi Pemerintah Desa Wani Lumbumpetigo" class="w-full h-auto rounded-lg clickable-image" onclick="openImageModal(this.src)" onerror="this.parentElement.innerHTML='<div class=\'bg-gray-100 p-8 rounded-lg text-center\'><svg class=\'w-16 h-16 text-gray-400 mx-auto mb-4\' fill=\'currentColor\' viewBox=\'0 0 20 20\'><path fill-rule=\'evenodd\' d=\'M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z\' clip-rule=\'evenodd\'/></svg><p class=\'text-gray-600\'>Struktur Organisasi tidak dapat dimuat</p></div>';">
+      </div>
+      <div class="mt-6 text-center">
+       <p class="text-sm text-gray-500 italic">Klik gambar untuk memperbesar atau klik kanan dan pilih "Buka gambar di tab baru"</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Layanan -->
+   <section id="layanan" class="py-20 px-4" style="background-color: #0f0f1e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-200 mb-4">Layanan Desa</h2>
+      <div class="w-24 h-1 bg-red-800 mx-auto rounded"></div>
+      <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Berbagai layanan administrasi dan kemasyarakatan untuk memudahkan warga desa</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 card-hover border border-red-900">
+       <div class="w-16 h-16 bg-red-950 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /> <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-200 mb-3">Administrasi Kependudukan</h3>
+       <p class="text-gray-400 leading-relaxed">Pengurusan KTP, KK, Akta Kelahiran, dan dokumen kependudukan lainnya</p>
+      </div>
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 card-hover border border-red-900">
+       <div class="w-16 h-16 bg-red-950 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-200 mb-3">Surat Menyurat</h3>
+       <p class="text-gray-400 leading-relaxed">Penerbitan surat keterangan domisili, surat pengantar, dan surat resmi lainnya</p>
+      </div>
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 card-hover border border-red-900">
+       <div class="w-16 h-16 bg-red-950 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-200 mb-3">Pengaduan Masyarakat</h3>
+       <p class="text-gray-400 leading-relaxed">Layanan pengaduan dan aspirasi warga untuk pembangunan desa</p>
+      </div>
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 card-hover border border-red-900">
+       <div class="w-16 h-16 bg-red-950 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-200 mb-3">Perizinan Usaha</h3>
+       <p class="text-gray-400 leading-relaxed">Pengurusan izin usaha mikro, kecil, dan menengah di wilayah desa</p>
+      </div>
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 card-hover border border-red-900">
+       <div class="w-16 h-16 bg-red-950 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-200 mb-3">Bantuan Sosial</h3>
+       <p class="text-gray-400 leading-relaxed">Pendataan dan penyaluran bantuan sosial untuk warga yang membutuhkan</p>
+      </div>
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 card-hover border border-red-900">
+       <div class="w-16 h-16 bg-red-950 rounded-full flex items-center justify-center mb-6">
+        <svg class="w-8 h-8 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" /> <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+        </svg>
+       </div>
+       <h3 class="text-xl font-bold text-gray-200 mb-3">Pemberdayaan UMKM</h3>
+       <p class="text-gray-400 leading-relaxed">Pelatihan dan pendampingan usaha mikro kecil menengah desa</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Berita -->
+   <section id="berita" class="py-20 px-4" style="background-color: #16213e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-200 mb-4">Berita &amp; Informasi</h2>
+      <div class="w-24 h-1 bg-red-800 mx-auto rounded"></div>
+     </div>
+     <div class="grid md:grid-cols-3 gap-8">
+      <article class="bg-gray-800 rounded-xl shadow-lg overflow-hidden card-hover cursor-pointer border border-red-900" onclick="openSejarahModal()">
+       <div class="h-48 bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
+        <svg class="w-20 h-20 text-white opacity-50" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+        </svg>
+       </div>
+       <div class="p-6"><span class="text-xs text-red-400 font-semibold">Sejarah Desa</span>
+        <h3 class="text-xl font-bold text-gray-200 mt-2 mb-3">Sejarah Desa Wani Lumbumpetigo</h3>
+        <p class="text-gray-400 mb-4">Asal usul nama Lumbumpetigo dan perjalanan panjang pembentukan desa dari pemekaran tahun 2011...</p><span class="text-red-400 font-semibold hover:text-red-300 inline-flex items-center"> Baca Selengkapnya 
+         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+         </svg></span>
+       </div>
+      </article>
+      <article class="bg-gray-800 rounded-xl shadow-lg overflow-hidden card-hover cursor-pointer border border-red-900" onclick="openPemberdayaanModal()">
+       <div class="h-48 overflow-hidden"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.12_gll4xr.jpg" alt="Pelatihan Pemberdayaan Perempuan" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'h-48 bg-gradient-to-br from-red-900 to-red-950 flex items-center justify-center\'><svg class=\'w-20 h-20 text-white opacity-50\' fill=\'currentColor\' viewBox=\'0 0 20 20\'><path d=\'M9 2a1 1 0 000 2h2a1 1 0 100-2H9z\'/><path fill-rule=\'evenodd\' d=\'M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z\' clip-rule=\'evenodd\'/></svg></div>';">
+       </div>
+       <div class="p-6"><span class="text-xs text-red-400 font-semibold">18 Desember 2024</span>
+        <h3 class="text-xl font-bold text-gray-200 mt-2 mb-3">Pelatihan dan Penyuluhan Pemberdayaan Perempuan</h3>
+        <p class="text-gray-400 mb-4">Kegiatan pemberdayaan perempuan dengan fokus pada percepatan penurunan stunting yang dihadiri oleh Kader TPPKK dan Kader Posyandu...</p><span class="text-red-400 font-semibold hover:text-red-300 inline-flex items-center"> Baca Selengkapnya 
+         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+         </svg></span>
+       </div>
+      </article>
+      <article class="bg-gray-800 rounded-xl shadow-lg overflow-hidden card-hover border border-red-900">
+       <div class="h-48 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+        <svg class="w-20 h-20 text-white opacity-50" fill="currentColor" viewbox="0 0 20 20"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+        </svg>
+       </div>
+       <div class="p-6"><span class="text-xs text-red-400 font-semibold">5 Januari 2025</span>
+        <h3 class="text-xl font-bold text-gray-200 mt-2 mb-3">Festival Budaya Desa 2025</h3>
+        <p class="text-gray-400 mb-4">Meriahkan festival budaya desa dengan berbagai pertunjukan seni tradisional dan pameran produk lokal...</p><a href="#" class="text-red-400 font-semibold hover:text-red-300 inline-flex items-center"> Baca Selengkapnya 
+         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+         </svg></a>
+       </div>
+      </article>
+     </div>
+    </div>
+   </section><!-- Galeri -->
+   <section id="galeri" class="py-20 px-4" style="background-color: #0f0f1e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-200 mb-4">Galeri Desa</h2>
+      <div class="w-24 h-1 bg-red-800 mx-auto rounded"></div>
+     </div>
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1765586525/Gambar_WhatsApp_2025-12-12_pukul_17.55.05_e27223fa_wmsnvt.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.28_mzg68o.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.27_q8q82b.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.12_gll4xr.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.13_1_kejbwa.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.13_jtkgv6.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.09_dkqpcx.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+      <div class="aspect-square rounded-lg overflow-hidden shadow-lg card-hover clickable-image" onclick="openImageModal(this.querySelector('img').src)"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586658/WhatsApp_Image_2025-12-18_at_17.12.14_yivsyv.jpg" alt="Galeri Desa Wani Lumbumpetigo" class="w-full h-full object-cover" onerror="this.style.display='none';">
+      </div>
+     </div>
+    </div>
+   </section><!-- Kontak -->
+   <section id="kontak" class="py-20 px-4" style="background-color: #16213e;">
+    <div class="max-w-6xl mx-auto">
+     <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-200 mb-4">Hubungi Kami</h2>
+      <div class="w-24 h-1 bg-red-800 mx-auto rounded"></div>
+     </div>
+     <div class="grid md:grid-cols-2 gap-12">
+      <div class="space-y-6">
+       <div class="flex items-start space-x-4">
+        <div class="w-12 h-12 bg-red-950 rounded-full flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-bold text-gray-200 mb-1">Alamat</h3>
+         <p id="contact-address" class="text-gray-400">Jl. Kayuriva Dusun II, Kecamatan Tanantovea, Kabupaten Donggala, Provinsi Sulawesi Tengah 94342</p>
+        </div>
+       </div>
+       <div class="flex items-start space-x-4">
+        <div class="w-12 h-12 bg-red-950 rounded-full flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-bold text-gray-200 mb-1">Telepon</h3>
+         <p id="contact-phone" class="text-gray-400">0821-2345-6789</p>
+        </div>
+       </div>
+       <div class="flex items-start space-x-4">
+        <div class="w-12 h-12 bg-red-950 rounded-full flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /> <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-bold text-gray-200 mb-1">Email</h3>
+         <p id="contact-email" class="text-gray-400">wani.lumbumpetigo10@gmail.com</p>
+        </div>
+       </div>
+       <div class="flex items-start space-x-4">
+        <div class="w-12 h-12 bg-red-950 rounded-full flex items-center justify-center flex-shrink-0">
+         <svg class="w-6 h-6 text-red-400" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="font-bold text-gray-200 mb-1">Jam Operasional</h3>
+         <p class="text-gray-400">Senin - Jumat: 08.00 - 16.00 WIB</p>
+         <p class="text-gray-400">Sabtu: 08.00 - 12.00 WIB</p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 border border-red-900">
+       <h3 class="text-2xl font-bold text-gray-200 mb-6">Kirim Pesan</h3>
+       <form id="contact-form" class="space-y-4">
+        <div><label for="name" class="block text-sm font-semibold text-gray-300 mb-2">Nama Lengkap</label> <input type="text" id="name" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 text-gray-200 rounded-lg focus:ring-2 focus:ring-red-800 focus:border-transparent outline-none transition" placeholder="Masukkan nama Anda" required>
+        </div>
+        <div><label for="email" class="block text-sm font-semibold text-gray-300 mb-2">Email</label> <input type="email" id="email" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 text-gray-200 rounded-lg focus:ring-2 focus:ring-red-800 focus:border-transparent outline-none transition" placeholder="nama@email.com" required>
+        </div>
+        <div><label for="message" class="block text-sm font-semibold text-gray-300 mb-2">Pesan</label> <textarea id="message" rows="4" class="w-full px-4 py-3 bg-gray-900 border border-gray-700 text-gray-200 rounded-lg focus:ring-2 focus:ring-red-800 focus:border-transparent outline-none transition resize-none" placeholder="Tulis pesan Anda..." required></textarea>
+        </div><button type="submit" class="w-full bg-gradient-to-r from-red-900 to-red-950 text-white py-3 rounded-lg font-semibold hover:from-red-800 hover:to-red-900 transition shadow-lg"> Kirim Pesan </button>
+        <div id="form-message" class="hidden mt-4 p-4 rounded-lg text-center font-semibold"></div>
+       </form>
+      </div>
+     </div>
+    </div>
+   </section><!-- Modal Sejarah Desa -->
+   <div id="sejarahModal" class="fixed inset-0 bg-black bg-opacity-50 z-[1000] hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+     <div class="sticky top-0 bg-gradient-to-r from-amber-500 to-amber-600 text-white p-6 rounded-t-2xl flex justify-between items-center">
+      <h2 class="text-3xl font-bold">�� Sejarah Desa Wani Lumbumpetigo</h2><button onclick="closeSejarahModal()" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div class="p-8 space-y-6 text-gray-700 leading-relaxed">
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-3 text-amber-600">📍</span> Asal Usul Nama</h3>
+       <p class="mb-3">Wani Lumbumpetigo adalah desa di kecamatan Tanantovea, Donggala, Sulawesi Tengah, Indonesia. Asal nama <strong>Lumbumpetigo</strong> berasal dari gabungan kedua nama perkampungan yang terdapat dalam desa Wani Satu, yakni:</p>
+       <ul class="list-disc list-inside space-y-2 ml-4 mb-4">
+        <li><strong>Lumbumambo</strong> dan <strong>Boyampetigo</strong></li>
+        <li><strong>Lumbum</strong> berarti tanah yang subur dan gembur atau sering disebut <em>tanahmbone</em></li>
+        <li><strong>Petigo (Petioge)</strong> berarti sebuah peti besar yang diyakini masyarakat sebagai tempat penyimpanan harta karun peninggalan raja yang tidak ditemukan keberadaannya karena dijaga oleh makhluk ghaib</li>
+       </ul>
+       <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+        <p class="font-semibold text-amber-900">💡 Makna Filosofis:</p>
+        <p class="text-amber-800">Bila digabungkan, <strong>Lumbumpetigo</strong> bermakna bahwasanya desa Wani Lumbumpetigo merupakan <em>tanah yang subur</em> serta menjadi <em>wadah yang menyimpan hasil kekayaan alam</em> untuk masa yang akan datang.</p>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 text-green-600">🏛️</span> Pembentukan Desa</h3>
+       <p class="mb-3">Desa Wani Lumbumpetigo merupakan hasil <strong>pemekaran dari desa induk</strong> di kecamatan Tanantovea yakni <strong>Desa Wani Satu</strong>.</p>
+       <div class="bg-green-50 p-4 rounded-lg">
+        <p class="text-green-900"><strong>📅 30 Desember 2011</strong> - Desa Lumbumpetigo diresmikan bersama dengan 18 desa hasil pemekaran lainnya di Donggala oleh <strong>Habir Ponulele</strong> selaku Bupati Donggala saat itu.</p>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3 text-purple-600">👥</span> Sejarah Pemerintahan Desa</h3>
+       <p class="mb-4 font-semibold">Kepala Desa sebelum dan sesudah berdirinya Desa Wani Lumbumpetigo:</p>
+       <div class="space-y-3">
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">1.</span>
+         <div>
+          <strong>Tandu Lembah</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">2.</span>
+         <div>
+          <strong>Djibu Kambay</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">3.</span>
+         <div>
+          <strong>Dae Mambone</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">4.</span>
+         <div>
+          <strong>Moh. Sigo</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">5.</span>
+         <div>
+          <strong>Abdul Rasid Lamanimpa</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">6.</span>
+         <div>
+          <strong>Saud. A. Kono</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">7.</span>
+         <div>
+          <strong>Hilman Pettalolo</strong>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">8.</span>
+         <div>
+          <strong>Nurdin Yampu</strong> <span class="text-sm text-gray-600">(1991 - 1999)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">9.</span>
+         <div>
+          <strong>Badjran Ambara, BBA</strong> <span class="text-sm text-gray-600">(1999 - 2008)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">10.</span>
+         <div>
+          <strong>Moh. Ikbal A. Kono</strong> <span class="text-sm text-gray-600">(2008 - 2015)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">11.</span>
+         <div>
+          <strong>Sahrudin Lavebidja</strong> <span class="text-sm text-gray-600">(2012 - 2017)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">12.</span>
+         <div>
+          <strong>Ismail Mudohali</strong> <span class="text-sm text-gray-600">(2017 - 2019)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">13.</span>
+         <div>
+          <strong>Anwar M. Pali S, Kom</strong> <span class="text-sm text-gray-600">(2019 - 2020)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">14.</span>
+         <div>
+          <strong>Lukman</strong> <span class="text-sm text-gray-600">(2020 - 2023)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">15.</span>
+         <div>
+          <strong>Abdurahman Rifai</strong> <span class="text-sm text-gray-600">(2023 - 2024)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-gray-50 p-3 rounded-lg"><span class="text-purple-600 font-bold">16.</span>
+         <div>
+          <strong>Uswatun Hasanah, SE</strong> <span class="text-sm text-gray-600">(2024 - 2025)</span>
+         </div>
+        </div>
+        <div class="flex items-start space-x-3 bg-green-100 p-3 rounded-lg border-2 border-green-500"><span class="text-green-600 font-bold">17.</span>
+         <div>
+          <strong>Amir Ramang</strong> <span class="text-sm text-green-700 font-semibold">(2025 - Sekarang) 🌟</span>
+         </div>
+        </div>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-blue-600">🌍</span> Kondisi Geografis</h3>
+       <p class="mb-4">Desa Wani Lumbumpetigo secara geografis terletak di sebelah <strong>Utara pedesaan</strong> di wilayah Kecamatan Tanantovea, memiliki potensi yang cukup strategis dengan <strong>luas wilayah 181 Ha</strong> yang terbagi menjadi <strong>Tiga Dusun</strong>: Dusun I, Dusun II, dan Dusun III.</p>
+       <div class="bg-blue-50 p-4 rounded-lg">
+        <h4 class="font-bold text-blue-900 mb-3">📍 Batas Wilayah:</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+         <div class="flex items-center space-x-2"><span class="text-blue-600">���️</span> <span><strong>Utara:</strong> Desa Wani Tiga</span>
+         </div>
+         <div class="flex items-center space-x-2"><span class="text-blue-600">⬅️</span> <span><strong>Barat:</strong> Desa Labuan Lelea</span>
+         </div>
+         <div class="flex items-center space-x-2"><span class="text-blue-600">�����️</span> <span><strong>Selatan:</strong> Desa Wani Satu</span>
+         </div>
+         <div class="flex items-center space-x-2"><span class="text-blue-600">➡️</span> <span><strong>Timur:</strong> Kelurahan Boya Pantoloan</span>
+         </div>
+        </div>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center mr-3 text-teal-600">🌍</span> Kondisi Topografi</h3>
+       <p class="mb-4">Kondisi topografi adalah kondisi permukaan atau keadaan relief Desa Lumbumpetigo. Desa Lumbumpetigo terbagi dalam <strong>3 (Tiga) Dusun</strong> dengan kondisi topografi berupa tanah datar dan perbukitan rendah. Beberapa dusun berbatasan dengan <strong>Sungai Limoya Kelurahan Pantoloan</strong>.</p>
+       <div class="bg-teal-50 p-4 rounded-lg mb-4">
+        <p class="text-teal-900 mb-3">📏 <strong>Elevasi dan Luas Wilayah:</strong></p>
+        <ul class="space-y-2 text-teal-800 ml-4">
+         <li>⛰️ <strong>80%</strong> wilayah berada pada ketinggian <strong>4 Km</strong> di atas permukaan laut</li>
+         <li>• <strong>80 Ha</strong> berupa dataran</li>
+         <li>• <strong>101 Ha</strong> berupa perbukitan</li>
+         <li>• Merupakan wilayah dataran rendah dengan kontur tanah datar yang diapit oleh bukit-bukit</li>
+        </ul>
+       </div>
+       <div class="bg-gradient-to-r from-teal-50 to-blue-50 p-4 rounded-lg mb-4">
+        <p class="font-semibold text-gray-800 mb-2">�� Keunggulan Lokasi:</p>
+        <p class="text-gray-700">Kondisi sebagian besar wilayah berupa tanah datar menjadikan Desa Wani Lumbumpetigo sebagai lokasi pemukiman yang <strong>cukup nyaman dan aman</strong> untuk ditinggali. Desa ini juga termasuk dalam wilayah <strong>Ibukota Kecamatan Tanantovea</strong> sehingga memiliki orbitasi yang cukup dekat dengan wilayah-wilayah strategis di Kabupaten Donggala.</p>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-3 mt-6">📍 Sebaran Dusun (2013 - 2020)</h4>
+       <div class="overflow-x-auto mb-6">
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow-sm">
+         <thead class="bg-teal-600 text-white">
+          <tr>
+           <th class="py-3 px-4 text-left">No</th>
+           <th class="py-3 px-4 text-left">Dusun</th>
+           <th class="py-3 px-4 text-left">Jarak dari Kantor Desa</th>
+          </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-200">
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">1</td>
+           <td class="py-3 px-4 font-semibold">Dusun I</td>
+           <td class="py-3 px-4">250 Meter</td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-teal-50">
+           <td class="py-3 px-4">2</td>
+           <td class="py-3 px-4 font-semibold">Dusun II</td>
+           <td class="py-3 px-4"><span class="bg-teal-600 text-white px-2 py-1 rounded text-sm">0 Meter (Lokasi Kantor Desa)</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">3</td>
+           <td class="py-3 px-4 font-semibold">Dusun III</td>
+           <td class="py-3 px-4">200 Meter</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-3 mt-6">🚗 Jarak Tempuh ke Wilayah Strategis (2020)</h4>
+       <div class="overflow-x-auto">
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow-sm">
+         <thead class="bg-blue-600 text-white">
+          <tr>
+           <th class="py-3 px-4 text-left">No</th>
+           <th class="py-3 px-4 text-left">Tujuan</th>
+           <th class="py-3 px-4 text-left">Jarak</th>
+           <th class="py-3 px-4 text-left">Waktu Tempuh</th>
+           <th class="py-3 px-4 text-left">Transportasi</th>
+          </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-200 text-sm">
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">1</td>
+           <td class="py-3 px-4 font-semibold">Ibukota Provinsi Sulawesi Tengah</td>
+           <td class="py-3 px-4">30 Km</td>
+           <td class="py-3 px-4">1 Jam</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-blue-50">
+           <td class="py-3 px-4">2</td>
+           <td class="py-3 px-4 font-semibold">Ibukota Kec. Tanantovea</td>
+           <td class="py-3 px-4">2 Km</td>
+           <td class="py-3 px-4">8 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">3</td>
+           <td class="py-3 px-4 font-semibold">Ibukota Kab. Donggala</td>
+           <td class="py-3 px-4">65 Km</td>
+           <td class="py-3 px-4">2 Jam</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">4</td>
+           <td class="py-3 px-4">Desa Wani Satu</td>
+           <td class="py-3 px-4">1,5 Km</td>
+           <td class="py-3 px-4">3 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">5</td>
+           <td class="py-3 px-4">Desa Wani Dua</td>
+           <td class="py-3 px-4">2 Km</td>
+           <td class="py-3 px-4">8 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">6</td>
+           <td class="py-3 px-4">Desa Wani Tiga</td>
+           <td class="py-3 px-4">2 Km</td>
+           <td class="py-3 px-4">12 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">7</td>
+           <td class="py-3 px-4">Desa Wombo Mpanau</td>
+           <td class="py-3 px-4">5 Km</td>
+           <td class="py-3 px-4">25 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">8</td>
+           <td class="py-3 px-4">Desa Wombo</td>
+           <td class="py-3 px-4">6 Km</td>
+           <td class="py-3 px-4">26 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">9</td>
+           <td class="py-3 px-4">Desa Wombo Kalonggo</td>
+           <td class="py-3 px-4">7 Km</td>
+           <td class="py-3 px-4">28 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">10</td>
+           <td class="py-3 px-4">Desa Nupabomba</td>
+           <td class="py-3 px-4">12 Km</td>
+           <td class="py-3 px-4">38 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">11</td>
+           <td class="py-3 px-4">Desa Guntarano</td>
+           <td class="py-3 px-4">15 Km</td>
+           <td class="py-3 px-4">40 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4">12</td>
+           <td class="py-3 px-4">Desa Bale</td>
+           <td class="py-3 px-4">4 Km</td>
+           <td class="py-3 px-4">42 Menit</td>
+           <td class="py-3 px-4">Darat</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+       <p class="text-xs text-gray-500 italic mt-3">Sumber: Hasil Pengkajian Desa Wani Lumbumpetigo, 2023</p>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-cyan-100 rounded-full flex items-center justify-center mr-3 text-cyan-600">💧</span> Kondisi Hidrologi</h3>
+       <p class="mb-4">Kondisi hidrologi merupakan keadaan pergerakan, distribusi dan kualitas air pada suatu wilayah. Desa Wani Lumbumpetigo dilewati oleh <strong>Dua aliran sungai</strong> yaitu:</p>
+       <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-cyan-50 p-4 rounded-lg border-l-4 border-cyan-500">
+         <h4 class="font-bold text-cyan-900 mb-2">🏞��� Sungai Bionga</h4>
+         <p class="text-cyan-800">Panjang: <strong>1,57 Km</strong></p>
+        </div>
+        <div class="bg-cyan-50 p-4 rounded-lg border-l-4 border-cyan-500">
+         <h4 class="font-bold text-cyan-900 mb-2">🏞️ Sungai Bekava</h4>
+         <p class="text-cyan-800">Panjang: <strong>1,57 Km</strong></p>
+        </div>
+       </div>
+       <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+        <p class="font-semibold text-red-900 mb-2">⚠️ Peringatan Banjir:</p>
+        <p class="text-red-800">Aliran sungai yang melewati wilayah Desa Wani Lumbumpetigo merupakan sungai yang tidak aktif, namun pada <strong>musim penghujan dapat mengakibatkan banjir</strong> sehingga wilayah pemukiman penduduk tergenang air.</p>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center mr-3 text-sky-600">🌦️</span> Kondisi Klimatologi</h3>
+       <p class="mb-4">Kondisi klimatologi merupakan keadaan suatu wilayah dilihat dari perspektif kondisi iklim atau musim yang terjadi setiap tahunnya. Desa Wani Lumbumpetigo merupakan <strong>daerah tropis</strong> yang memiliki dua musim:</p>
+       <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-orange-50 p-4 rounded-lg border-2 border-orange-300">
+         <h4 class="font-bold text-orange-900 mb-2 flex items-center"><span class="text-2xl mr-2">☀️</span> Musim Kemarau</h4>
+         <p class="text-orange-800">Periode: <strong>Juni - Oktober</strong></p>
+         <p class="text-sm text-orange-700 mt-2">Bulan terkering: <strong>September</strong></p>
+        </div>
+        <div class="bg-blue-50 p-4 rounded-lg border-2 border-blue-300">
+         <h4 class="font-bold text-blue-900 mb-2 flex items-center"><span class="text-2xl mr-2">🌧️</span> Musim Penghujan</h4>
+         <p class="text-blue-800">Periode: <strong>Desember - Mei</strong></p>
+         <p class="text-sm text-blue-700 mt-2">Bulan terbasah: <strong>April</strong></p>
+        </div>
+       </div>
+       <div class="bg-sky-50 p-4 rounded-lg mb-4">
+        <h4 class="font-bold text-sky-900 mb-2">📊 Data Curah Hujan:</h4>
+        <p class="text-sky-800">Jumlah curah hujan tahunan: <strong>1.100 - 1.500 mm</strong></p>
+       </div>
+       <div class="bg-gradient-to-r from-blue-50 to-green-50 p-4 rounded-lg border-l-4 border-blue-500">
+        <p class="text-gray-800">Sebagaimana wilayah Kabupaten Donggala pada umumnya yang <strong>beriklim basah</strong>, begitu pula Desa Wani Lumbumpetigo, sehingga wilayah desa ini memiliki <strong>sumber daya air yang potensial</strong>, namun perlu diwaspadai ketika terjadi jumlah curah hujan tinggi dapat berpotensi menimbulkan <strong>ancaman bencana alam berupa banjir</strong>.</p>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-stone-100 rounded-full flex items-center justify-center mr-3 text-stone-600">��</span> Kondisi Geologi</h3>
+       <div class="bg-stone-50 p-4 rounded-lg border-l-4 border-stone-400">
+        <p class="text-gray-700 mb-3">Secara geologis, Desa Wani Lumbumpetigo tentunya tersusun atas beberapa jenis batuan, namun sampai dengan sekarang belum pernah dilakukan pendataan terkait kondisi geologis Desa Wani Lumbumpetigo.</p>
+        <div class="bg-amber-50 p-3 rounded-lg">
+         <p class="text-sm text-amber-900"><strong>���️ Catatan:</strong> Keterbatasan data disebabkan tidak adanya sumber daya manusia desa yang memiliki kompetensi ilmu geologi dan keterbatasan dana untuk mengadakan tenaga pendata/peneliti geologi dari luar Desa Wani Lumbumpetigo.</p>
+        </div>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-lime-100 rounded-full flex items-center justify-center mr-3 text-lime-600">🌱</span> Kondisi Tanah</h3>
+       <p class="mb-4">Kondisi tanah pada wilayah Desa Wani Lumbumpetigo berdasarkan pengetahuan dasar yang dimiliki oleh Tim Pendataan Desa dapat disimpulkan bahwa struktur tanah desa berupa <strong>tanah subur dan gembur</strong>, hanya pada beberapa titik lokasi terdapat struktur tanah yang berbatuan kecil.</p>
+       <div class="bg-lime-50 p-4 rounded-lg mb-4 border-l-4 border-lime-500">
+        <h4 class="font-bold text-lime-900 mb-3">🌾 Potensi Pertanian dan Perkebunan:</h4>
+        <p class="text-lime-800 mb-3">Kondisi tanah pada Desa Wani Lumbumpetigo dapat dimanfaatkan untuk usaha pertanian tanaman pangan dan perkebunan:</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2"><span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🌾 Palawija</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🫚 Jahe</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🌰 Cengkeh</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🍈 Durian</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🥭 Mangga</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🥑 Alpukat</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">🍫 Coklat</span> <span class="bg-white px-3 py-2 rounded-lg text-sm font-semibold text-lime-900 text-center">��� Kelapa</span>
+        </div>
+       </div>
+       <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 mb-4">
+        <p class="text-sm text-amber-900"><strong>📝 Catatan:</strong> Pendataan kondisi tanah dilaksanakan oleh Tim Pendataan Desa dengan keterbatasan sumber daya manusia yang tidak memiliki pengetahuan khusus dalam menganalisis struktur tanah desa secara komprehensif.</p>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-3 mt-6">�� Data Tingkat Kesuburan Tanah (2020)</h4>
+       <div class="overflow-x-auto mb-6">
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow-sm">
+         <thead class="bg-lime-600 text-white">
+          <tr>
+           <th class="py-3 px-4 text-left">No</th>
+           <th class="py-3 px-4 text-left">Tingkat Kesuburan</th>
+           <th class="py-3 px-4 text-left">Luas</th>
+          </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-200">
+          <tr class="hover:bg-gray-50 bg-green-50">
+           <td class="py-3 px-4">1</td>
+           <td class="py-3 px-4 font-semibold text-green-800">🌿 Sangat Subur</td>
+           <td class="py-3 px-4"><span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">30 Ha</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-lime-50">
+           <td class="py-3 px-4">2</td>
+           <td class="py-3 px-4 font-semibold text-lime-800">🌱 Subur</td>
+           <td class="py-3 px-4"><span class="bg-lime-600 text-white px-3 py-1 rounded-full text-sm font-semibold">60 Ha</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-yellow-50">
+           <td class="py-3 px-4">3</td>
+           <td class="py-3 px-4 font-semibold text-yellow-800">���️ Sedang</td>
+           <td class="py-3 px-4"><span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-semibold">20 Ha</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-red-50">
+           <td class="py-3 px-4">4</td>
+           <td class="py-3 px-4 font-semibold text-red-800">��️ Tidak Subur/Kritis</td>
+           <td class="py-3 px-4"><span class="text-gray-500 italic">-</span></td>
+          </tr>
+          <tr class="bg-lime-100 font-bold">
+           <td colspan="2" class="py-3 px-4 text-right">Total Luas:</td>
+           <td class="py-3 px-4"><span class="bg-lime-700 text-white px-3 py-1 rounded-full text-sm font-semibold">110 Ha</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+       <p class="text-xs text-gray-500 italic">Sumber: Hasil Pengkajian Desa Wani Lumbumpetigo, 2020</p>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3 text-emerald-600">🗺️</span> Penggunaan Lahan</h3>
+       <p class="mb-4">Desa Wani Lumbumpetigo yang diperkirakan seluas <strong>181 Ha</strong> dipergunakan oleh masyarakat, pemerintah desa dan pihak swasta dengan berpedoman pada <strong>Peraturan Perundang-undangan tentang rencana tata ruang dan rencana wilayah</strong>, serta berlandaskan prinsip kelestarian lingkungan hidup.</p>
+       <div class="bg-emerald-50 p-4 rounded-lg mb-4 border-l-4 border-emerald-500">
+        <p class="text-emerald-900 mb-2"><strong>📋 Kategori Penggunaan Lahan:</strong></p>
+        <ul class="space-y-1 text-emerald-800 ml-4">
+         <li>• Pemukiman penduduk</li>
+         <li>• Persawahan</li>
+         <li>• Perkebunan</li>
+         <li>• Lokasi pemerintahan dan fasilitas umum</li>
+        </ul>
+       </div>
+       <h4 class="font-bold text-gray-800 mb-3 mt-6">📊 Data Penggunaan Lahan (2013 - 2021)</h4>
+       <div class="overflow-x-auto mb-6">
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow-sm">
+         <thead class="bg-emerald-600 text-white">
+          <tr>
+           <th class="py-3 px-4 text-left">No</th>
+           <th class="py-3 px-4 text-left">Jenis Penggunaan</th>
+           <th class="py-3 px-4 text-left">Luas</th>
+           <th class="py-3 px-4 text-left">Keterangan</th>
+          </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-200 text-sm">
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4 align-top font-semibold">1</td>
+           <td class="py-3 px-4 align-top">
+            <div class="font-semibold text-emerald-800 mb-2">
+             🏛️ Lokasi Pemerintahan/Fasilitas Umum:
+            </div>
+            <ul class="space-y-1 ml-4 text-gray-700">
+             <li>• Perkantoran Pemerintah</li>
+             <li>• Poskesdes</li>
+             <li>• Posyandu</li>
+             <li>• Kantor BUMDes</li>
+             <li>• Sekolah</li>
+             <li>• Lapangan</li>
+             <li>• Masjid</li>
+             <li>• Taman/RTH</li>
+            </ul></td>
+           <td class="py-3 px-4 align-top">
+            <div class="space-y-1">
+             <div>
+              <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs">0,5 Ha</span>
+             </div>
+             <div>
+              <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs">0,5 Ha</span>
+             </div>
+             <div>
+              <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs">0,2 Ha</span>
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+             <div>
+              <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs">0,5 Ha</span>
+             </div>
+             <div>
+              <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded text-xs">0,5 Ha</span>
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+            </div></td>
+           <td class="py-3 px-4 align-top text-gray-500">-</td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-blue-50">
+           <td class="py-3 px-4 font-semibold">2</td>
+           <td class="py-3 px-4 font-semibold text-blue-800">������️ Pemukiman</td>
+           <td class="py-3 px-4"><span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-semibold">30 Ha</span></td>
+           <td class="py-3 px-4 text-gray-500">-</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4 align-top font-semibold">3</td>
+           <td class="py-3 px-4 align-top">
+            <div class="font-semibold text-gray-800 mb-2">
+             🏪 Perdagangan:
+            </div>
+            <ul class="space-y-1 ml-4 text-gray-700">
+             <li>• Pasar</li>
+             <li>• Pertokoan</li>
+            </ul></td>
+           <td class="py-3 px-4 align-top">
+            <div class="space-y-1">
+             <div class="text-gray-400">
+              -
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+            </div></td>
+           <td class="py-3 px-4 align-top text-gray-500">-</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4 align-top font-semibold">4</td>
+           <td class="py-3 px-4 align-top">
+            <div class="font-semibold text-gray-800 mb-2">
+             🌾 Persawahan:
+            </div>
+            <ul class="space-y-1 ml-4 text-gray-700">
+             <li>• Sawah Irigasi</li>
+             <li>• Sawah Irigasi �� Teknis</li>
+             <li>• Tanah Kering</li>
+             <li>• Ladang</li>
+            </ul></td>
+           <td class="py-3 px-4 align-top">
+            <div class="space-y-1">
+             <div class="text-gray-400">
+              -
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+            </div></td>
+           <td class="py-3 px-4 align-top text-gray-500">-</td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-green-50">
+           <td class="py-3 px-4 align-top font-semibold">5</td>
+           <td class="py-3 px-4 align-top">
+            <div class="font-semibold text-green-800 mb-2">
+             🌳 Perkebunan:
+            </div>
+            <ul class="space-y-1 ml-4 text-gray-700">
+             <li>• Perkebunan Masyarakat</li>
+             <li>• Perkebunan Negara</li>
+             <li>• Perkebunan Swasta</li>
+            </ul></td>
+           <td class="py-3 px-4 align-top">
+            <div class="space-y-1">
+             <div>
+              <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">1,5 Ha</span>
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+             <div class="text-gray-400">
+              -
+             </div>
+            </div></td>
+           <td class="py-3 px-4 align-top text-gray-500">-</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="py-3 px-4 font-semibold">6</td>
+           <td class="py-3 px-4 font-semibold text-gray-800">�� APL (Area Penggunaan Lain)</td>
+           <td class="py-3 px-4 text-gray-400">-</td>
+           <td class="py-3 px-4 text-gray-500">-</td>
+          </tr>
+          <tr class="hover:bg-gray-50 bg-amber-50">
+           <td class="py-3 px-4 font-semibold">7</td>
+           <td class="py-3 px-4 font-semibold text-amber-800">🌐 Lahan Tidur</td>
+           <td class="py-3 px-4"><span class="bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold">3.458 Ha</span></td>
+           <td class="py-3 px-4 text-gray-500">-</td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+       <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 rounded-lg border-l-4 border-emerald-500">
+        <p class="font-semibold text-emerald-900 mb-2">💡 Catatan Penting:</p>
+        <p class="text-emerald-800 text-sm">Data penggunaan lahan ini mencerminkan pemanfaatan wilayah Desa Wani Lumbumpetigo yang disesuaikan dengan tata ruang, kelestarian lingkungan, dan kebutuhan pembangunan desa. Terdapat <strong>lahan tidur seluas 3.458 Ha</strong> yang berpotensi untuk pengembangan masa depan.</p>
+       </div>
+       <p class="text-xs text-gray-500 italic mt-3">Sumber: Data Penggunaan Lahan Desa Wani Lumbumpetigo Tahun 2013 - 2021</p>
+      </section>
+      <section class="bg-gray-50 p-4 rounded-lg border-t-4 border-amber-500">
+       <p class="text-sm text-gray-600 italic"><strong>Sumber:</strong> Informasi dari tokoh masyarakat Desa Wani Lumbumpetigo, dikembangkan oleh Sekretaris Desa Wani Lumbumpetigo. @bySyam</p>
+      </section>
+     </div>
+    </div>
+   </div><!-- Image Zoom Modal -->
+   <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-95 z-[1001] hidden items-center justify-center p-4" style="cursor: zoom-out;"><button onclick="closeImageModal()" class="absolute top-4 right-4 w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition z-10">
+     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+     </svg></button> <img id="modalImage" src="" alt="Gambar Zoom" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" style="cursor: default;" onclick="event.stopPropagation()">
+   </div><!-- Modal Pemberdayaan Perempuan -->
+   <div id="pemberdayaanModal" class="fixed inset-0 bg-black bg-opacity-50 z-[1000] hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+     <div class="sticky top-0 bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-t-2xl flex justify-between items-center">
+      <h2 class="text-3xl font-bold">��‍🌾 Pelatihan dan Penyuluhan Pemberdayaan Perempuan</h2><button onclick="closePemberdayaanModal()" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+       </svg></button>
+     </div>
+     <div class="p-8 space-y-6 text-gray-700 leading-relaxed">
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+       <p class="text-sm text-green-900"><strong>📅 Kamis, 18 Desember 2024</strong></p>
+       <p class="text-sm text-green-800 mt-1">Desa Wani Lumbumpetigo, Kecamatan Tanantovea, Kabupaten Donggala</p>
+      </div>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3 text-green-600">💪</span> Tentang Pemberdayaan Perempuan</h3>
+       <p class="mb-4">Wani Lumbumpetigo, <strong>Pemberdayaan Perempuan</strong> adalah upaya pemampuan perempuan untuk memperoleh akses dan kontrol terhadap sumber daya, ekonomi, politik, sosial, dan budaya.</p>
+       <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
+        <p class="font-semibold text-blue-900 mb-2">🎯 Tujuan Pemberdayaan Perempuan:</p>
+        <p class="text-blue-800">Pemberdayaan Perempuan penting untuk dilakukan tujuannya ialah untuk terus <strong>meningkatkan kapasitas diri kaum perempuan</strong> agar dapat memiliki rasa kepercayaan diri sehingga kaum perempuan dapat ikut <strong>berpartisipasi serta berkipra dalam semua lini pembangunan di Indonesia</strong> termasuk dalam pembangunan lingkungan hidup.</p>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3 text-purple-600">���</span> Pelaksanaan Kegiatan</h3>
+       <p class="mb-4">Di Desa Wani Lumbumpetigo <strong>Pelatihan dan Penyuluhan Pemberdayaan Perempuan</strong> telah dilaksanakan pada hari <strong>Kamis, 18 Desember 2024</strong> yang dihadiri oleh:</p>
+       <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200">
+         <h4 class="font-bold text-purple-900 mb-2 flex items-center"><span class="text-xl mr-2">���</span> Peserta</h4>
+         <ul class="space-y-2 text-purple-800">
+          <li>• Kader TPPKK</li>
+          <li>• Kader Posyandu Desa Wani Lumbumpetigo</li>
+         </ul>
+        </div>
+        <div class="bg-amber-50 p-4 rounded-lg border-2 border-amber-200">
+         <h4 class="font-bold text-amber-900 mb-2 flex items-center"><span class="text-xl mr-2">🎤</span> Narasumber</h4>
+         <p class="text-amber-800"><strong>Kepala UPTD Puskesmas Malambora Wani</strong><br>
+          Kecamatan Tanantovea, Kabupaten Donggala</p>
+        </div>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center mr-3 text-red-600">📚</span> Materi Pelatihan</h3>
+       <div class="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
+        <p class="font-semibold text-red-900 mb-2">🎯 Fokus Materi:</p>
+        <p class="text-red-800 mb-3"><strong>Percepatan Penurunan Stunting di Desa Wani Lumbumpetigo</strong></p>
+        <p class="text-sm text-red-700">Sesuai dengan <strong>Peraturan Presiden Nomor 72 Tahun 2021</strong> tentang Percepatan Penurunan Stunting</p>
+       </div>
+       <div class="bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg mt-4">
+        <p class="text-gray-800 text-sm"><strong>ℹ️ Catatan:</strong> Kegiatan ini merupakan bagian dari upaya pemerintah desa dalam meningkatkan kesejahteraan masyarakat, khususnya dalam aspek kesehatan ibu dan anak serta pencegahan stunting di wilayah Desa Wani Lumbumpetigo.</p>
+       </div>
+      </section>
+      <section>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center"><span class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center mr-3 text-indigo-600">��</span> Dokumentasi Kegiatan</h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="rounded-lg overflow-hidden shadow-lg"><img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1766586659/WhatsApp_Image_2025-12-18_at_17.12.27_q8q82b.jpg" alt="Dokumentasi Pemberdayaan Perempuan 1" class="w-full h-64 object-cover" onerror="this.parentElement.innerHTML='<div class=\'bg-gray-100 h-64 flex items-center justify-center\'><p class=\'text-gray-500\'>Foto tidak dapat dimuat</p></div>';">
+        </div>
+        <div class="rounded-lg overflow-hidden shadow-lg"><img src="https://lumbumpetigo.berdesa.id/desa/upload/media/WhatsApp_Image_2025-12-18_at_17-12-29.jpg" alt="Dokumentasi Pemberdayaan Perempuan 2" class="w-full h-64 object-cover" onerror="this.parentElement.innerHTML='<div class=\'bg-gray-100 h-64 flex items-center justify-center\'><p class=\'text-gray-500\'>Foto tidak dapat dimuat</p></div>';">
+        </div>
+        <div class="rounded-lg overflow-hidden shadow-lg md:col-span-2"><img src="https://lumbumpetigo.berdesa.id/desa/upload/media/WhatsApp_Image_2025-12-18_at_17-12-27_(1).jpg" alt="Dokumentasi Pemberdayaan Perempuan 3" class="w-full h-80 object-cover" onerror="this.parentElement.innerHTML='<div class=\'bg-gray-100 h-80 flex items-center justify-center\'><p class=\'text-gray-500\'>Foto tidak dapat dimuat</p></div>';">
+        </div>
+       </div>
+      </section>
+      <section class="bg-gray-50 p-4 rounded-lg border-t-4 border-green-500">
+       <p class="text-sm text-gray-600 italic text-center">Kegiatan Pemberdayaan Perempuan ini merupakan wujud komitmen Pemerintah Desa Wani Lumbumpetigo dalam meningkatkan kualitas hidup masyarakat melalui pendidikan kesehatan dan pemberdayaan perempuan.</p>
+      </section>
+     </div>
+    </div>
+   </div><!-- Footer -->
+   <footer class="gradient-bg text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto">
+     <div class="grid md:grid-cols-3 gap-8 mb-8">
+      <div>
+       <h3 class="text-xl font-bold mb-4">Desa Wani Lumbumpetigo</h3>
+       <p class="text-sm opacity-90 leading-relaxed">Bersama membangun desa yang sejahtera, mandiri, dan berkelanjutan untuk generasi masa depan di Kabupaten Donggala, Sulawesi Tengah.</p>
+      </div>
+      <div>
+       <h3 class="text-xl font-bold mb-4">Tautan Cepat</h3>
+       <ul class="space-y-2 text-sm">
+        <li><a href="#beranda" class="opacity-90 hover:opacity-100 transition">Beranda</a></li>
+        <li><a href="#tentang" class="opacity-90 hover:opacity-100 transition">Tentang Kami</a></li>
+        <li><a href="#struktur" class="opacity-90 hover:opacity-100 transition">Struktur Organisasi</a></li>
+        <li><a href="#layanan" class="opacity-90 hover:opacity-100 transition">Layanan</a></li>
+        <li><a href="#kontak" class="opacity-90 hover:opacity-100 transition">Hubungi Kami</a></li>
+       </ul>
+      </div>
+      <div>
+       <h3 class="text-xl font-bold mb-4">Ikuti Kami</h3>
+       <div class="flex space-x-4"><a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+         </svg></a> <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+         </svg></a> <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="border-t border-white border-opacity-20 pt-8 text-center text-sm opacity-90">
+      <p>© 2025 Desa Wani Lumbumpetigo. Seluruh hak cipta dilindungi.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+    const defaultConfig = {
+      background_color: "#1a1a2e",
+      secondary_surface: "#16213e",
+      text_color: "#eaeaea",
+      primary_action: "#8b0000",
+      secondary_action: "#4a0404",
+      font_family: "Inter",
+      font_size: 16,
+      village_name: "Desa Wani Lumbumpetigo",
+      tagline: "Kecamatan Tanantovea - Kabupaten Donggala",
+      hero_title: "Selamat Datang di Desa Wani Lumbumpetigo",
+      hero_description: "Desa di Sulawesi Tengah yang berkembang dengan potensi alam, pertanian, dan masyarakat yang gotong royong membangun masa depan bersama",
+      about_title: "Tentang Desa Wani Lumbumpetigo",
+      about_description: "Desa Wani Lumbumpetigo merupakan desa yang terletak di Kecamatan Tanantovea, Kabupaten Donggala, Sulawesi Tengah. Masyarakat kami hidup rukun dengan mengedepankan nilai gotong royong dan kearifan lokal dalam setiap aktivitas pembangunan desa.",
+      contact_address: "Jl. Kayuriva Dusun II, Kecamatan Tanantovea, Kabupaten Donggala, Provinsi Sulawesi Tengah 94342",
+      contact_phone: "0821-2345-6789",
+      contact_email: "wani.lumbumpetigo10@gmail.com"
+    };
+
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'Inter, Segoe UI, sans-serif';
+      const baseSize = config.font_size || defaultConfig.font_size;
+      
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.secondary_surface || defaultConfig.secondary_surface;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryAction = config.primary_action || defaultConfig.primary_action;
+      const secondaryAction = config.secondary_action || defaultConfig.secondary_action;
+
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+      const gradientElements = document.querySelectorAll('.gradient-bg, nav');
+      gradientElements.forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${secondaryAction} 100%)`;
+      });
+
+      const heroSection = document.querySelector('#beranda');
+      if (heroSection) {
+        heroSection.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${secondaryAction} 100%)`;
+      }
+
+      const cardElements = document.querySelectorAll('.bg-white');
+      cardElements.forEach(el => {
+        if (!el.closest('nav')) {
+          el.style.backgroundColor = surfaceColor;
+        }
+      });
+
+      const textElements = document.querySelectorAll('.text-gray-800, .text-gray-700, .text-gray-600');
+      textElements.forEach(el => {
+        el.style.color = textColor;
+      });
+
+      const primaryButtons = document.querySelectorAll('a[href="#layanan"], button[type="submit"]');
+      primaryButtons.forEach(btn => {
+        btn.style.backgroundColor = primaryAction;
+      });
+
+      const secondaryButtons = document.querySelectorAll('a[href="#tentang"]');
+      secondaryButtons.forEach(btn => {
+        btn.style.borderColor = surfaceColor;
+        btn.style.color = surfaceColor;
+      });
+
+      const accentElements = document.querySelectorAll('.text-purple-600, .bg-purple-600');
+      accentElements.forEach(el => {
+        if (el.classList.contains('text-purple-600')) {
+          el.style.color = primaryAction;
+        }
+        if (el.classList.contains('bg-purple-600')) {
+          el.style.backgroundColor = primaryAction;
+        }
+      });
+
+      document.getElementById('nav-village-name').textContent = config.village_name || defaultConfig.village_name;
+      document.getElementById('nav-tagline').textContent = config.tagline || defaultConfig.tagline;
+      document.getElementById('hero-title').textContent = config.hero_title || defaultConfig.hero_title;
+      document.getElementById('hero-description').textContent = config.hero_description || defaultConfig.hero_description;
+      document.getElementById('about-title').textContent = config.about_title || defaultConfig.about_title;
+      document.getElementById('about-description').textContent = config.about_description || defaultConfig.about_description;
+      document.getElementById('contact-address').textContent = config.contact_address || defaultConfig.contact_address;
+      document.getElementById('contact-phone').textContent = config.contact_phone || defaultConfig.contact_phone;
+      document.getElementById('contact-email').textContent = config.contact_email || defaultConfig.contact_email;
+
+      const headings = document.querySelectorAll('h1');
+      headings.forEach(h => {
+        h.style.fontSize = `${baseSize * 1.25}px`;
+      });
+
+      const h2Elements = document.querySelectorAll('h2');
+      h2Elements.forEach(h => {
+        h.style.fontSize = `${baseSize * 2}px`;
+      });
+
+      const h3Elements = document.querySelectorAll('h3');
+      h3Elements.forEach(h => {
+        h.style.fontSize = `${baseSize * 1.25}px`;
+      });
+
+      const bodyText = document.querySelectorAll('p, a, span, label, input, textarea, button');
+      bodyText.forEach(el => {
+        el.style.fontSize = `${baseSize}px`;
+      });
+
+      const smallText = document.querySelectorAll('.text-xs, .text-sm');
+      smallText.forEach(el => {
+        el.style.fontSize = `${baseSize * 0.875}px`;
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_surface || defaultConfig.secondary_surface,
+              set: (value) => {
+                config.secondary_surface = value;
+                window.elementSdk.setConfig({ secondary_surface: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.primary_action || defaultConfig.primary_action,
+              set: (value) => {
+                config.primary_action = value;
+                window.elementSdk.setConfig({ primary_action: value });
+              }
+            },
+            {
+              get: () => config.secondary_action || defaultConfig.secondary_action,
+              set: (value) => {
+                config.secondary_action = value;
+                window.elementSdk.setConfig({ secondary_action: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["village_name", config.village_name || defaultConfig.village_name],
+          ["tagline", config.tagline || defaultConfig.tagline],
+          ["hero_title", config.hero_title || defaultConfig.hero_title],
+          ["hero_description", config.hero_description || defaultConfig.hero_description],
+          ["about_title", config.about_title || defaultConfig.about_title],
+          ["about_description", config.about_description || defaultConfig.about_description],
+          ["contact_address", config.contact_address || defaultConfig.contact_address],
+          ["contact_phone", config.contact_phone || defaultConfig.contact_phone],
+          ["contact_email", config.contact_email || defaultConfig.contact_email]
+        ])
+      });
+    }
+
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Mobile dropdown functionality
+    document.querySelectorAll('.mobile-dropdown-trigger').forEach(trigger => {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        const content = this.nextElementSibling;
+        const arrow = this.querySelector('.mobile-dropdown-arrow');
+        
+        content.classList.toggle('hidden');
+        arrow.style.transform = content.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+      });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const mobileMenu = document.getElementById('mobile-menu');
+          mobileMenu.classList.remove('active');
+        }
+      });
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const messageDiv = document.getElementById('form-message');
+      messageDiv.className = 'mt-4 p-4 rounded-lg text-center font-semibold bg-green-100 text-green-700';
+      messageDiv.textContent = 'Terima kasih! Pesan Anda telah berhasil dikirim. Kami akan segera menghubungi Anda.';
+      messageDiv.classList.remove('hidden');
+      document.getElementById('contact-form').reset();
+      
+      setTimeout(() => {
+        messageDiv.classList.add('hidden');
+      }, 5000);
+    });
+
+    // Back to Top functionality
+    const backToTopBtn = document.getElementById('backToTop');
+    const whatsappBtn = document.getElementById('whatsappBtn');
+    const scrollContainer = document.querySelector('.w-full.h-full.overflow-auto');
+
+    scrollContainer.addEventListener('scroll', () => {
+      if (scrollContainer.scrollTop > 300) {
+        backToTopBtn.classList.add('visible');
+        whatsappBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+        whatsappBtn.classList.remove('visible');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      scrollContainer.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Modal functions
+    function openSejarahModal() {
+      const modal = document.getElementById('sejarahModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSejarahModal() {
+      const modal = document.getElementById('sejarahModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = 'auto';
+    }
+
+    function openPemberdayaanModal() {
+      const modal = document.getElementById('pemberdayaanModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePemberdayaanModal() {
+      const modal = document.getElementById('pemberdayaanModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Image zoom modal functions
+    function openImageModal(imageSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      modalImage.src = imageSrc;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('sejarahModal').addEventListener('click', (e) => {
+      if (e.target.id === 'sejarahModal') {
+        closeSejarahModal();
+      }
+    });
+
+    document.getElementById('pemberdayaanModal').addEventListener('click', (e) => {
+      if (e.target.id === 'pemberdayaanModal') {
+        closePemberdayaanModal();
+      }
+    });
+
+    document.getElementById('imageModal').addEventListener('click', (e) => {
+      if (e.target.id === 'imageModal') {
+        closeImageModal();
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSejarahModal();
+        closePemberdayaanModal();
+        closeImageModal();
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b49e8d461d5a146',t:'MTc2Njg0OTk1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
