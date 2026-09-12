@@ -4,11 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Petigo</title>
-  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png">
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png">
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- PapaParse untuk Parsing CSV tangguh -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
 
@@ -21,7 +23,7 @@
         </h1>
         <p class="text-emerald-100 text-sm">Desa Wani Lumbumpetigo - Dusun 1 Petigo</p>
       </div>
-      <!-- Tab Navigasi Halaman Gender -->
+      <!-- Tab Navigasi Gender -->
       <div class="flex bg-emerald-800 p-1 rounded-xl shadow-inner">
         <button id="tabLaki" onclick="switchGender('laki')" class="px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow">
           <i class="fa-solid fa-mars text-blue-500"></i> Laki-Laki
@@ -76,7 +78,7 @@
           <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
             <i class="fa-solid fa-magnifying-glass"></i>
           </span>
-          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, NIK, No. KK, atau Pekerjaan..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm">
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, NIK, No. KK, atau kata kunci lainnya..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm">
         </div>
         <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center">
           <i class="fa-solid fa-rotate"></i> Muat Ulang Data
@@ -95,7 +97,7 @@
       <i class="fa-solid fa-triangle-exclamation text-xl"></i>
       <div>
         <h4 class="font-bold">Gagal Mengambil Data</h4>
-        <p class="text-sm">Silakan periksa koneksi internet Anda atau pastikan tautan Google Sheets publik dapat diakses.</p>
+        <p class="text-sm">Silakan periksa koneksi internet Anda atau coba tekan tombol "Muat Ulang Data".</p>
       </div>
     </div>
 
@@ -155,10 +157,10 @@
   </footer>
 
   <script>
-    // URL CSV Google Sheets
+    // URL CSV Google Sheets yang telah dikonversi secara tepat
     const CSV_URLS = {
-      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv",
-      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv"
+      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv",
+      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv"
     };
 
     let currentGender = 'laki';
@@ -193,11 +195,38 @@
         statLabel.innerText = "Kategori: Perempuan";
       }
 
-      if (rawData[gender].length === 0) {
+      if (!rawData[gender] || rawData[gender].length === 0) {
         loadData(gender);
       } else {
         applyFilters();
       }
+    }
+
+    async function fetchCSVText(url) {
+      // Coba fetch langsung
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const txt = await res.text();
+          if (txt && !txt.startsWith("<!DOCTYPE")) return txt;
+        }
+      } catch (e) {
+        console.warn("Direct fetch blocked by CORS, trying proxies...");
+      }
+
+      // Fallback Proxy 1: AllOrigins
+      try {
+        const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`);
+        if (res.ok) {
+          const txt = await res.text();
+          if (txt && !txt.startsWith("<!DOCTYPE")) return txt;
+        }
+      } catch (e) {}
+
+      // Fallback Proxy 2: Corsproxy.io
+      const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
+      if (!res.ok) throw new Error("Gagal mengunduh CSV");
+      return await res.text();
     }
 
     async function loadData(gender, forceRefresh = false) {
@@ -206,71 +235,26 @@
 
       try {
         const targetUrl = CSV_URLS[gender];
-        // Penggunaan CORS Proxy untuk menghindari pemblokiran CORS browser
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}${forceRefresh ? '&_t=' + Date.now() : ''}`;
+        const csvText = await fetchCSVText(targetUrl);
 
-        const response = await fetch(proxyUrl);
-        if (!response.ok) throw new Error("Gagal mengunduh data melalui Proxy");
+        // Parsing CSV secara tangguh menggunakan PapaParse
+        const parsed = Papa.parse(csvText, {
+          header: true,
+          skipEmptyLines: true
+        });
 
-        const json = await response.json();
-        const text = json.contents;
-
-        if (!text || text.includes("<html")) {
-          throw new Error("Format yang didapat bukan CSV valid");
+        if (parsed.data && parsed.data.length > 0) {
+          rawData[gender] = parsed.data;
+          applyFilters();
+        } else {
+          throw new Error("Data Kosong");
         }
-
-        const parsedData = parseCSV(text);
-        rawData[gender] = parsedData;
-        applyFilters();
       } catch (err) {
         console.error("Fetch Error:", err);
         showError(true);
       } finally {
         showLoading(false);
       }
-    }
-
-    function parseCSV(text) {
-      const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
-      if (lines.length === 0) return [];
-
-      const headers = parseCSVLine(lines[0]);
-      const result = [];
-
-      for (let i = 1; i < lines.length; i++) {
-        const row = parseCSVLine(lines[i]);
-        if (row.length > 0 && row.some(val => val.trim() !== '')) {
-          let item = {};
-          headers.forEach((h, index) => {
-            const keyName = h.trim();
-            if (keyName) {
-              item[keyName] = row[index] ? row[index].trim() : '';
-            }
-          });
-          result.push(item);
-        }
-      }
-      return result;
-    }
-
-    function parseCSVLine(line) {
-      const values = [];
-      let current = '';
-      let inQuotes = false;
-
-      for (let i = 0; i < line.length; i++) {
-        const char = line[i];
-        if (char === '"' || char === "'") {
-          inQuotes = !inQuotes;
-        } else if (char === ',' && !inQuotes) {
-          values.push(current);
-          current = '';
-        } else {
-          current += char;
-        }
-      }
-      values.push(current);
-      return values;
     }
 
     function applyFilters() {
@@ -280,7 +264,7 @@
       filteredData = dataset.filter(item => {
         if (!query) return true;
         return Object.values(item).some(val => 
-          String(val).toLowerCase().includes(query)
+          String(val || '').toLowerCase().includes(query)
         );
       });
 
@@ -312,7 +296,9 @@
 
       let headerHTML = `<th class="px-4 py-3 border-b text-center w-12">No</th>`;
       columns.forEach(col => {
-        headerHTML += `<th class="px-4 py-3 border-b whitespace-nowrap">${col}</th>`;
+        if (col.trim()) {
+          headerHTML += `<th class="px-4 py-3 border-b whitespace-nowrap">${col}</th>`;
+        }
       });
       tableHeader.innerHTML = headerHTML;
 
@@ -323,6 +309,7 @@
         let rowHTML = `<td class="px-4 py-3 text-center text-gray-400 font-mono">${index + 1}</td>`;
         
         columns.forEach(col => {
+          if (!col.trim()) return;
           const val = row[col] || '-';
           const isNameCol = col.toLowerCase().includes('nama');
           
@@ -364,6 +351,7 @@
 
       modalContent.innerHTML = '';
       Object.entries(dataObj).forEach(([key, value]) => {
+        if (!key.trim()) return;
         const detailItem = document.createElement('div');
         detailItem.className = "bg-gray-50 p-3 rounded-xl border border-gray-100";
         detailItem.innerHTML = `
