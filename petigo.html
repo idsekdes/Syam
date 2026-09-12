@@ -95,7 +95,7 @@
       <i class="fa-solid fa-triangle-exclamation text-xl"></i>
       <div>
         <h4 class="font-bold">Gagal Mengambil Data</h4>
-        <p class="text-sm">Silakan periksa koneksi internet Anda atau pastikan tautan Google Sheets dapat diakses secara publik.</p>
+        <p class="text-sm">Silakan periksa koneksi internet Anda atau pastikan tautan Google Sheets publik dapat diakses.</p>
       </div>
     </div>
 
@@ -155,10 +155,10 @@
   </footer>
 
   <script>
-    // URL CSV Google Sheets yang sudah disesuaikan
+    // URL CSV Google Sheets
     const CSV_URLS = {
-      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=0&single=true&output=csv",
-      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=0&single=true&output=csv"
+      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv",
+      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv"
     };
 
     let currentGender = 'laki';
@@ -205,15 +205,21 @@
       showError(false);
 
       try {
-        const url = CSV_URLS[gender];
-        const cacheBuster = forceRefresh ? `&_t=${Date.now()}` : '';
-        const response = await fetch(url + cacheBuster);
-        
-        if (!response.ok) throw new Error("Gagal mengunduh data");
+        const targetUrl = CSV_URLS[gender];
+        // Penggunaan CORS Proxy untuk menghindari pemblokiran CORS browser
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}${forceRefresh ? '&_t=' + Date.now() : ''}`;
 
-        const text = await response.text();
+        const response = await fetch(proxyUrl);
+        if (!response.ok) throw new Error("Gagal mengunduh data melalui Proxy");
+
+        const json = await response.json();
+        const text = json.contents;
+
+        if (!text || text.includes("<html")) {
+          throw new Error("Format yang didapat bukan CSV valid");
+        }
+
         const parsedData = parseCSV(text);
-        
         rawData[gender] = parsedData;
         applyFilters();
       } catch (err) {
@@ -236,8 +242,9 @@
         if (row.length > 0 && row.some(val => val.trim() !== '')) {
           let item = {};
           headers.forEach((h, index) => {
-            if (h.trim()) {
-              item[h.trim()] = row[index] ? row[index].trim() : '';
+            const keyName = h.trim();
+            if (keyName) {
+              item[keyName] = row[index] ? row[index].trim() : '';
             }
           });
           result.push(item);
