@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- PapaParse untuk Parsing CSV -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <!-- jsPDF & AutoTable untuk Ekspor PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.min.js"></script>
+  <!-- jsPDF & AutoTable CDN Resmi & Stabil -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
@@ -94,11 +94,11 @@
         
         <div class="flex gap-2">
           <!-- Tombol Ekspor PDF -->
-          <button onclick="exportToPDF()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center shadow-sm">
+          <button id="btnExportPDF" onclick="exportToPDF()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center shadow-sm cursor-pointer active:scale-95">
             <i class="fa-solid fa-file-pdf"></i> Ekspor PDF
           </button>
           <!-- Tombol Muat Ulang -->
-          <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center">
+          <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center cursor-pointer">
             <i class="fa-solid fa-rotate"></i> Muat Ulang
           </button>
         </div>
@@ -163,20 +163,18 @@
       <div class="p-6 overflow-y-auto flex-grow bg-slate-50/50 space-y-4">
         <!-- Section Identitas Utama (NIK & KK) -->
         <div id="modalMainIdentifiers" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- Diisi via JS -->
         </div>
 
         <div class="border-t border-gray-200 my-2"></div>
 
         <!-- Section Rincian Informasi Lainnya -->
         <div id="modalOtherDetails" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <!-- Diisi via JS -->
         </div>
       </div>
 
       <!-- Footer Modal -->
       <div class="px-6 py-3 bg-gray-100 border-t border-gray-200 flex justify-end">
-        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
+        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition shadow-sm cursor-pointer">
           Tutup
         </button>
       </div>
@@ -369,7 +367,6 @@
       document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${total} data`;
     }
 
-    // Modal Terstruktur + Fitur Copy NIK & KK
     function openModal(dataObj) {
       const modal = document.getElementById('detailModal');
       const modalMainIdentifiers = document.getElementById('modalMainIdentifiers');
@@ -395,7 +392,6 @@
         const isKK = keyLower.includes('kk') || keyLower.includes('kartu keluarga');
 
         if (isNIK || isKK) {
-          // Kartu Spesial untuk NIK dan No. KK dengan Tombol Salin
           const card = document.createElement('div');
           card.className = "bg-white p-3.5 rounded-xl border border-emerald-200 shadow-sm flex justify-between items-center";
           card.innerHTML = `
@@ -406,7 +402,7 @@
               <p class="text-base font-mono font-bold text-gray-900 mt-0.5 tracking-wide">${valStr}</p>
             </div>
             ${valStr !== '-' ? `
-              <button onclick="copyToClipboard('${valStr}', '${key}')" title="Salin ${key}" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-sm transition border border-emerald-200 flex items-center gap-1">
+              <button onclick="copyToClipboard('${valStr}', '${key}')" title="Salin ${key}" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-sm transition border border-emerald-200 flex items-center gap-1 cursor-pointer">
                 <i class="fa-regular fa-copy"></i>
                 <span class="text-xs font-semibold">Salin</span>
               </button>
@@ -414,7 +410,6 @@
           `;
           modalMainIdentifiers.appendChild(card);
         } else {
-          // Kartu Informasi Umum Lainnya
           const item = document.createElement('div');
           item.className = "bg-white p-3 rounded-xl border border-gray-200 shadow-sm";
           item.innerHTML = `
@@ -432,12 +427,10 @@
       document.getElementById('detailModal').classList.add('hidden');
     }
 
-    // Fungsi Salin ke Clipboard & Menampilkan Toast
     function copyToClipboard(text, label) {
       navigator.clipboard.writeText(text).then(() => {
         showToast(`${label} (${text}) berhasil disalin!`);
       }).catch(err => {
-        // Fallback untuk browser lama
         const dummy = document.createElement("textarea");
         document.body.appendChild(dummy);
         dummy.value = text;
@@ -471,41 +464,64 @@
       document.getElementById('errorState').classList.toggle('hidden', !show);
     }
 
+    // Fungsi Ekspor PDF yang sudah Ditingkatkan Keandalannya
     function exportToPDF() {
       if (!filteredData || filteredData.length === 0) {
-        alert("Tidak ada data untuk diekspor.");
+        alert("Tidak ada data untuk diekspor. Silakan muat data terlebih dahulu.");
         return;
       }
 
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+      try {
+        const jsPDF = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+        if (!jsPDF) {
+          alert("Pustaka pembentuk PDF belum selesai dimuat. Silakan muat ulang halaman.");
+          return;
+        }
 
-      const genderLabel = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
-      const title = `Data Penduduk ${genderLabel} - Desa Wani Lumbumpetigo Dusun 1 Petigo`;
+        const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
 
-      doc.setFontSize(14);
-      doc.text(title, 14, 15);
-      doc.setFontSize(9);
-      doc.text(`Total Data Terunduh: ${filteredData.length} orang`, 14, 21);
+        const genderLabel = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
+        const title = `Data Penduduk ${genderLabel} - Desa Wani Lumbumpetigo Dusun 1 Petigo`;
 
-      const rawColumns = Object.keys(filteredData[0]).filter(c => c.trim() !== '');
-      const head = [['No', ...rawColumns]];
+        doc.setFontSize(14);
+        doc.text(title, 14, 15);
+        doc.setFontSize(9);
+        doc.text(`Total Data Terunduh: ${filteredData.length} orang`, 14, 21);
 
-      const body = filteredData.map((item, index) => {
-        const rowVals = rawColumns.map(col => item[col] || '-');
-        return [index + 1, ...rowVals];
-      });
+        const rawColumns = Object.keys(filteredData[0]).filter(c => c.trim() !== '');
+        const head = [['No', ...rawColumns]];
 
-      doc.autoTable({
-        startY: 25,
-        head: head,
-        body: body,
-        theme: 'striped',
-        styles: { fontSize: 8, cellPadding: 2 },
-        headStyles: { fillColor: [4, 120, 87] },
-      });
+        const body = filteredData.map((item, index) => {
+          const rowVals = rawColumns.map(col => item[col] || '-');
+          return [index + 1, ...rowVals];
+        });
 
-      doc.save(`Data_Penduduk_${genderLabel}_Dusun1_Petigo.pdf`);
+        // Pemanggilan autoTable aman
+        if (typeof doc.autoTable === 'function') {
+          doc.autoTable({
+            startY: 25,
+            head: head,
+            body: body,
+            theme: 'striped',
+            styles: { fontSize: 8, cellPadding: 2 },
+            headStyles: { fillColor: [4, 120, 87] },
+          });
+        } else if (typeof window.jspdf.autoTable === 'function') {
+          window.jspdf.autoTable(doc, {
+            startY: 25,
+            head: head,
+            body: body,
+            theme: 'striped',
+            styles: { fontSize: 8, cellPadding: 2 },
+            headStyles: { fillColor: [4, 120, 87] },
+          });
+        }
+
+        doc.save(`Data_Penduduk_${genderLabel}_Dusun1_Petigo.pdf`);
+      } catch (err) {
+        console.error("Ekspor PDF Error:", err);
+        alert("Gagal mengekspor PDF. Pastikan data tidak kosong.");
+      }
     }
   </script>
 </body>
