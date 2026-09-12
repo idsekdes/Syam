@@ -341,7 +341,7 @@
         columns.forEach(col => {
           if (!col.trim()) return;
           const val = row[col] || '-';
-          const isNameCol = col.toLowerCase().includes('nama');
+          const isNameCol = col.toLowerCase().includes('nama') && !col.toLowerCase().includes('ayah') && !col.toLowerCase().includes('ibu');
           
           if (isNameCol) {
             rowHTML += `
@@ -374,7 +374,7 @@
       const modalTitle = document.getElementById('modalTitle');
       const modalSubtitle = document.getElementById('modalSubtitle');
 
-      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
+      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase() === 'nama' || k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
       const nameVal = dataObj[nameKey] || 'Detail Penduduk';
 
       modalTitle.innerText = nameVal;
@@ -464,7 +464,7 @@
       document.getElementById('errorState').classList.toggle('hidden', !show);
     }
 
-    // Fungsi Ekspor PDF yang sudah Ditingkatkan Keandalannya
+    // Fungsi Ekspor PDF Terstruktur & Selektif Kolom Penting
     function exportToPDF() {
       if (!filteredData || filteredData.length === 0) {
         alert("Tidak ada data untuk diekspor. Silakan muat data terlebih dahulu.");
@@ -483,44 +483,65 @@
         const genderLabel = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
         const title = `Data Penduduk ${genderLabel} - Desa Wani Lumbumpetigo Dusun 1 Petigo`;
 
-        doc.setFontSize(14);
-        doc.text(title, 14, 15);
-        doc.setFontSize(9);
-        doc.text(`Total Data Terunduh: ${filteredData.length} orang`, 14, 21);
+        doc.setFontSize(13);
+        doc.text(title, 14, 12);
+        doc.setFontSize(8);
+        doc.text(`Total Data Dicetak: ${filteredData.length} orang | Tanggal: ${new Date().toLocaleDateString('id-ID')}`, 14, 17);
 
-        const rawColumns = Object.keys(filteredData[0]).filter(c => c.trim() !== '');
-        const head = [['No', ...rawColumns]];
+        // Daftar nama kolom penting yang ingin ditampilkan di PDF
+        const targetKeys = [
+          'nama', 'no_kk', 'nik', 'sex', 'tempatlahir', 
+          'tanggallahir', 'alamat', 'dusun', 'agama_id', 
+          'pekerjaan_id', 'nama ayah', 'nama ibu'
+        ];
+
+        // Cari pencocokan key sesungguhnya dari dataset CSV (Case Insensitive)
+        const availableKeys = Object.keys(filteredData[0]);
+        const pdfColumns = [];
+        const mappedKeys = [];
+
+        targetKeys.forEach(tKey => {
+          const foundKey = availableKeys.find(k => k.trim().toLowerCase() === tKey.toLowerCase() || k.trim().toLowerCase().replace(/_/g, '') === tKey.replace(/_/g, ''));
+          if (foundKey) {
+            mappedKeys.push(foundKey);
+            // Label Header yang Rapi
+            let displayTitle = foundKey
+              .replace(/_/g, ' ')
+              .replace(/id$/i, '')
+              .toUpperCase();
+            pdfColumns.push(displayTitle);
+          }
+        });
+
+        const head = [['No', ...pdfColumns]];
 
         const body = filteredData.map((item, index) => {
-          const rowVals = rawColumns.map(col => item[col] || '-');
+          const rowVals = mappedKeys.map(k => item[k] || '-');
           return [index + 1, ...rowVals];
         });
 
-        // Pemanggilan autoTable aman
+        const options = {
+          startY: 21,
+          head: head,
+          body: body,
+          theme: 'grid',
+          styles: { fontSize: 6.5, cellPadding: 1.5, overflow: 'linebreak' },
+          headStyles: { fillColor: [4, 120, 87], textColor: [255, 255, 255], fontStyle: 'bold', halign: 'center' },
+          columnStyles: {
+            0: { halign: 'center', cellWidth: 8 }
+          }
+        };
+
         if (typeof doc.autoTable === 'function') {
-          doc.autoTable({
-            startY: 25,
-            head: head,
-            body: body,
-            theme: 'striped',
-            styles: { fontSize: 8, cellPadding: 2 },
-            headStyles: { fillColor: [4, 120, 87] },
-          });
+          doc.autoTable(options);
         } else if (typeof window.jspdf.autoTable === 'function') {
-          window.jspdf.autoTable(doc, {
-            startY: 25,
-            head: head,
-            body: body,
-            theme: 'striped',
-            styles: { fontSize: 8, cellPadding: 2 },
-            headStyles: { fillColor: [4, 120, 87] },
-          });
+          window.jspdf.autoTable(doc, options);
         }
 
-        doc.save(`Data_Penduduk_${genderLabel}_Dusun1_Petigo.pdf`);
+        doc.save(`Data_Penduduk_${genderLabel}_Ringkas.pdf`);
       } catch (err) {
         console.error("Ekspor PDF Error:", err);
-        alert("Gagal mengekspor PDF. Pastikan data tidak kosong.");
+        alert("Gagal mengekspor PDF.");
       }
     }
   </script>
