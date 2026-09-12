@@ -95,7 +95,7 @@
       <i class="fa-solid fa-triangle-exclamation text-xl"></i>
       <div>
         <h4 class="font-bold">Gagal Mengambil Data</h4>
-        <p class="text-sm">Silakan periksa koneksi internet Anda atau pastikan link spreadsheet telah dipublikasikan dengan benar.</p>
+        <p class="text-sm">Silakan periksa koneksi internet Anda atau pastikan tautan Google Sheets dapat diakses secara publik.</p>
       </div>
     </div>
 
@@ -155,7 +155,7 @@
   </footer>
 
   <script>
-    // URL Spreadsheet CSV Output (Sudah Disesuaikan/Dibalik)
+    // URL CSV Google Sheets yang sudah disesuaikan
     const CSV_URLS = {
       perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv",
       laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv"
@@ -217,15 +217,15 @@
         rawData[gender] = parsedData;
         applyFilters();
       } catch (err) {
-        console.error(err);
+        console.error("Fetch Error:", err);
         showError(true);
-      } font-medium {
+      } finally {
         showLoading(false);
       }
     }
 
     function parseCSV(text) {
-      const lines = text.split('\n').filter(line => line.trim() !== '');
+      const lines = text.split(/\r?\n/).filter(line => line.trim() !== '');
       if (lines.length === 0) return [];
 
       const headers = parseCSVLine(lines[0]);
@@ -233,10 +233,12 @@
 
       for (let i = 1; i < lines.length; i++) {
         const row = parseCSVLine(lines[i]);
-        if (row.length === headers.length || row.length > 1) {
+        if (row.length > 0 && row.some(val => val.trim() !== '')) {
           let item = {};
           headers.forEach((h, index) => {
-            item[h.trim()] = row[index] ? row[index].trim() : '';
+            if (h.trim()) {
+              item[h.trim()] = row[index] ? row[index].trim() : '';
+            }
           });
           result.push(item);
         }
@@ -266,7 +268,7 @@
 
     function applyFilters() {
       const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const dataset = rawData[currentGender];
+      const dataset = rawData[currentGender] || [];
 
       filteredData = dataset.filter(item => {
         if (!query) return true;
@@ -287,7 +289,7 @@
       tableHeader.innerHTML = '';
       tableBody.innerHTML = '';
 
-      if (data.length === 0) {
+      if (!data || data.length === 0) {
         tableBody.innerHTML = `
           <tr>
             <td colspan="100%" class="text-center py-8 text-gray-400">
@@ -334,10 +336,11 @@
     }
 
     function updateStats() {
-      document.getElementById('statTotal').innerText = rawData[currentGender].length;
+      const total = rawData[currentGender] ? rawData[currentGender].length : 0;
+      document.getElementById('statTotal').innerText = total;
       document.getElementById('statFiltered').innerText = filteredData.length;
       document.getElementById('statGenderCount').innerText = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
-      document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${rawData[currentGender].length} data`;
+      document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${total} data`;
     }
 
     function openModal(dataObj) {
