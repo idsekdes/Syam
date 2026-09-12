@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pencarian Data Penduduk - Desa Wani Lumbumpetigo Dusun 1 Petigo</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
+
+  <!-- Header / Navbar -->
+  <header class="bg-emerald-700 text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>
+        <h1 class="text-2xl font-bold flex items-center gap-2">
+          <i class="fa-solid font-bold fa-users"></i> System Data Penduduk
+        </h1>
+        <p class="text-emerald-100 text-sm">Desa Wani Lumbumpetigo - Dusun 1 Petigo</p>
+      </div>
+      <!-- Tab Navigasi Halaman Gender -->
+      <div class="flex bg-emerald-800 p-1 rounded-xl shadow-inner">
+        <button id="tabLaki" onclick="switchGender('laki')" class="px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow">
+          <i class="fa-solid fa-mars text-blue-500"></i> Laki-Laki
+        </button>
+        <button id="tabPerempuan" onclick="switchGender('perempuan')" class="px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white">
+          <i class="fa-solid fa-venus text-pink-400"></i> Perempuan
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content Container -->
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+    <!-- Ringkasan Statistik -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
+        <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg text-xl">
+          <i class="fa-solid fa-address-card"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Total Terdaftar</p>
+          <h3 id="statTotal" class="text-2xl font-bold text-gray-800">0</h3>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
+        <div id="genderIconBox" class="p-3 bg-blue-100 text-blue-600 rounded-lg text-xl">
+          <i id="genderIconStat" class="fa-solid fa-mars"></i>
+        </div>
+        <div>
+          <p id="statGenderLabel" class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Kategori Aktif</p>
+          <h3 id="statGenderCount" class="text-2xl font-bold text-gray-800">Laki-Laki</h3>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
+        <div class="p-3 bg-amber-100 text-amber-600 rounded-lg text-xl">
+          <i class="fa-solid fa-filter"></i>
+        </div>
+        <div>
+          <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Hasil Pencarian</p>
+          <h3 id="statFiltered" class="text-2xl font-bold text-gray-800">0</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Bar -->
+    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-6">
+      <div class="flex flex-col md:flex-row gap-4">
+        <!-- Input Cari Nama/NIK/KK -->
+        <div class="relative flex-grow">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, NIK, No. KK, atau Pekerjaan..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm">
+        </div>
+        <!-- Refresh Button -->
+        <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center">
+          <i class="fa-solid fa-rotate"></i> Muat Ulang Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingState" class="hidden py-12 text-center">
+      <i class="fa-solid fa-circle-notch fa-spin text-4xl text-emerald-600 mb-3"></i>
+      <p class="text-gray-500 font-medium">Mengambil data dari spreadsheet...</p>
+    </div>
+
+    <!-- Error Banner -->
+    <div id="errorState" class="hidden bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6 flex items-center gap-3">
+      <i class="fa-solid fa-triangle-exclamation text-xl"></i>
+      <div>
+        <h4 class="font-bold">Gagal Mengambil Data</h4>
+        <p class="text-sm">Silakan periksa koneksi internet Anda atau pastikan URL spreadsheet dapat diakses publik.</p>
+      </div>
+    </div>
+
+    <!-- Tabel Data Penduduk -->
+    <div id="tableContainer" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr id="tableHeader" class="bg-gray-100 text-gray-700 font-semibold border-b border-gray-200">
+              <!-- Kolom header akan dirender secara dinamis -->
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="divide-y divide-gray-100">
+            <!-- Data baris akan dirender secara dinamis -->
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination / Footer Info -->
+      <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 flex justify-between items-center text-xs text-gray-500">
+        <span id="showingText">Menampilkan 0 data</span>
+        <span class="italic">* Klik pada Nama Warga untuk melihat modal Rincian Lengkap</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL DETAIL / RINCIAN WARGA -->
+  <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
+      <!-- Header Modal -->
+      <div class="bg-emerald-700 px-6 py-4 text-white flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div id="modalAvatar" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div>
+            <h3 id="modalTitle" class="text-lg font-bold leading-tight">Detail Rincian Penduduk</h3>
+            <p id="modalSubtitle" class="text-xs text-emerald-100">Dusun 1 Petigo</p>
+          </div>
+        </div>
+        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-xl transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Body Modal (Grid Details) -->
+      <div class="p-6 overflow-y-auto flex-grow">
+        <div id="modalContent" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Item rincian akan diinjeksi via JavaScript -->
+        </div>
+      </div>
+
+      <!-- Footer Modal -->
+      <div class="px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end">
+        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-white border-t border-gray-200 py-4 text-center text-xs text-gray-500">
+    Desa Wani Lumbumpetigo Dusun 1 Petigo &copy; 2026 - System Informasi Penduduk
+  </footer>
+
+  <!-- Javascript Logic -->
+  <script>
+    // URL Spreadsheet CSV Output
+    const CSV_URLS = {
+      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv",
+      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv"
+    };
+
+    let currentGender = 'laki';
+    let rawData = { laki: [], perempuan: [] };
+    let filteredData = [];
+
+    // Inisialisasi Aplikasi saat dokumen dimuat
+    document.addEventListener("DOMContentLoaded", () => {
+      loadData('laki');
+    });
+
+    // Pindah Halaman Gender (Laki-laki / Perempuan)
+    function switchGender(gender) {
+      if (currentGender === gender) return;
+      currentGender = gender;
+
+      // Reset Tab Style
+      const tabLaki = document.getElementById('tabLaki');
+      const tabPerempuan = document.getElementById('tabPerempuan');
+      const iconStat = document.getElementById('genderIconStat');
+      const iconBox = document.getElementById('genderIconBox');
+      const statLabel = document.getElementById('statGenderLabel');
+
+      if (gender === 'laki') {
+        tabLaki.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow";
+        tabPerempuan.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white";
+        iconStat.className = "fa-solid fa-mars";
+        iconBox.className = "p-3 bg-blue-100 text-blue-600 rounded-lg text-xl";
+        statLabel.innerText = "Kategori: Laki-Laki";
+      } else {
+        tabPerempuan.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow";
+        tabLaki.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white";
+        iconStat.className = "fa-solid fa-venus";
+        iconBox.className = "p-3 bg-pink-100 text-pink-600 rounded-lg text-xl";
+        statLabel.innerText = "Kategori: Perempuan";
+      }
+
+      // Load data jika belum ada, atau tampilkan jika sudah ada
+      if (rawData[gender].length === 0) {
+        loadData(gender);
+      } else {
+        applyFilters();
+      }
+    }
+
+    // Ambil Data dari Spreadsheet (CSV)
+    async function loadData(gender, forceRefresh = false) {
+      showLoading(true);
+      showError(false);
+
+      try {
+        const url = CSV_URLS[gender];
+        const cacheBuster = forceRefresh ? `&_t=${Date.now()}` : '';
+        const response = await fetch(url + cacheBuster);
+        
+        if (!response.ok) throw new Error("Gagal mengunduh data");
+
+        const text = await response.text();
+        const parsedData = parseCSV(text);
+        
+        rawData[gender] = parsedData;
+        applyFilters();
+      } catch (err) {
+        console.error(err);
+        showError(true);
+      } finally {
+        showLoading(false);
+      }
+    }
+
+    // Helper Parser CSV sederhana yang menangani kutip
+    function parseCSV(text) {
+      const lines = text.split('\n').filter(line => line.trim() !== '');
+      if (lines.length === 0) return [];
+
+      const result = [];
+      const headers = parseCSVLine(lines[0]);
+
+      for (let i = 1; i < lines.length; i++) {
+        const row = parseCSVLine(lines[i]);
+        if (row.length === headers.length || row.length > 1) {
+          let item = {};
+          headers.forEach((h, index) => {
+            item[h.trim()] = row[index] ? row[index].trim() : '';
+          });
+          result.push(item);
+        }
+      }
+      return result;
+    }
+
+    function parseCSVLine(line) {
+      const values = [];
+      let current = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"' || char === "'") {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          values.push(current);
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      values.push(current);
+      return values;
+    }
+
+    // Filter & Search Function
+    function applyFilters() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const dataset = rawData[currentGender];
+
+      filteredData = dataset.filter(item => {
+        if (!query) return true;
+        return Object.values(item).some(val => 
+          String(val).toLowerCase().includes(query)
+        );
+      });
+
+      renderTable();
+      updateStats();
+    }
+
+    // Render Tabel
+    function renderTable() {
+      const tableHeader = document.getElementById('tableHeader');
+      const tableBody = document.getElementById('tableBody');
+      const data = filteredData;
+
+      tableHeader.innerHTML = '';
+      tableBody.innerHTML = '';
+
+      if (data.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="100%" class="text-center py-8 text-gray-400">
+              <i class="fa-solid fa-folder-open text-3xl mb-2"></i>
+              <p>Tidak ada data penduduk yang ditemukan.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      // Ambil Nama Kolom dari Data
+      const columns = Object.keys(data[0]);
+
+      // Buat Header Tabel
+      let headerHTML = `<th class="px-4 py-3 border-b text-center w-12">No</th>`;
+      columns.forEach(col => {
+        headerHTML += `<th class="px-4 py-3 border-b whitespace-nowrap">${col}</th>`;
+      });
+      tableHeader.innerHTML = headerHTML;
+
+      // Buat Baris Data
+      data.forEach((row, index) => {
+        let tr = document.createElement('tr');
+        tr.className = "hover:bg-emerald-50/50 transition duration-150 cursor-pointer border-b border-gray-100";
+        
+        // Buat Isi Kolom
+        let rowHTML = `<td class="px-4 py-3 text-center text-gray-400 font-mono">${index + 1}</td>`;
+        
+        columns.forEach(col => {
+          const val = row[col] || '-';
+          // Deteksi apakah ini kolom Nama (agar diberi gaya khusus)
+          const isNameCol = col.toLowerCase().includes('nama');
+          
+          if (isNameCol) {
+            rowHTML += `
+              <td class="px-4 py-3 font-semibold text-emerald-700 hover:underline whitespace-nowrap">
+                <i class="fa-solid fa-user-circle mr-1 text-emerald-500"></i> ${val}
+              </td>`;
+          } else {
+            rowHTML += `<td class="px-4 py-3 whitespace-nowrap text-gray-600">${val}</td>`;
+          }
+        });
+
+        tr.innerHTML = rowHTML;
+        
+        // Klik Baris untuk Membuka Modal Detail
+        tr.addEventListener('click', () => openModal(row));
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // Update Angka Statistik
+    function updateStats() {
+      document.getElementById('statTotal').innerText = rawData[currentGender].length;
+      document.getElementById('statFiltered').innerText = filteredData.length;
+      document.getElementById('statGenderCount').innerText = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
+      document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${rawData[currentGender].length} data`;
+    }
+
+    // Modal Control & Render Rincian
+    function openModal(dataObj) {
+      const modal = document.getElementById('detailModal');
+      const modalContent = document.getElementById('modalContent');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubtitle = document.getElementById('modalSubtitle');
+
+      // Cari Nama untuk Header Modal
+      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
+      const nameVal = dataObj[nameKey] || 'Detail Penduduk';
+
+      modalTitle.innerText = nameVal;
+      modalSubtitle.innerText = `Data Penduduk (${currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan'}) - Dusun 1 Petigo`;
+
+      // Render Item Detail
+      modalContent.innerHTML = '';
+      Object.entries(dataObj).forEach(([key, value]) => {
+        const detailItem = document.createElement('div');
+        detailItem.className = "bg-gray-50 p-3 rounded-xl border border-gray-100";
+        detailItem.innerHTML = `
+          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">${key}</p>
+          <p class="text-sm font-semibold text-gray-800 mt-1">${value || '-'}</p>
+        `;
+        modalContent.appendChild(detailItem);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // State Handlers
+    function showLoading(show) {
+      document.getElementById('loadingState').classList.toggle('hidden', !show);
+      document.getElementById('tableContainer').classList.toggle('hidden', show);
+    }
+
+    function showError(show) {
+      document.getElementById('errorState').classList.toggle('hidden', !show);
+    }
+  </script>
+</body>
+</html>
