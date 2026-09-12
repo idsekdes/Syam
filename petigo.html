@@ -3,26 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Petigo</title>
-<link rel="icon" type="image/png" href="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png">
+  <title>Dusun 1 Petigo</title>
+  
+  <!-- Favicon Logo Donggala -->
+  <link rel="icon" type="image/png" href="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- PapaParse untuk Parsing CSV tangguh -->
+  <!-- PapaParse untuk Parsing CSV -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <!-- jsPDF & AutoTable untuk Ekspor PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
 
   <!-- Header / Navbar -->
   <header class="bg-emerald-700 text-white shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-      <div>
-        <h1 class="text-2xl font-bold flex items-center gap-2">
-          <i class="fa-solid fa-users"></i> System Data Penduduk
-        </h1>
-        <p class="text-emerald-100 text-sm">Desa Wani Lumbumpetigo - Dusun 1 Petigo</p>
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <!-- Branding / Logo & Judul -->
+      <div class="flex items-center gap-3">
+        <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png" alt="Logo Kabupaten Donggala" class="h-12 w-auto drop-shadow-md">
+        <div>
+          <h1 class="text-xl md:text-2xl font-bold leading-tight">
+            Sistem Data Penduduk
+          </h1>
+          <p class="text-emerald-100 text-xs md:text-sm">Desa Wani Lumbumpetigo - Dusun 1 Petigo</p>
+        </div>
       </div>
+
       <!-- Tab Navigasi Gender -->
       <div class="flex bg-emerald-800 p-1 rounded-xl shadow-inner">
         <button id="tabLaki" onclick="switchGender('laki')" class="px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow">
@@ -71,7 +82,7 @@
       </div>
     </div>
 
-    <!-- Filter & Search Bar -->
+    <!-- Filter, Search & Export Bar -->
     <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-6">
       <div class="flex flex-col md:flex-row gap-4">
         <div class="relative flex-grow">
@@ -80,9 +91,17 @@
           </span>
           <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, NIK, No. KK, atau kata kunci lainnya..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm">
         </div>
-        <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center">
-          <i class="fa-solid fa-rotate"></i> Muat Ulang Data
-        </button>
+        
+        <div class="flex gap-2">
+          <!-- Tombol Ekspor PDF -->
+          <button onclick="exportToPDF()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center shadow-sm">
+            <i class="fa-solid fa-file-pdf"></i> Ekspor PDF
+          </button>
+          <!-- Tombol Muat Ulang -->
+          <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center">
+            <i class="fa-solid fa-rotate"></i> Muat Ulang
+          </button>
+        </div>
       </div>
     </div>
 
@@ -97,7 +116,7 @@
       <i class="fa-solid fa-triangle-exclamation text-xl"></i>
       <div>
         <h4 class="font-bold">Gagal Mengambil Data</h4>
-        <p class="text-sm">Silakan periksa koneksi internet Anda atau coba tekan tombol "Muat Ulang Data".</p>
+        <p class="text-sm">Silakan periksa koneksi internet Anda atau coba tekan tombol "Muat Ulang".</p>
       </div>
     </div>
 
@@ -121,43 +140,60 @@
 
   </main>
 
-  <!-- MODAL DETAIL / RINCIAN WARGA -->
+  <!-- MODAL DETAIL / RINCIAN WARGA TERSTRUKTUR -->
   <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
+      <!-- Header Modal -->
       <div class="bg-emerald-700 px-6 py-4 text-white flex justify-between items-center">
         <div class="flex items-center gap-3">
-          <div id="modalAvatar" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-lg font-bold">
-            <i class="fa-solid fa-user"></i>
+          <div id="modalAvatar" class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-xl font-bold shadow-inner border border-white/30">
+            <i class="fa-solid fa-user-large"></i>
           </div>
           <div>
-            <h3 id="modalTitle" class="text-lg font-bold leading-tight">Detail Rincian Penduduk</h3>
-            <p id="modalSubtitle" class="text-xs text-emerald-100">Dusun 1 Petigo</p>
+            <h3 id="modalTitle" class="text-xl font-bold leading-tight">Detail Penduduk</h3>
+            <p id="modalSubtitle" class="text-xs text-emerald-100">Dusun 1 Petigo - Desa Wani Lumbumpetigo</p>
           </div>
         </div>
-        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-xl transition">
+        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-2xl transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <div class="p-6 overflow-y-auto flex-grow">
-        <div id="modalContent" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Content Modal -->
+      <div class="p-6 overflow-y-auto flex-grow bg-slate-50/50 space-y-4">
+        <!-- Section Identitas Utama (NIK & KK) -->
+        <div id="modalMainIdentifiers" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Diisi via JS -->
+        </div>
+
+        <div class="border-t border-gray-200 my-2"></div>
+
+        <!-- Section Rincian Informasi Lainnya -->
+        <div id="modalOtherDetails" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Diisi via JS -->
         </div>
       </div>
 
-      <div class="px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end">
-        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition">
+      <!-- Footer Modal -->
+      <div class="px-6 py-3 bg-gray-100 border-t border-gray-200 flex justify-end">
+        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition shadow-sm">
           Tutup
         </button>
       </div>
     </div>
   </div>
 
+  <!-- Toast Notification Copy -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-50">
+    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+    <span id="toastMessage">Teks berhasil disalin!</span>
+  </div>
+
   <footer class="bg-white border-t border-gray-200 py-4 text-center text-xs text-gray-500">
-    Desa Wani Lumbumpetigo Dusun 1 Petigo &copy; 2026 - System Informasi Penduduk
+    Desa Wani Lumbumpetigo Dusun 1 Petigo &copy; 2026 - Sistem Informasi Penduduk
   </footer>
 
   <script>
-    // URL CSV Google Sheets yang telah dikonversi secara tepat
     const CSV_URLS = {
       perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv",
       laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv"
@@ -203,7 +239,6 @@
     }
 
     async function fetchCSVText(url) {
-      // Coba fetch langsung
       try {
         const res = await fetch(url);
         if (res.ok) {
@@ -214,7 +249,6 @@
         console.warn("Direct fetch blocked by CORS, trying proxies...");
       }
 
-      // Fallback Proxy 1: AllOrigins
       try {
         const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`);
         if (res.ok) {
@@ -223,7 +257,6 @@
         }
       } catch (e) {}
 
-      // Fallback Proxy 2: Corsproxy.io
       const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
       if (!res.ok) throw new Error("Gagal mengunduh CSV");
       return await res.text();
@@ -237,7 +270,6 @@
         const targetUrl = CSV_URLS[gender];
         const csvText = await fetchCSVText(targetUrl);
 
-        // Parsing CSV secara tangguh menggunakan PapaParse
         const parsed = Papa.parse(csvText, {
           header: true,
           skipEmptyLines: true
@@ -337,9 +369,11 @@
       document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${total} data`;
     }
 
+    // Modal Terstruktur + Fitur Copy NIK & KK
     function openModal(dataObj) {
       const modal = document.getElementById('detailModal');
-      const modalContent = document.getElementById('modalContent');
+      const modalMainIdentifiers = document.getElementById('modalMainIdentifiers');
+      const modalOtherDetails = document.getElementById('modalOtherDetails');
       const modalTitle = document.getElementById('modalTitle');
       const modalSubtitle = document.getElementById('modalSubtitle');
 
@@ -347,18 +381,48 @@
       const nameVal = dataObj[nameKey] || 'Detail Penduduk';
 
       modalTitle.innerText = nameVal;
-      modalSubtitle.innerText = `Data Penduduk (${currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan'}) - Dusun 1 Petigo`;
+      modalSubtitle.innerText = `Jenis Kelamin: ${currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan'}`;
 
-      modalContent.innerHTML = '';
+      modalMainIdentifiers.innerHTML = '';
+      modalOtherDetails.innerHTML = '';
+
       Object.entries(dataObj).forEach(([key, value]) => {
         if (!key.trim()) return;
-        const detailItem = document.createElement('div');
-        detailItem.className = "bg-gray-50 p-3 rounded-xl border border-gray-100";
-        detailItem.innerHTML = `
-          <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">${key}</p>
-          <p class="text-sm font-semibold text-gray-800 mt-1">${value || '-'}</p>
-        `;
-        modalContent.appendChild(detailItem);
+
+        const keyLower = key.toLowerCase();
+        const valStr = String(value || '-').trim();
+        const isNIK = keyLower.includes('nik');
+        const isKK = keyLower.includes('kk') || keyLower.includes('kartu keluarga');
+
+        if (isNIK || isKK) {
+          // Kartu Spesial untuk NIK dan No. KK dengan Tombol Salin
+          const card = document.createElement('div');
+          card.className = "bg-white p-3.5 rounded-xl border border-emerald-200 shadow-sm flex justify-between items-center";
+          card.innerHTML = `
+            <div>
+              <p class="text-xs text-emerald-700 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                <i class="${isNIK ? 'fa-id-card' : 'fa-users'}"></i> ${key}
+              </p>
+              <p class="text-base font-mono font-bold text-gray-900 mt-0.5 tracking-wide">${valStr}</p>
+            </div>
+            ${valStr !== '-' ? `
+              <button onclick="copyToClipboard('${valStr}', '${key}')" title="Salin ${key}" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-sm transition border border-emerald-200 flex items-center gap-1">
+                <i class="fa-regular fa-copy"></i>
+                <span class="text-xs font-semibold">Salin</span>
+              </button>
+            ` : ''}
+          `;
+          modalMainIdentifiers.appendChild(card);
+        } else {
+          // Kartu Informasi Umum Lainnya
+          const item = document.createElement('div');
+          item.className = "bg-white p-3 rounded-xl border border-gray-200 shadow-sm";
+          item.innerHTML = `
+            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">${key}</p>
+            <p class="text-sm font-semibold text-gray-800 mt-1">${valStr}</p>
+          `;
+          modalOtherDetails.appendChild(item);
+        }
       });
 
       modal.classList.remove('hidden');
@@ -368,6 +432,36 @@
       document.getElementById('detailModal').classList.add('hidden');
     }
 
+    // Fungsi Salin ke Clipboard & Menampilkan Toast
+    function copyToClipboard(text, label) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`${label} (${text}) berhasil disalin!`);
+      }).catch(err => {
+        // Fallback untuk browser lama
+        const dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        showToast(`${label} berhasil disalin!`);
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      toastMsg.innerText = msg;
+
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 3000);
+    }
+
     function showLoading(show) {
       document.getElementById('loadingState').classList.toggle('hidden', !show);
       document.getElementById('tableContainer').classList.toggle('hidden', show);
@@ -375,6 +469,43 @@
 
     function showError(show) {
       document.getElementById('errorState').classList.toggle('hidden', !show);
+    }
+
+    function exportToPDF() {
+      if (!filteredData || filteredData.length === 0) {
+        alert("Tidak ada data untuk diekspor.");
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+
+      const genderLabel = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
+      const title = `Data Penduduk ${genderLabel} - Desa Wani Lumbumpetigo Dusun 1 Petigo`;
+
+      doc.setFontSize(14);
+      doc.text(title, 14, 15);
+      doc.setFontSize(9);
+      doc.text(`Total Data Terunduh: ${filteredData.length} orang`, 14, 21);
+
+      const rawColumns = Object.keys(filteredData[0]).filter(c => c.trim() !== '');
+      const head = [['No', ...rawColumns]];
+
+      const body = filteredData.map((item, index) => {
+        const rowVals = rawColumns.map(col => item[col] || '-');
+        return [index + 1, ...rowVals];
+      });
+
+      doc.autoTable({
+        startY: 25,
+        head: head,
+        body: body,
+        theme: 'striped',
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [4, 120, 87] },
+      });
+
+      doc.save(`Data_Penduduk_${genderLabel}_Dusun1_Petigo.pdf`);
     }
   </script>
 </body>
