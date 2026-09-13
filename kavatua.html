@@ -202,6 +202,15 @@
       });
     }
 
+    function updateStats() {
+      const total = rawData[currentGender] ? rawData[currentGender].length : 0;
+      document.getElementById('statTotal').innerText = total;
+      document.getElementById('statFiltered').innerText = filteredData.length;
+      document.getElementById('statGenderCount').innerText = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
+      document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${total} data`;
+    }
+
+    // FUNGSI MEMBUKA MODAL TAMPILAN BARU (MIRIP DESAIN REFERENSI)
     function openModal(dataObj) {
       const modal = document.getElementById('detailModal'), pContainer = document.getElementById('modalPhotoContainer');
       const nameKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
@@ -236,6 +245,7 @@
 
       modal.classList.remove('hidden');
     }
+
 
     function closeModal() { document.getElementById('detailModal').classList.add('hidden'); }
     function copyToClipboard(text, label) {
