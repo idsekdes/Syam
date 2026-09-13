@@ -3,38 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dusun 3 Kavatua</title>
+  <title>Pencarian Data Penduduk - Desa Wani Lumbumpetigo Dusun 3 Kavatua</title>
   
-  <!-- Favicon Logo Donggala -->
   <link rel="icon" type="image/png" href="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png">
-
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- PapaParse untuk Parsing CSV -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  <!-- jsPDF & AutoTable CDN Resmi & Stabil -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
 
-  <!-- Header / Navbar -->
   <header class="bg-emerald-700 text-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-      <!-- Branding / Logo & Judul -->
       <div class="flex items-center gap-3">
         <img src="https://res.cloudinary.com/dpr2vc3b0/image/upload/v1767107096/logo_donggala-fix-2025_napiej.png" alt="Logo Kabupaten Donggala" class="h-12 w-auto drop-shadow-md">
         <div>
-          <h1 class="text-xl md:text-2xl font-bold leading-tight">
-            Sistem Data Penduduk
-          </h1>
+          <h1 class="text-xl md:text-2xl font-bold leading-tight">Sistem Data Penduduk</h1>
           <p class="text-emerald-100 text-xs md:text-sm">Desa Wani Lumbumpetigo - Dusun 3 Kavatua</p>
         </div>
       </div>
 
-      <!-- Tab Navigasi Gender -->
       <div class="flex bg-emerald-800 p-1 rounded-xl shadow-inner">
         <button id="tabLaki" onclick="switchGender('laki')" class="px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow">
           <i class="fa-solid fa-mars text-blue-500"></i> Laki-Laki
@@ -46,35 +35,24 @@
     </div>
   </header>
 
-  <!-- Content Container -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-
-    <!-- Ringkasan Statistik -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
-        <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg text-xl">
-          <i class="fa-solid fa-address-card"></i>
-        </div>
+        <div class="p-3 bg-emerald-100 text-emerald-600 rounded-lg text-xl"><i class="fa-solid fa-address-card"></i></div>
         <div>
           <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Total Terdaftar</p>
           <h3 id="statTotal" class="text-2xl font-bold text-gray-800">0</h3>
         </div>
       </div>
-
       <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
-        <div id="genderIconBox" class="p-3 bg-blue-100 text-blue-600 rounded-lg text-xl">
-          <i id="genderIconStat" class="fa-solid fa-mars"></i>
-        </div>
+        <div id="genderIconBox" class="p-3 bg-blue-100 text-blue-600 rounded-lg text-xl"><i id="genderIconStat" class="fa-solid fa-mars"></i></div>
         <div>
           <p id="statGenderLabel" class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Kategori Aktif</p>
           <h3 id="statGenderCount" class="text-2xl font-bold text-gray-800">Laki-Laki</h3>
         </div>
       </div>
-
       <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex items-center gap-4">
-        <div class="p-3 bg-amber-100 text-amber-600 rounded-lg text-xl">
-          <i class="fa-solid fa-filter"></i>
-        </div>
+        <div class="p-3 bg-amber-100 text-amber-600 rounded-lg text-xl"><i class="fa-solid fa-filter"></i></div>
         <div>
           <p class="text-xs text-gray-500 uppercase tracking-wider font-semibold">Hasil Pencarian</p>
           <h3 id="statFiltered" class="text-2xl font-bold text-gray-800">0</h3>
@@ -82,36 +60,22 @@
       </div>
     </div>
 
-    <!-- Filter, Search & Export Bar -->
-    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-6">
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="relative flex-grow">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-          <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, NIK, No. KK, atau kata kunci lainnya..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm">
-        </div>
-        
-        <div class="flex gap-2">
-          <!-- Tombol Ekspor PDF -->
-          <button id="btnExportPDF" onclick="exportToPDF()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center shadow-sm cursor-pointer active:scale-95">
-            <i class="fa-solid fa-file-pdf"></i> Ekspor PDF
-          </button>
-          <!-- Tombol Muat Ulang -->
-          <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center cursor-pointer">
-            <i class="fa-solid fa-rotate"></i> Muat Ulang
-          </button>
-        </div>
+    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-6 flex flex-col md:flex-row gap-4">
+      <div class="relative flex-grow">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Cari nama, NIK, No. KK..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 text-sm">
+      </div>
+      <div class="flex gap-2">
+        <button onclick="exportToPDF()" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center shadow-sm cursor-pointer"><i class="fa-solid fa-file-pdf"></i> Ekspor PDF</button>
+        <button onclick="loadData(currentGender, true)" class="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition flex items-center gap-2 justify-center cursor-pointer"><i class="fa-solid fa-rotate"></i> Muat Ulang</button>
       </div>
     </div>
 
-    <!-- Loading Spinner -->
     <div id="loadingState" class="hidden py-12 text-center">
       <i class="fa-solid fa-circle-notch fa-spin text-4xl text-emerald-600 mb-3"></i>
       <p class="text-gray-500 font-medium">Mengambil data dari spreadsheet Dusun 3 Kavatua...</p>
     </div>
 
-    <!-- Error Banner -->
     <div id="errorState" class="hidden bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6 flex items-center gap-3">
       <i class="fa-solid fa-triangle-exclamation text-xl"></i>
       <div>
@@ -120,16 +84,11 @@
       </div>
     </div>
 
-    <!-- Tabel Data Penduduk -->
     <div id="tableContainer" class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse text-sm">
-          <thead>
-            <tr id="tableHeader" class="bg-gray-100 text-gray-700 font-semibold border-b border-gray-200">
-            </tr>
-          </thead>
-          <tbody id="tableBody" class="divide-y divide-gray-100">
-          </tbody>
+          <thead><tr id="tableHeader" class="bg-gray-100 text-gray-700 font-semibold border-b border-gray-200"></tr></thead>
+          <tbody id="tableBody" class="divide-y divide-gray-100"></tbody>
         </table>
       </div>
       <div class="px-4 py-3 bg-gray-50 border-t border-gray-200 flex justify-between items-center text-xs text-gray-500">
@@ -137,54 +96,44 @@
         <span class="italic">* Klik pada Nama Warga untuk melihat rincian lengkap</span>
       </div>
     </div>
-
   </main>
 
-  <!-- MODAL DETAIL / RINCIAN WARGA TERSTRUKTUR -->
-  <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
-      <!-- Header Modal -->
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
       <div class="bg-emerald-700 px-6 py-4 text-white flex justify-between items-center">
-        <div class="flex items-center gap-3">
-          <div id="modalAvatar" class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-xl font-bold shadow-inner border border-white/30">
-            <i class="fa-solid fa-user-large"></i>
-          </div>
-          <div>
-            <h3 id="modalTitle" class="text-xl font-bold leading-tight">Detail Penduduk</h3>
-            <p id="modalSubtitle" class="text-xs text-emerald-100">Dusun 3 Kavatua - Desa Wani Lumbumpetigo</p>
-          </div>
-        </div>
-        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-2xl transition">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <h3 class="text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-id-card"></i> Detail Data Penduduk</h3>
+        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-xl transition"><i class="fa-solid fa-xmark"></i></button>
       </div>
-
-      <!-- Content Modal -->
-      <div class="p-6 overflow-y-auto flex-grow bg-slate-50/50 space-y-4">
-        <!-- Section Identitas Utama (NIK & KK) -->
-        <div id="modalMainIdentifiers" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        </div>
-
-        <div class="border-t border-gray-200 my-2"></div>
-
-        <!-- Section Rincian Informasi Lainnya -->
-        <div id="modalOtherDetails" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="p-6 overflow-y-auto flex-grow bg-slate-50">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="w-full md:w-5/12 flex flex-col items-center text-center">
+            <div id="modalPhotoContainer" class="w-48 h-56 bg-white border-4 border-emerald-600 rounded-xl overflow-hidden shadow-md flex items-center justify-center mb-3"></div>
+            <h2 id="modalName" class="text-xl font-extrabold text-emerald-900 leading-snug">-</h2>
+            <div class="mt-2 inline-flex items-center gap-2 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200 text-emerald-800 font-mono text-sm font-semibold">
+              <span id="modalNikText">NIK: -</span>
+              <button id="btnCopyNik" onclick="" title="Salin NIK" class="p-1 hover:text-emerald-600 text-gray-500 transition"><i class="fa-regular fa-copy"></i></button>
+            </div>
+          </div>
+          <div class="w-full md:w-7/12 space-y-5">
+            <div>
+              <h4 class="text-sm font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-2 pb-1 border-b-2 border-emerald-600 mb-2"><i class="fa-solid fa-clipboard-user"></i> Data Identitas</h4>
+              <div id="modalGroupIdentitas" class="space-y-1.5 text-xs sm:text-sm"></div>
+            </div>
+            <div>
+              <h4 class="text-sm font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-2 pb-1 border-b-2 border-emerald-600 mb-2"><i class="fa-solid fa-users text-xs"></i> Data Sosial & Keluarga</h4>
+              <div id="modalGroupSosial" class="space-y-1.5 text-xs sm:text-sm"></div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Footer Modal -->
       <div class="px-6 py-3 bg-gray-100 border-t border-gray-200 flex justify-end">
-        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition shadow-sm cursor-pointer">
-          Tutup
-        </button>
+        <button onclick="closeModal()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-sm font-medium transition cursor-pointer">Tutup</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification Copy -->
   <div id="toastNotification" class="fixed bottom-6 right-6 bg-gray-900 text-white px-4 py-2.5 rounded-lg shadow-lg text-xs font-medium flex items-center gap-2 opacity-0 transition-opacity duration-300 pointer-events-none z-50">
-    <i class="fa-solid fa-circle-check text-emerald-400"></i>
-    <span id="toastMessage">Teks berhasil disalin!</span>
+    <i class="fa-solid fa-circle-check text-emerald-400"></i><span id="toastMessage">Teks berhasil disalin!</span>
   </div>
 
   <footer class="bg-white border-t border-gray-200 py-4 text-center text-xs text-gray-500">
@@ -192,171 +141,64 @@
   </footer>
 
   <script>
-    // URL CSV Google Sheets khusus untuk Dusun 3 Kavatua
     const CSV_URLS = {
-      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJ3gRub099OnlMJjF_0fWM_04W21ISwwu6LZZuWHsQvPKj8neSBznxH0ei1o8q7RxbCzM3G1KEFtuw/pub?gid=1825285856&single=true&output=csv",
-      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSjHKgVnzgfLudfEQk5soYb0ZV5HqIDHV1MYHgRsgMrTV6_2BKq28TqQF0X6HXZ9I1EGHMO3K81wJFU/pub?gid=1027952502&single=true&output=csv"
+      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQhmItqd-86LT6lQrhWiPd94ZDZVew1i6WyxYn3t0bA2d21pzyLBKXMiD8b8m90R-CfrUdTMR4Xo4HZ/pub?gid=1217765628&single=true&output=csv",
+      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTQwYCQLWAu95bP1KdDBa3WwGcUFEyDb23c23JSfkF3BhdxrOHAxfVfsATlUwzq_lmRdoP4kVkbgKo8/pub?gid=580499093&single=true&output=csv"
     };
 
-    let currentGender = 'laki';
-    let rawData = { laki: [], perempuan: [] };
-    let filteredData = [];
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadData('laki');
-    });
+    let currentGender = 'laki', rawData = { laki: [], perempuan: [] }, filteredData = [];
+    document.addEventListener("DOMContentLoaded", () => loadData('laki'));
 
     function switchGender(gender) {
       if (currentGender === gender) return;
       currentGender = gender;
-
-      const tabLaki = document.getElementById('tabLaki');
-      const tabPerempuan = document.getElementById('tabPerempuan');
-      const iconStat = document.getElementById('genderIconStat');
-      const iconBox = document.getElementById('genderIconBox');
-      const statLabel = document.getElementById('statGenderLabel');
-
-      if (gender === 'laki') {
-        tabLaki.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow";
-        tabPerempuan.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white";
-        iconStat.className = "fa-solid fa-mars";
-        iconBox.className = "p-3 bg-blue-100 text-blue-600 rounded-lg text-xl";
-        statLabel.innerText = "Kategori: Laki-Laki";
-      } else {
-        tabPerempuan.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow";
-        tabLaki.className = "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white";
-        iconStat.className = "fa-solid fa-venus";
-        iconBox.className = "p-3 bg-pink-100 text-pink-600 rounded-lg text-xl";
-        statLabel.innerText = "Kategori: Perempuan";
-      }
-
-      if (!rawData[gender] || rawData[gender].length === 0) {
-        loadData(gender);
-      } else {
-        applyFilters();
-      }
+      document.getElementById('tabLaki').className = gender === 'laki' ? "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow" : "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white";
+      document.getElementById('tabPerempuan').className = gender === 'perempuan' ? "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 bg-white text-emerald-800 shadow" : "px-5 py-2.5 rounded-lg font-medium transition flex items-center gap-2 text-emerald-100 hover:text-white";
+      document.getElementById('genderIconStat').className = gender === 'laki' ? "fa-solid fa-mars" : "fa-solid fa-venus";
+      document.getElementById('genderIconBox').className = gender === 'laki' ? "p-3 bg-blue-100 text-blue-600 rounded-lg text-xl" : "p-3 bg-pink-100 text-pink-600 rounded-lg text-xl";
+      document.getElementById('statGenderLabel').innerText = `Kategori: ${gender === 'laki' ? 'Laki-Laki' : 'Perempuan'}`;
+      if (!rawData[gender] || rawData[gender].length === 0) loadData(gender); else applyFilters();
     }
 
     async function fetchCSVText(url) {
-      try {
-        const res = await fetch(url);
-        if (res.ok) {
-          const txt = await res.text();
-          if (txt && !txt.startsWith("<!DOCTYPE")) return txt;
-        }
-      } catch (e) {
-        console.warn("Direct fetch blocked by CORS, trying proxies...");
-      }
-
-      try {
-        const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`);
-        if (res.ok) {
-          const txt = await res.text();
-          if (txt && !txt.startsWith("<!DOCTYPE")) return txt;
-        }
-      } catch (e) {}
-
+      try { const res = await fetch(url); if (res.ok) { const txt = await res.text(); if (txt && !txt.startsWith("<!DOCTYPE")) return txt; } } catch (e) {}
+      try { const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`); if (res.ok) { const txt = await res.text(); if (txt && !txt.startsWith("<!DOCTYPE")) return txt; } } catch (e) {}
       const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
-      if (!res.ok) throw new Error("Gagal mengunduh CSV");
       return await res.text();
     }
 
-    async function loadData(gender, forceRefresh = false) {
-      showLoading(true);
-      showError(false);
-
+    async function loadData(gender) {
+      showLoading(true); showError(false);
       try {
-        const targetUrl = CSV_URLS[gender];
-        const csvText = await fetchCSVText(targetUrl);
-
-        const parsed = Papa.parse(csvText, {
-          header: true,
-          skipEmptyLines: true
-        });
-
-        if (parsed.data && parsed.data.length > 0) {
-          rawData[gender] = parsed.data;
-          applyFilters();
-        } else {
-          throw new Error("Data Kosong");
-        }
-      } catch (err) {
-        console.error("Fetch Error:", err);
-        showError(true);
-      } finally {
-        showLoading(false);
-      }
+        const csvText = await fetchCSVText(CSV_URLS[gender]);
+        const parsed = Papa.parse(csvText, { header: true, skipEmptyLines: true });
+        if (parsed.data && parsed.data.length > 0) { rawData[gender] = parsed.data; applyFilters(); } else throw new Error();
+      } catch (err) { showError(true); } finally { showLoading(false); }
     }
 
     function applyFilters() {
-      const query = document.getElementById('searchInput').value.toLowerCase().trim();
-      const dataset = rawData[currentGender] || [];
-
-      filteredData = dataset.filter(item => {
-        if (!query) return true;
-        return Object.values(item).some(val => 
-          String(val || '').toLowerCase().includes(query)
-        );
-      });
-
-      renderTable();
-      updateStats();
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      filteredData = (rawData[currentGender] || []).filter(item => !q || Object.values(item).some(val => String(val || '').toLowerCase().includes(q)));
+      renderTable(); updateStats();
     }
 
     function renderTable() {
-      const tableHeader = document.getElementById('tableHeader');
-      const tableBody = document.getElementById('tableBody');
-      const data = filteredData;
-
-      tableHeader.innerHTML = '';
-      tableBody.innerHTML = '';
-
-      if (!data || data.length === 0) {
-        tableBody.innerHTML = `
-          <tr>
-            <td colspan="100%" class="text-center py-8 text-gray-400">
-              <i class="fa-solid fa-folder-open text-3xl mb-2"></i>
-              <p>Tidak ada data penduduk yang ditemukan.</p>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      const columns = Object.keys(data[0]);
-
-      let headerHTML = `<th class="px-4 py-3 border-b text-center w-12">No</th>`;
-      columns.forEach(col => {
-        if (col.trim()) {
-          headerHTML += `<th class="px-4 py-3 border-b whitespace-nowrap">${col}</th>`;
-        }
-      });
-      tableHeader.innerHTML = headerHTML;
-
-      data.forEach((row, index) => {
-        let tr = document.createElement('tr');
-        tr.className = "hover:bg-emerald-50/50 transition duration-150 cursor-pointer border-b border-gray-100";
-        
-        let rowHTML = `<td class="px-4 py-3 text-center text-gray-400 font-mono">${index + 1}</td>`;
-        
-        columns.forEach(col => {
-          if (!col.trim()) return;
-          const val = row[col] || '-';
-          const isNameCol = col.toLowerCase().includes('nama') && !col.toLowerCase().includes('ayah') && !col.toLowerCase().includes('ibu');
-          
-          if (isNameCol) {
-            rowHTML += `
-              <td class="px-4 py-3 font-semibold text-emerald-700 hover:underline whitespace-nowrap">
-                <i class="fa-solid fa-user-circle mr-1 text-emerald-500"></i> ${val}
-              </td>`;
-          } else {
-            rowHTML += `<td class="px-4 py-3 whitespace-nowrap text-gray-600">${val}</td>`;
-          }
-        });
-
-        tr.innerHTML = rowHTML;
+      const header = document.getElementById('tableHeader'), body = document.getElementById('tableBody'), data = filteredData;
+      header.innerHTML = ''; body.innerHTML = '';
+      if (!data.length) { body.innerHTML = `<tr><td colspan="100%" class="text-center py-8 text-gray-400"><i class="fa-solid fa-folder-open text-3xl mb-2"></i><p>Tidak ada data ditemukan.</p></td></tr>`; return; }
+      const cols = Object.keys(data[0]);
+      header.innerHTML = `<th class="px-4 py-3 border-b text-center w-12">No</th>` + cols.filter(c => c.trim() && !c.toLowerCase().includes('foto')).map(c => `<th class="px-4 py-3 border-b whitespace-nowrap">${c}</th>`).join('');
+      data.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-emerald-50/50 transition cursor-pointer border-b border-gray-100";
+        tr.innerHTML = `<td class="px-4 py-3 text-center text-gray-400 font-mono">${i + 1}</td>` + cols.filter(c => c.trim() && !c.toLowerCase().includes('foto')).map(c => {
+          const val = row[c] || '-';
+          return c.toLowerCase().includes('nama') && !c.toLowerCase().includes('ayah') && !c.toLowerCase().includes('ibu')
+            ? `<td class="px-4 py-3 font-semibold text-emerald-700 hover:underline whitespace-nowrap"><i class="fa-solid fa-user-circle mr-1 text-emerald-500"></i> ${val}</td>`
+            : `<td class="px-4 py-3 whitespace-nowrap text-gray-600">${val}</td>`;
+        }).join('');
         tr.addEventListener('click', () => openModal(row));
-        tableBody.appendChild(tr);
+        body.appendChild(tr);
       });
     }
 
@@ -369,179 +211,63 @@
     }
 
     function openModal(dataObj) {
-      const modal = document.getElementById('detailModal');
-      const modalMainIdentifiers = document.getElementById('modalMainIdentifiers');
-      const modalOtherDetails = document.getElementById('modalOtherDetails');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalSubtitle = document.getElementById('modalSubtitle');
+      const modal = document.getElementById('detailModal'), pContainer = document.getElementById('modalPhotoContainer');
+      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
+      const nikKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nik'));
+      const nameVal = dataObj[nameKey] || '-', nikVal = nikKey ? dataObj[nikKey] : '-';
 
-      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase() === 'nama' || k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
-      const nameVal = dataObj[nameKey] || 'Detail Penduduk';
+      document.getElementById('modalName').innerText = nameVal;
+      document.getElementById('modalNikText').innerText = `NIK: ${nikVal}`;
+      document.getElementById('btnCopyNik').setAttribute('onclick', `copyToClipboard('${nikVal}', 'NIK')`);
 
-      modalTitle.innerText = nameVal;
-      modalSubtitle.innerText = `Jenis Kelamin: ${currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan'}`;
+      const photoKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('foto') || k.toLowerCase().includes('gambar'));
+      const photoUrl = photoKey ? dataObj[photoKey] : null;
+      pContainer.innerHTML = (photoUrl && photoUrl.trim().startsWith('http')) 
+        ? `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-cover">`
+        : `<div class="text-gray-300 text-6xl"><i class="fa-solid fa-user"></i></div>`;
 
-      modalMainIdentifiers.innerHTML = '';
-      modalOtherDetails.innerHTML = '';
+      const gIdentitas = document.getElementById('modalGroupIdentitas'), gSosial = document.getElementById('modalGroupSosial');
+      gIdentitas.innerHTML = ''; gSosial.innerHTML = '';
+      const idKeys = ['no_kk', 'kk', 'sex', 'jenis kelamin', 'tempatlahir', 'tempat lahir', 'tanggallahir', 'tanggal lahir', 'umur', 'alamat', 'dusun'];
 
-      Object.entries(dataObj).forEach(([key, value]) => {
-        if (!key.trim()) return;
-
-        const keyLower = key.toLowerCase();
-        const valStr = String(value || '-').trim();
-        const isNIK = keyLower.includes('nik');
-        const isKK = keyLower.includes('kk') || keyLower.includes('kartu keluarga');
-
-        if (isNIK || isKK) {
-          const card = document.createElement('div');
-          card.className = "bg-white p-3.5 rounded-xl border border-emerald-200 shadow-sm flex justify-between items-center";
-          card.innerHTML = `
-            <div>
-              <p class="text-xs text-emerald-700 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                <i class="${isNIK ? 'fa-id-card' : 'fa-users'}"></i> ${key}
-              </p>
-              <p class="text-base font-mono font-bold text-gray-900 mt-0.5 tracking-wide">${valStr}</p>
-            </div>
-            ${valStr !== '-' ? `
-              <button onclick="copyToClipboard('${valStr}', '${key}')" title="Salin ${key}" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-sm transition border border-emerald-200 flex items-center gap-1 cursor-pointer">
-                <i class="fa-regular fa-copy"></i>
-                <span class="text-xs font-semibold">Salin</span>
-              </button>
-            ` : ''}
-          `;
-          modalMainIdentifiers.appendChild(card);
-        } else {
-          const item = document.createElement('div');
-          item.className = "bg-white p-3 rounded-xl border border-gray-200 shadow-sm";
-          item.innerHTML = `
-            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">${key}</p>
-            <p class="text-sm font-semibold text-gray-800 mt-1">${valStr}</p>
-          `;
-          modalOtherDetails.appendChild(item);
-        }
+      Object.entries(dataObj).forEach(([key, val]) => {
+        if (!key.trim() || key.toLowerCase().includes('foto') || key.toLowerCase() === nameKey.toLowerCase() || key.toLowerCase().includes('nik')) return;
+        const valText = String(val || '-').trim();
+        const isKK = key.toLowerCase().includes('kk');
+        const copyBtn = isKK && valText !== '-' ? `<button onclick="copyToClipboard('${valText}', '${key.toUpperCase()}')" class="ml-2 text-emerald-600 hover:text-emerald-800"><i class="fa-regular fa-copy"></i></button>` : '';
+        const row = document.createElement('div');
+        row.className = "flex justify-between items-center py-1 border-b border-gray-200";
+        row.innerHTML = `<span class="text-gray-500 font-medium">${key.replace(/_/g, ' ').toUpperCase()}:</span><span class="font-bold text-gray-800 text-right">${valText} ${copyBtn}</span>`;
+        if (idKeys.some(k => key.toLowerCase().includes(k))) gIdentitas.appendChild(row); else gSosial.appendChild(row);
       });
 
       modal.classList.remove('hidden');
     }
 
-    function closeModal() {
-      document.getElementById('detailModal').classList.add('hidden');
-    }
-
+    function closeModal() { document.getElementById('detailModal').classList.add('hidden'); }
     function copyToClipboard(text, label) {
-      navigator.clipboard.writeText(text).then(() => {
-        showToast(`${label} (${text}) berhasil disalin!`);
-      }).catch(err => {
-        const dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = text;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
-        showToast(`${label} berhasil disalin!`);
-      });
+      navigator.clipboard.writeText(text).then(() => showToast(`${label} (${text}) berhasil disalin!`));
     }
-
     function showToast(msg) {
       const toast = document.getElementById('toastNotification');
-      const toastMsg = document.getElementById('toastMessage');
-      toastMsg.innerText = msg;
-
-      toast.classList.remove('opacity-0');
-      toast.classList.add('opacity-100');
-
-      setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0');
-      }, 3000);
+      document.getElementById('toastMessage').innerText = msg;
+      toast.classList.replace('opacity-0', 'opacity-100');
+      setTimeout(() => toast.classList.replace('opacity-100', 'opacity-0'), 3000);
     }
+    function showLoading(show) { document.getElementById('loadingState').classList.toggle('hidden', !show); document.getElementById('tableContainer').classList.toggle('hidden', show); }
+    function showError(show) { document.getElementById('errorState').classList.toggle('hidden', !show); }
 
-    function showLoading(show) {
-      document.getElementById('loadingState').classList.toggle('hidden', !show);
-      document.getElementById('tableContainer').classList.toggle('hidden', show);
-    }
-
-    function showError(show) {
-      document.getElementById('errorState').classList.toggle('hidden', !show);
-    }
-
-    // Ekspor PDF Selektif Kolom Penting untuk Dusun 3 Kavatua
     function exportToPDF() {
-      if (!filteredData || filteredData.length === 0) {
-        alert("Tidak ada data untuk diekspor. Silakan muat data terlebih dahulu.");
-        return;
-      }
-
-      try {
-        const jsPDF = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
-        if (!jsPDF) {
-          alert("Pustaka pembentuk PDF belum selesai dimuat. Silakan muat ulang halaman.");
-          return;
-        }
-
-        const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-
-        const genderLabel = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
-        const title = `Data Penduduk ${genderLabel} - Desa Wani Lumbumpetigo Dusun 3 Kavatua`;
-
-        doc.setFontSize(13);
-        doc.text(title, 14, 12);
-        doc.setFontSize(8);
-        doc.text(`Total Data Dicetak: ${filteredData.length} orang | Tanggal: ${new Date().toLocaleDateString('id-ID')}`, 14, 17);
-
-        // Kolom penting yang dipilih
-        const targetKeys = [
-          'nama', 'no_kk', 'nik', 'sex', 'tempatlahir', 
-          'tanggallahir', 'alamat', 'dusun', 'agama_id', 
-          'pekerjaan_id', 'nama ayah', 'nama ibu'
-        ];
-
-        const availableKeys = Object.keys(filteredData[0]);
-        const pdfColumns = [];
-        const mappedKeys = [];
-
-        targetKeys.forEach(tKey => {
-          const foundKey = availableKeys.find(k => k.trim().toLowerCase() === tKey.toLowerCase() || k.trim().toLowerCase().replace(/_/g, '') === tKey.replace(/_/g, ''));
-          if (foundKey) {
-            mappedKeys.push(foundKey);
-            let displayTitle = foundKey
-              .replace(/_/g, ' ')
-              .replace(/id$/i, '')
-              .toUpperCase();
-            pdfColumns.push(displayTitle);
-          }
-        });
-
-        const head = [['No', ...pdfColumns]];
-
-        const body = filteredData.map((item, index) => {
-          const rowVals = mappedKeys.map(k => item[k] || '-');
-          return [index + 1, ...rowVals];
-        });
-
-        const options = {
-          startY: 21,
-          head: head,
-          body: body,
-          theme: 'grid',
-          styles: { fontSize: 6.5, cellPadding: 1.5, overflow: 'linebreak' },
-          headStyles: { fillColor: [4, 120, 87], textColor: [255, 255, 255], fontStyle: 'bold', halign: 'center' },
-          columnStyles: {
-            0: { halign: 'center', cellWidth: 8 }
-          }
-        };
-
-        if (typeof doc.autoTable === 'function') {
-          doc.autoTable(options);
-        } else if (typeof window.jspdf.autoTable === 'function') {
-          window.jspdf.autoTable(doc, options);
-        }
-
-        doc.save(`Data_Penduduk_${genderLabel}_Dusun_3_Kavatua.pdf`);
-      } catch (err) {
-        console.error("Ekspor PDF Error:", err);
-        alert("Gagal mengekspor PDF.");
-      }
+      if (!filteredData.length) return alert("Tidak ada data untuk diekspor.");
+      const jsPDF = window.jspdf ? window.jspdf.jsPDF : window.jsPDF;
+      const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
+      const genderLabel = currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan';
+      doc.setFontSize(13); doc.text(`Data Penduduk ${genderLabel} - Dusun 3 Kavatua`, 14, 12);
+      const cols = Object.keys(filteredData[0]).filter(k => !k.toLowerCase().includes('foto'));
+      const head = [['No', ...cols.map(c => c.replace(/_/g, ' ').toUpperCase())]];
+      const body = filteredData.map((item, index) => [index + 1, ...cols.map(k => item[k] || '-')]);
+      doc.autoTable({ startY: 18, head: head, body: body, styles: { fontSize: 6.5 }, headStyles: { fillColor: [4, 120, 87] } });
+      doc.save(`Data_Penduduk_${genderLabel}_Dusun_3_Kavatua.pdf`);
     }
   </script>
 </body>
