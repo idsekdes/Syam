@@ -211,10 +211,11 @@
     }
 
     function openModal(dataObj) {
-      const modal = document.getElementById('detailModal'), pContainer = document.getElementById('modalPhotoContainer');
-      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
-      const nikKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nik'));
-      const nameVal = dataObj[nameKey] || '-', nikVal = nikKey ? dataObj[nikKey] : '-';
+      if (photoUrl && photoUrl.trim() !== '' && photoUrl.startsWith('http')) {
+     photoContainer.innerHTML = `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-contain bg-gray-100">`;
+    } else {
+     photoContainer.innerHTML = `<div class="text-gray-300 text-6xl"><i class="fa-solid fa-user"></i></div>`;
+   }
 
       document.getElementById('modalName').innerText = nameVal;
       document.getElementById('modalNikText').innerText = `NIK: ${nikVal}`;
