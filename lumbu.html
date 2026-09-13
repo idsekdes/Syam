@@ -220,10 +220,11 @@
       document.getElementById('modalNikText').innerText = `NIK: ${nikVal}`;
       document.getElementById('btnCopyNik').setAttribute('onclick', `copyToClipboard('${nikVal}', 'NIK')`);
 
+      // PENANGANAN FOTO (SUDAH DIPERBAIKI AGAR TIDAK KEPOTONG)
       const photoKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('foto') || k.toLowerCase().includes('gambar'));
       const photoUrl = photoKey ? dataObj[photoKey] : null;
       pContainer.innerHTML = (photoUrl && photoUrl.trim().startsWith('http')) 
-        ? `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-cover">`
+        ? `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-contain bg-gray-100">`
         : `<div class="text-gray-300 text-6xl"><i class="fa-solid fa-user"></i></div>`;
 
       const gIdentitas = document.getElementById('modalGroupIdentitas'), gSosial = document.getElementById('modalGroupSosial');

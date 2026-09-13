@@ -45,6 +45,7 @@
     </div>
   </header>
 
+
   <!-- Content Container -->
   <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
 
@@ -394,69 +395,35 @@
 
     // FUNGSI MEMBUKA MODAL TAMPILAN BARU (MIRIP DESAIN REFERENSI)
     function openModal(dataObj) {
-      const modal = document.getElementById('detailModal');
-      const photoContainer = document.getElementById('modalPhotoContainer');
-      const modalName = document.getElementById('modalName');
-      const modalNikText = document.getElementById('modalNikText');
-      const btnCopyNik = document.getElementById('btnCopyNik');
-
-      const groupIdentitas = document.getElementById('modalGroupIdentitas');
-      const groupSosial = document.getElementById('modalGroupSosial');
-
-      // Ambil Nama & NIK
-      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase() === 'nama' || k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
+      const modal = document.getElementById('detailModal'), pContainer = document.getElementById('modalPhotoContainer');
+      const nameKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
       const nikKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nik'));
+      const nameVal = dataObj[nameKey] || '-', nikVal = nikKey ? dataObj[nikKey] : '-';
 
-      const nameVal = dataObj[nameKey] || '-';
-      const nikVal = nikKey ? dataObj[nikKey] : '-';
+      document.getElementById('modalName').innerText = nameVal;
+      document.getElementById('modalNikText').innerText = `NIK: ${nikVal}`;
+      document.getElementById('btnCopyNik').setAttribute('onclick', `copyToClipboard('${nikVal}', 'NIK')`);
 
-      modalName.innerText = nameVal;
-      modalNikText.innerText = `NIK: ${nikVal}`;
-      btnCopyNik.setAttribute('onclick', `copyToClipboard('${nikVal}', 'NIK')`);
-
-      // Penanganan Foto
+      // PENANGANAN FOTO (SUDAH DIPERBAIKI AGAR TIDAK KEPOTONG)
       const photoKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('foto') || k.toLowerCase().includes('gambar'));
       const photoUrl = photoKey ? dataObj[photoKey] : null;
+      pContainer.innerHTML = (photoUrl && photoUrl.trim().startsWith('http')) 
+        ? `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-contain bg-gray-100">`
+        : `<div class="text-gray-300 text-6xl"><i class="fa-solid fa-user"></i></div>`;
 
-      if (photoUrl && photoUrl.trim() !== '' && photoUrl.startsWith('http')) {
-        photoContainer.innerHTML = `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-cover">`;
-      } else {
-        photoContainer.innerHTML = `<div class="text-gray-300 text-6xl"><i class="fa-solid fa-user"></i></div>`;
-      }
-
-      // Render Item Data
-      groupIdentitas.innerHTML = '';
-      groupSosial.innerHTML = '';
-
-      // Definisi Pemisahan Kategori Data
-      const identitasKeys = ['no_kk', 'kk', 'sex', 'jenis kelamin', 'tempatlahir', 'tempat lahir', 'tanggallahir', 'tanggal lahir', 'umur', 'alamat', 'dusun'];
+      const gIdentitas = document.getElementById('modalGroupIdentitas'), gSosial = document.getElementById('modalGroupSosial');
+      gIdentitas.innerHTML = ''; gSosial.innerHTML = '';
+      const idKeys = ['no_kk', 'kk', 'sex', 'jenis kelamin', 'tempatlahir', 'tempat lahir', 'tanggallahir', 'tanggal lahir', 'umur', 'alamat', 'dusun'];
 
       Object.entries(dataObj).forEach(([key, val]) => {
-        if (!key.trim()) return;
-        const kLower = key.toLowerCase();
-        if (kLower.includes('foto') || kLower.includes('gambar') || kLower === nameKey.toLowerCase() || kLower.includes('nik')) return;
-
-        const labelName = key.replace(/_/g, ' ').toUpperCase();
-        const valueText = String(val || '-').trim();
-        const isKK = kLower.includes('kk') || kLower.includes('kartu keluarga');
-
-        const rowElem = document.createElement('div');
-        rowElem.className = "flex justify-between items-center py-1 border-b border-gray-200";
-
-        let copyBtn = isKK && valueText !== '-' 
-          ? `<button onclick="copyToClipboard('${valueText}', '${labelName}')" class="ml-2 text-emerald-600 hover:text-emerald-800"><i class="fa-regular fa-copy"></i></button>` 
-          : '';
-
-        rowElem.innerHTML = `
-          <span class="text-gray-500 font-medium">${labelName}:</span>
-          <span class="font-bold text-gray-800 text-right">${valueText} ${copyBtn}</span>
-        `;
-
-        if (identitasKeys.some(ik => kLower.includes(ik))) {
-          groupIdentitas.appendChild(rowElem);
-        } else {
-          groupSosial.appendChild(rowElem);
-        }
+        if (!key.trim() || key.toLowerCase().includes('foto') || key.toLowerCase() === nameKey.toLowerCase() || key.toLowerCase().includes('nik')) return;
+        const valText = String(val || '-').trim();
+        const isKK = key.toLowerCase().includes('kk');
+        const copyBtn = isKK && valText !== '-' ? `<button onclick="copyToClipboard('${valText}', '${key.toUpperCase()}')" class="ml-2 text-emerald-600 hover:text-emerald-800"><i class="fa-regular fa-copy"></i></button>` : '';
+        const row = document.createElement('div');
+        row.className = "flex justify-between items-center py-1 border-b border-gray-200";
+        row.innerHTML = `<span class="text-gray-500 font-medium">${key.replace(/_/g, ' ').toUpperCase()}:</span><span class="font-bold text-gray-800 text-right">${valText} ${copyBtn}</span>`;
+        if (idKeys.some(k => key.toLowerCase().includes(k))) gIdentitas.appendChild(row); else gSosial.appendChild(row);
       });
 
       modal.classList.remove('hidden');
