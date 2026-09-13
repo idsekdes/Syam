@@ -137,37 +137,63 @@
 
   </main>
 
-  <!-- MODAL DETAIL / RINCIAN WARGA TERSTRUKTUR -->
-  <div id="detailModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
+  <!-- MODAL DETAIL RINCIAN BARU BERBASIS KARTU & KELOMPOK DATA -->
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden transform transition-all flex flex-col max-h-[90vh]">
       
-      <!-- Header Modal -->
+      <!-- Header Modal Emerald -->
       <div class="bg-emerald-700 px-6 py-4 text-white flex justify-between items-center">
-        <div class="flex items-center gap-3">
-          <!-- Lingkaran Foto Kiri Atas -->
-          <div id="modalAvatar" class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-2xl font-bold shadow-inner border-2 border-white/50 overflow-hidden shrink-0">
-            <i class="fa-solid fa-user-large"></i>
-          </div>
-          <div>
-            <h3 id="modalTitle" class="text-xl font-bold leading-tight">Detail Penduduk</h3>
-            <p id="modalSubtitle" class="text-xs text-emerald-100">Dusun 1 Petigo - Desa Wani Lumbumpetigo</p>
-          </div>
-        </div>
-        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-2xl transition">
+        <h3 class="text-lg font-bold flex items-center gap-2">
+          <i class="fa-solid fa-id-card"></i> Detail Data Penduduk
+        </h3>
+        <button onclick="closeModal()" class="text-emerald-100 hover:text-white p-1 rounded-lg text-xl transition">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <!-- Content Modal -->
-      <div class="p-6 overflow-y-auto flex-grow bg-slate-50/50 space-y-4">
-        <!-- Section Identitas Utama (NIK & KK) -->
-        <div id="modalMainIdentifiers" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        </div>
+      <!-- Body Modal -->
+      <div class="p-6 overflow-y-auto flex-grow bg-slate-50">
+        <div class="flex flex-col md:flex-row gap-6">
+          
+          <!-- Kolom Kiri: Foto, Nama, dan NIK -->
+          <div class="w-full md:w-5/12 flex flex-col items-center text-center">
+            <div id="modalPhotoContainer" class="w-48 h-56 bg-white border-4 border-emerald-600 rounded-xl overflow-hidden shadow-md flex items-center justify-center mb-3">
+              <!-- Foto atau placeholder akan dimasukkan lewat JS -->
+            </div>
+            <h2 id="modalName" class="text-xl font-extrabold text-emerald-900 leading-snug">
+              -
+            </h2>
+            <div class="mt-2 inline-flex items-center gap-2 bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200 text-emerald-800 font-mono text-sm font-semibold">
+              <span id="modalNikText">NIK: -</span>
+              <button id="btnCopyNik" onclick="" title="Salin NIK" class="p-1 hover:text-emerald-600 text-gray-500 transition">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+          </div>
 
-        <div class="border-t border-gray-200 my-2"></div>
+          <!-- Kolom Kanan: Rincian Data Berkelompok -->
+          <div class="w-full md:w-7/12 space-y-5">
+            
+            <!-- Group 1: Data Identitas -->
+            <div>
+              <h4 class="text-sm font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-2 pb-1 border-b-2 border-emerald-600 mb-2">
+                <i class="fa-solid fa-clipboard-user"></i> Data Identitas
+              </h4>
+              <div id="modalGroupIdentitas" class="space-y-1.5 text-xs sm:text-sm">
+              </div>
+            </div>
 
-        <!-- Section Rincian Informasi Lainnya -->
-        <div id="modalOtherDetails" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Group 2: Data Sosial & Pekerjaan -->
+            <div>
+              <h4 class="text-sm font-bold text-emerald-800 uppercase tracking-wider flex items-center gap-2 pb-1 border-b-2 border-emerald-600 mb-2">
+                <i class="fa-solid fa-users text-xs"></i> Data Sosial & Keluarga
+              </h4>
+              <div id="modalGroupSosial" class="space-y-1.5 text-xs sm:text-sm">
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
@@ -191,10 +217,9 @@
   </footer>
 
   <script>
-    // URL CSV Google Sheets Dusun 1 Petigo
     const CSV_URLS = {
-      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBJ74Q3oXOBhx0txat90H7AnFrhBB8QJnQT9BVqusn_07-Fdf2LVgme7oOuOjkFfMyizzGtegnNq1R/pub?gid=732082757&single=true&output=csv",
-      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRv3XZZTDhRaHFmDLW5RZ-CwkrDnIlKjd9MVFmo41jBv_5Qs8i2j2NA1HuAMyvkENZDCptoSsC_Lj-N/pub?gid=381111652&single=true&output=csv"
+      perempuan: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTE2kFqC0uK2hGzY2309831006579290074/pub?gid=1825285856&single=true&output=csv",
+      laki: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTE2kFqC0uK2hGzY2309831006579290074/pub?gid=1027952502&single=true&output=csv"
     };
 
     let currentGender = 'laki';
@@ -367,70 +392,70 @@
       document.getElementById('showingText').innerText = `Menampilkan ${filteredData.length} dari ${total} data`;
     }
 
-    // LOGIKA PENAMPILAN FOTO DI MODAL
+    // FUNGSI MEMBUKA MODAL TAMPILAN BARU (MIRIP DESAIN REFERENSI)
     function openModal(dataObj) {
       const modal = document.getElementById('detailModal');
-      const modalAvatar = document.getElementById('modalAvatar');
-      const modalMainIdentifiers = document.getElementById('modalMainIdentifiers');
-      const modalOtherDetails = document.getElementById('modalOtherDetails');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalSubtitle = document.getElementById('modalSubtitle');
+      const photoContainer = document.getElementById('modalPhotoContainer');
+      const modalName = document.getElementById('modalName');
+      const modalNikText = document.getElementById('modalNikText');
+      const btnCopyNik = document.getElementById('btnCopyNik');
 
+      const groupIdentitas = document.getElementById('modalGroupIdentitas');
+      const groupSosial = document.getElementById('modalGroupSosial');
+
+      // Ambil Nama & NIK
       const nameKey = Object.keys(dataObj).find(k => k.toLowerCase() === 'nama' || k.toLowerCase().includes('nama')) || Object.keys(dataObj)[0];
-      const nameVal = dataObj[nameKey] || 'Detail Penduduk';
+      const nikKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('nik'));
 
-      modalTitle.innerText = nameVal;
-      modalSubtitle.innerText = `Jenis Kelamin: ${currentGender === 'laki' ? 'Laki-Laki' : 'Perempuan'}`;
+      const nameVal = dataObj[nameKey] || '-';
+      const nikVal = nikKey ? dataObj[nikKey] : '-';
 
-      // Deteksi Kolom Foto dari Google Sheets
-      const photoKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('foto') || k.toLowerCase().includes('gambar') || k.toLowerCase().includes('avatar'));
+      modalName.innerText = nameVal;
+      modalNikText.innerText = `NIK: ${nikVal}`;
+      btnCopyNik.setAttribute('onclick', `copyToClipboard('${nikVal}', 'NIK')`);
+
+      // Penanganan Foto
+      const photoKey = Object.keys(dataObj).find(k => k.toLowerCase().includes('foto') || k.toLowerCase().includes('gambar'));
       const photoUrl = photoKey ? dataObj[photoKey] : null;
 
       if (photoUrl && photoUrl.trim() !== '' && photoUrl.startsWith('http')) {
-        modalAvatar.innerHTML = `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-cover">`;
+        photoContainer.innerHTML = `<img src="${photoUrl.trim()}" alt="${nameVal}" class="w-full h-full object-cover">`;
       } else {
-        modalAvatar.innerHTML = `<i class="fa-solid fa-user-large"></i>`;
+        photoContainer.innerHTML = `<div class="text-gray-300 text-6xl"><i class="fa-solid fa-user"></i></div>`;
       }
 
-      modalMainIdentifiers.innerHTML = '';
-      modalOtherDetails.innerHTML = '';
+      // Render Item Data
+      groupIdentitas.innerHTML = '';
+      groupSosial.innerHTML = '';
 
-      Object.entries(dataObj).forEach(([key, value]) => {
+      // Definisi Pemisahan Kategori Data
+      const identitasKeys = ['no_kk', 'kk', 'sex', 'jenis kelamin', 'tempatlahir', 'tempat lahir', 'tanggallahir', 'tanggal lahir', 'umur', 'alamat', 'dusun'];
+
+      Object.entries(dataObj).forEach(([key, val]) => {
         if (!key.trim()) return;
+        const kLower = key.toLowerCase();
+        if (kLower.includes('foto') || kLower.includes('gambar') || kLower === nameKey.toLowerCase() || kLower.includes('nik')) return;
 
-        const keyLower = key.toLowerCase();
-        if (keyLower.includes('foto') || keyLower.includes('gambar') || keyLower.includes('avatar')) return;
+        const labelName = key.replace(/_/g, ' ').toUpperCase();
+        const valueText = String(val || '-').trim();
+        const isKK = kLower.includes('kk') || kLower.includes('kartu keluarga');
 
-        const valStr = String(value || '-').trim();
-        const isNIK = keyLower.includes('nik');
-        const isKK = keyLower.includes('kk') || keyLower.includes('kartu keluarga');
+        const rowElem = document.createElement('div');
+        rowElem.className = "flex justify-between items-center py-1 border-b border-gray-200";
 
-        if (isNIK || isKK) {
-          const card = document.createElement('div');
-          card.className = "bg-white p-3.5 rounded-xl border border-emerald-200 shadow-sm flex justify-between items-center";
-          card.innerHTML = `
-            <div>
-              <p class="text-xs text-emerald-700 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                <i class="${isNIK ? 'fa-id-card' : 'fa-users'}"></i> ${key}
-              </p>
-              <p class="text-base font-mono font-bold text-gray-900 mt-0.5 tracking-wide">${valStr}</p>
-            </div>
-            ${valStr !== '-' ? `
-              <button onclick="copyToClipboard('${valStr}', '${key}')" title="Salin ${key}" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-sm transition border border-emerald-200 flex items-center gap-1 cursor-pointer">
-                <i class="fa-regular fa-copy"></i>
-                <span class="text-xs font-semibold">Salin</span>
-              </button>
-            ` : ''}
-          `;
-          modalMainIdentifiers.appendChild(card);
+        let copyBtn = isKK && valueText !== '-' 
+          ? `<button onclick="copyToClipboard('${valueText}', '${labelName}')" class="ml-2 text-emerald-600 hover:text-emerald-800"><i class="fa-regular fa-copy"></i></button>` 
+          : '';
+
+        rowElem.innerHTML = `
+          <span class="text-gray-500 font-medium">${labelName}:</span>
+          <span class="font-bold text-gray-800 text-right">${valueText} ${copyBtn}</span>
+        `;
+
+        if (identitasKeys.some(ik => kLower.includes(ik))) {
+          groupIdentitas.appendChild(rowElem);
         } else {
-          const item = document.createElement('div');
-          item.className = "bg-white p-3 rounded-xl border border-gray-200 shadow-sm";
-          item.innerHTML = `
-            <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider">${key}</p>
-            <p class="text-sm font-semibold text-gray-800 mt-1">${valStr}</p>
-          `;
-          modalOtherDetails.appendChild(item);
+          groupSosial.appendChild(rowElem);
         }
       });
 
